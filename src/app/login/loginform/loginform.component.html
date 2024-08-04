@@ -1,0 +1,53 @@
+<section>
+  <div class="login-box">
+    <div class="headline-box">
+      <h2>Anmeldung</h2>
+      <span
+        >Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+        verwendest.</span
+      >
+    </div>
+    <div class="login-input-box">
+      <form action="">
+        <div class="input-box">
+          <div>
+            <img src="assets/icons/mail.svg" alt="email icon" />
+            <input type="text" placeholder="beispielname@email.com" />
+          </div>
+          <span class="error-text" *ngIf="EmailInvalid"
+            >*Diese E-Mail-Adresse ist leider ungültig
+          </span>
+        </div>
+        <div class="input-box">
+          <div>
+            <img src="assets/icons/lock.svg" alt="lock icon" />
+            <input type="password" placeholder="Passwort" />
+          </div>
+          <span class="error-text" *ngIf="PwOrEmailWrong"
+            >Falsches Passwort oder E-Mail.. Bitte noch einmal versuchen.</span
+          >
+        </div>
+        <a href="Placeholder für richtigen Link">Passwort vergessen?</a>
+      </form>
+    </div>
+    <div class="or-container">
+      <span>ODER</span>
+    </div>
+    <div class="login-google-box">
+      <button>
+        <div>
+          <img src="assets/icons/google.svg" alt="" />
+          Anmelden mit Google
+        </div>
+      </button>
+    </div>
+    <div class="btn-box">
+      <button class="btn-purple">Anmelden</button>
+      <button class="btn-white">Gäste-Login</button>
+    </div>
+  </div>
+  <div class="go-to-regestration-box">
+    <span>Neu bei DABubble?</span>
+    <button (click)="changeToRegestration()">Konto erstellen</button>
+  </div>
+</section>
