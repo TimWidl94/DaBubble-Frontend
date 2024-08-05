@@ -1,1 +1,66 @@
-<p>regestration works!</p>
+<section>
+  <div class="login-box">
+    <div class="img-arrow-left-box" (click)="backToLogin()">
+    </div>
+    <div class="headline-box">
+      <h2>Konto erstellen</h2>
+      <span
+        >Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues
+        DABubble-Konto.</span
+      >
+    </div>
+    <div class="login-input-box">
+      <form action="">
+        <div class="input-box">
+          <div>
+            <img src="assets/icons/person_filled.svg" alt="person icon" />
+            <input type="text" placeholder="Name und Nachname" [(ngModel)]="name" (input)="onInputChange('name')" name="name"/>
+          </div>
+          <span class="error-text" *ngIf="nameEmpty"
+            >Bitte schreiben Sie einen Namen.
+          </span>
+        </div>
+        <div class="input-box">
+          <div>
+            <img src="assets/icons/mail.svg" alt="email icon" />
+            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" (input)="onInputChange('email')" name="email"/>
+          </div>
+          <span class="error-text" *ngIf="emailInvalid"
+            >*Diese E-Mail-Adresse ist leider ungültig</span
+          >
+        </div>
+        <div class="input-box">
+          <div>
+            <img src="assets/icons/lock.svg" alt="lock icon" />
+            <input type="password" placeholder="Passwort" [(ngModel)]="password" (input)="onInputChange('password')" name="password"/>
+          </div>
+          <span class="error-text" *ngIf="pwEmpty"
+            >Bitte geben Sie ein Passwort ein.</span
+          >
+        </div>
+        <div class="dataprotection-box">
+          <div
+            [class.hovered]="isHovered"
+            (mouseover)="onHover(true)"
+            (mouseout)="onHover(false)"
+            (click)="changeDataProtectionImg('assets/icons/checkbox_checked.svg')"
+            [style.backgroundImage]="'url(' + backgroundImage + ')'"
+          >
+          </div>
+          <span>Ich stimme der</span>
+          <a
+            href=""
+            [class.hovered]="isHovered"
+            (mouseover)="onHover(true)"
+            (mouseout)="onHover(false)"
+            >Datenschutzerklärung</a
+          >
+          <span>zu.</span>
+        </div>
+      </form>
+    </div>
+    <div class="btn-box">
+      <button class="btn-purple" (click)="changeToCreateProfilScreen()" [disabled]="buttonDisabled">weiter</button>
+    </div>
+  </div>
+</section>

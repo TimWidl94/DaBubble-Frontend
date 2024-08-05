@@ -12,7 +12,7 @@ section {
   width: 100%;
   max-width: calc(606px - 2 * 20px);
   height: 100%;
-  max-height: calc(769px);
+  max-height: calc(700px);
   border-radius: 30px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
   flex-direction: column;
@@ -203,53 +203,6 @@ a {
   width: 100%;
 }
 
-.btn-purple {
-  @include dFlex();
-  width: 100%;
-  max-width: 137px;
-  height: 100%;
-  max-height: 49px;
-  padding: 12px 25px;
-  border-radius: 25px;
-  border: 1px solid $Purple;
-  background-color: $Purple;
-  color: $White;
-  font-family: $nunito;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 24.55px;
-  transition: transform 0.3s ease, opacity 0.2s ease;
-  &:hover {
-    cursor: pointer;
-    opacity: 0.8;
-
-  }
-}
-
-.btn-white {
-  @include dFlex();
-  width: 100%;
-  max-width: 153px;
-  height: 100%;
-  max-height: 49px;
-  padding: 12px 25px;
-  border-radius: 25px;
-  border: 1px solid $Purple;
-  background-color: $White;
-  color: $Purple;
-  font-family: $nunito;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 24.55px;
-  text-align: center;
-  transition: transform 0.3s ease, background-color 0.2s ease, color 0.2s ease;
-  &:hover {
-    cursor: pointer;
-    background-color: $Purple;
-    color: $White;
-  }
-}
-
 
 .go-to-regestration-box{
   @include dFlex($g:12px, $ai: end);
@@ -258,7 +211,9 @@ a {
   right: 80px;
   flex-direction: column;
   >span{
-
+  font-family: $nunito;
+  font-size: 18px;
+  line-height: 24.55px;
   }
   >button{
     position: relative;
@@ -270,6 +225,7 @@ a {
     border-radius: 30px;
     padding: 10px 15px;
     font-weight: 400;
+    font-size: 18px;
     border: 1px solid transparent;
     &:hover{
       cursor: pointer;

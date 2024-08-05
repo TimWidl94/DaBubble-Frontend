@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-loginform',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './loginform.component.html',
   styleUrl: './loginform.component.scss'
 })

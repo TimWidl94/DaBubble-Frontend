@@ -1,0 +1,131 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex();
+  width: 100%;
+  height: 100%;
+}
+
+.login-box {
+  @include dFlex($g: 30px); // gap ist noch fiktiv gesetzt
+  background-color: $White;
+  width: 100%;
+  max-width: calc(606px - 2 * 20px);
+  border-radius: 30px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  margin: 30px;
+  padding: 40px 20px;
+  position: relative;
+}
+
+.headline-box {
+  @include dFlex($g: 30px);
+  width: 100%;
+  max-width: 486px;
+  > h2 {
+    display: flex;
+    font-family: $nunito;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 55.2px;
+    align-items: center;
+    color: $Purple;
+    margin: 0;
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.avatar-input-box {
+  @include dFlex($ai: start, $g: 12px);
+  width: 100%;
+  max-width: 472px;
+  max-height: 340px;
+  flex-direction: column;
+  > div {
+    @include dFlex($jc: space-between);
+    height: 100%;
+    width: 100%;
+  }
+  >span{
+    font-family: $nunito;
+    font-size: 20px;
+    line-height: 27.28px;
+  }
+}
+
+.btn-box {
+  @include dFlex($g: 30px, $jc: end);
+  width: 100%;
+  max-width: 500px;
+}
+
+.img-arrow-left-box {
+  position: absolute;
+  left: 32px;
+  top: 48px;
+  width: 40px;
+  height: 40px;
+  background-image: url("./../../../assets/icons/arrow_left.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  &:hover {
+    cursor: pointer;
+    background-color: $BGShadow;
+    border-radius: 100%;
+    background-image: url("./../../../assets/icons/arrow_left_purple.svg");
+  }
+}
+
+
+.avatar-img-box{
+  @include dFlex();
+  width: 72px;
+  height: 72px;
+  >img{
+    width: 64px;
+    height: 64px;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    &:hover{
+      border-color: $BGShadow;
+    }
+  };
+}
+
+.upload-box{
+  @include dFlex($g: 32px, $jc: space-between);
+  width: 100%;
+  max-width: 472px;
+  >span{
+    font-family: $nunito;
+    font-size: 20px;
+    line-height: 27.28px;
+    text-align: center;
+    text-wrap: nowrap;
+  }
+}
+
+
+.picked-img-box{
+  @include dFlex($g: 24px);
+  flex-direction: column;
+}
+
+h3{
+  font-family: $nunito;
+  font-size: 32px;
+  line-height: 43.65px;
+  text-align: center;
+  margin: 0;
+}
+
+.profilPicture{
+  width: 168px;
+  height: 168px;
+  border-radius: 100%;
+}

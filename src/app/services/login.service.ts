@@ -8,11 +8,14 @@ export class LoginService {
 
   constructor() { }
 
+  private loginScreenSubject = new BehaviorSubject<boolean>(true);
+  loginScreen$ = this.loginScreenSubject.asObservable();
+
   private registrationScreenSubject = new BehaviorSubject<boolean>(false);
   registrationScreen$ = this.registrationScreenSubject.asObservable();
 
-  private loginScreenSubject = new BehaviorSubject<boolean>(true);
-  loginScreen$ = this.loginScreenSubject.asObservable();
+  private profilScreenSubject = new BehaviorSubject<boolean>(false);
+  createProfilScreen$ = this.profilScreenSubject.asObservable();
 
   setRegistrationScreen(value: boolean) {
     this.registrationScreenSubject.next(value);
@@ -20,5 +23,9 @@ export class LoginService {
 
   setLoginScreen(value: boolean){
     this.loginScreenSubject.next(value);
+  }
+
+  setProfilScreen(value: boolean){
+    this.profilScreenSubject.next(value);
   }
 }

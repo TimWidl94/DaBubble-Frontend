@@ -1,0 +1,196 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex();
+  width: 100%;
+  height: 100%;
+}
+
+.login-box {
+  @include dFlex($g: 30px); // gap ist noch fiktiv gesetzt
+  background-color: $White;
+  width: 100%;
+  max-width: calc(606px - 2 * 20px);
+  height: 100%;
+  max-height: calc(669px);
+  border-radius: 30px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  margin: 30px;
+  padding: 0px 20px;
+  position: relative;
+}
+
+.headline-box {
+  @include dFlex($g: 30px);
+  width: 100%;
+  max-width: 486px;
+  height: 133px;
+  max-height: 133px;
+  flex-direction: column;
+  > h2 {
+    display: flex;
+    font-family: $nunito;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 55.2px;
+    align-items: center;
+    color: $Purple;
+    margin: 0;
+    &:hover {
+      cursor: default;
+    }
+  }
+  > span {
+    width: 100%;
+    max-width: 486px;
+    height: 48px;
+    max-height: 48px;
+    font-family: $nunito;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.login-input-box {
+  @include dFlex($ai: start);
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 340px;
+  > form {
+    @include dFlex($jc: space-between);
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.input-box {
+  @include dFlex();
+  width: 100%;
+  height: 100%;
+  max-height: 60px;
+  flex-direction: column;
+  > div {
+    @include dFlex();
+    width: 100%;
+    position: relative;
+    > input {
+      max-width: calc(500px - 32px - 82px);
+      flex: 1;
+      height: calc(60px - 2 * 18px);
+      border-radius: 6.25rem;
+      border: 1px solid $BGShadow;
+      padding: 18px 32px 18px 82px;
+      background-color: $BGShadow;
+      font-size: 18px;
+      line-height: 21.6px;
+      &:hover {
+        cursor: pointer;
+        border-color: $Gray;
+      }
+      &:focus {
+        border-color: $PurpleFont;
+        outline: none;
+      }
+      &:target {
+        border-color: $PurpleFont;
+        outline: none;
+      }
+    }
+    > img {
+      position: absolute;
+      left: 32px;
+    }
+  }
+}
+
+.error-text {
+  width: 100%;
+  padding-top: 4px;
+  color: $Error;
+  font-family: $nunito;
+  font-size: 14px;
+  line-height: 19.1px;
+}
+
+a {
+  @include dFlex($g: 10px);
+  height: 32px;
+  font-family: $figtree;
+  font-size: 18px;
+  line-height: 21.6px;
+  color: $PalePurple;
+  text-decoration: none;
+  font-weight: 400;
+  text-align: center;
+  padding: 0 6px;
+  border-radius: 30px;
+}
+
+.btn-box {
+  @include dFlex($g: 30px, $jc: end);
+  width: 100%;
+  max-width: 500px;
+}
+
+
+.img-arrow-left-box {
+  position: absolute;
+  left: 50px;
+  top: 52px;
+  width: 40px;
+  height: 40px;
+  background-image: url("./../../../assets/icons/arrow_left.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  &:hover {
+    cursor: pointer;
+    background-color: $BGShadow;
+    border-radius: 100%;
+    background-image: url("./../../../assets/icons/arrow_left_purple.svg");
+  }
+}
+
+.dataprotection-box {
+  @include dFlex($jc: start);
+  width: 100%;
+  > div {
+    @include dFlex();
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background-image: url("./../../../assets/icons/checkbox_blank.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    &:hover {
+      background-color: $BGShadow;
+    }
+  }
+
+  > span {
+    font-size: 16px;
+    line-height: 19.2px;
+    font-family: $openSans;
+    &:first-of-type {
+      padding-left: 8px;
+    }
+  }
+}
+
+.hovered{
+  background-color: $BGShadow;
+  color: $Purple;
+  font-weight: 500;
+}
+
+/// mobile ///
+/// change font size from input fields to smaller size for flex
