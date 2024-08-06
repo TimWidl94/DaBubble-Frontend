@@ -10,7 +10,7 @@
       >
     </div>
     <div class="login-input-box">
-      <form action="">
+      <form action="changeToCreateProfilScreen()">
         <div class="input-box">
           <div>
             <img src="assets/icons/person_filled.svg" alt="person icon" />
@@ -57,10 +57,11 @@
           >
           <span>zu.</span>
         </div>
+        <div class="btn-box">
+          <button class="btn-purple" (click)="changeToCreateProfilScreen()" [disabled]="buttonDisabled">weiter</button>
+        </div>
       </form>
     </div>
-    <div class="btn-box">
-      <button class="btn-purple" (click)="changeToCreateProfilScreen()" [disabled]="buttonDisabled">weiter</button>
-    </div>
+
   </div>
 </section>

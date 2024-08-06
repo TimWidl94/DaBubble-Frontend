@@ -5,17 +5,20 @@ import { LoginService } from '../services/login.service';
 import { RegestrationComponent } from "./regestration/regestration.component";
 import { FooterComponent } from '../shared/footer/footer.component';
 import { CreateProfilComponent } from './create-profil/create-profil.component';
+import { Router, RouterOutlet } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, LoginformComponent, RegestrationComponent, FooterComponent, CreateProfilComponent],
+  imports: [RouterOutlet, CommonModule, RegestrationComponent, LoginformComponent , FooterComponent, CreateProfilComponent, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
-  constructor(private loginService: LoginService){}
+  constructor(private loginService: LoginService, private as: AuthService, private router: Router){}
 
   loginScreen: boolean = true;
   regestrationScreen: boolean = false;

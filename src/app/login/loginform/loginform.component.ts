@@ -2,17 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-loginform',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './loginform.component.html',
   styleUrl: './loginform.component.scss'
 })
 export class LoginformComponent {
 
-  constructor(private loginService: LoginService){  }
+  constructor(private loginService: LoginService, private router: Router){  }
 
   EmailInvalid:boolean = false;
   PwOrEmailWrong:boolean = false;
@@ -21,9 +23,6 @@ export class LoginformComponent {
   regestrationScreen: boolean = false;
 
   changeToRegestration(){
-    if(this.loginScreen){
-      this.loginService.setRegistrationScreen(true);
-      this.loginService.setLoginScreen(false);
-    }
+    this.router.navigate(['/regestration']);
   }
 }

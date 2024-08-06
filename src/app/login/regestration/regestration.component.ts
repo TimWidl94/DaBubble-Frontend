@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-regestration',
@@ -11,7 +13,7 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './regestration.component.scss',
 })
 export class RegestrationComponent {
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router,private authService: AuthService) {}
 
   isHovered: boolean = false;
   backgroundImage = 'assets/icons/checkbox_blank.svg';
@@ -45,13 +47,14 @@ export class RegestrationComponent {
   }
 
   changeToCreateProfilScreen() {
-    this.loginService.setRegistrationScreen(false);
-    this.loginService.setProfilScreen(true);
+    if (!this.buttonDisabled) {
+      this.authService.setRegistrationData(this.name, this.email, this.password);
+      this.router.navigate(['/create-profile']);
+    }
   }
 
   backToLogin() {
-    this.loginService.setRegistrationScreen(false);
-    this.loginService.setLoginScreen(true);
+    this.router.navigate(['/login']);
   }
 
   enableButton() {
@@ -69,14 +72,11 @@ export class RegestrationComponent {
 
     if (field === 'password') {
       this.pwEmpty = !this.password.trim();
-      if(this.password.length <= 7){
+      if (this.password.length <= 7) {
         this.pwEmpty = true;
         this.buttonDisabled = true;
       }
     }
-    // if (field === 'password' && this.password.length <= 7) {
-      // this.pwEmpty = true;
-    // }
 
     if (this.password.length >= 8 && this.checkboxChecked) {
       this.buttonDisabled =
