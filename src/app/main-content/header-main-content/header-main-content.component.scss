@@ -1,0 +1,81 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex($jc: space-between);
+  // width: 100%;
+  height: 120px;
+  padding: 0 45px;
+}
+
+.logo-box {
+  @include dFlex();
+  min-width: 242px;
+  max-width: 20%;
+  height: 70px;
+  background-image: url("./../../../assets/img/logo/dabubble_logo.svg");
+}
+
+.search-box {
+  @include dFlex();
+  width: 100%;
+  position: relative;
+  // max-width: 989px;
+  height: 70px;
+  max-width: 60%;
+  > input {
+    width: 100%;
+    height: 70px;
+    border-radius: 42px;
+    padding: 17.5px 45px;
+    border: 1px solid $BGShadow;
+    font-family: $nunito;
+    font-size: 18px;
+    &:hover {
+      cursor: pointer;
+      border-color: $Gray;
+    }
+    &:focus {
+      border-color: $PurpleFont;
+      outline: none;
+    }
+    &:target {
+      border-color: $PurpleFont;
+      outline: none;
+    }
+  }
+}
+
+.search-icon {
+  @include dFlex();
+  position: absolute;
+  right: 40px;
+  width: 35px;
+  height: 35px;
+}
+
+.user-box {
+  @include dFlex();
+  max-width: 20%;
+  >span{
+    text-align: center;
+    font-family: $nunito;
+    font-size: 32px;
+    line-height: 43.65px;
+    color: black;
+    text-wrap: nowrap;
+
+  }
+  >img{
+
+  }
+  >button{
+    background-color: $BGShadow;
+    border: none;
+    background-image: url("./../../../assets/icons/arrow_down.svg");
+    width: 14px;
+    height: 9px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}

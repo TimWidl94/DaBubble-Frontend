@@ -5,25 +5,27 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
-
 @Component({
   selector: 'app-loginform',
   standalone: true,
-  imports: [CommonModule, FormsModule,],
+  imports: [CommonModule, FormsModule],
   templateUrl: './loginform.component.html',
-  styleUrl: './loginform.component.scss'
+  styleUrl: './loginform.component.scss',
 })
 export class LoginformComponent {
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private as: AuthService
+  ) {}
 
-  constructor(private loginService: LoginService, private router: Router, private as: AuthService){  }
-
-  EmailInvalid:boolean = false;
-  PwOrEmailWrong:boolean = false;
+  EmailInvalid: boolean = false;
+  PwOrEmailWrong: boolean = false;
 
   loginScreen: boolean = true;
   regestrationScreen: boolean = false;
 
-  changeToRegestration(){
+  changeToRegestration() {
     this.router.navigate(['/regestration']);
   }
 
@@ -31,18 +33,19 @@ export class LoginformComponent {
   password: string = '';
   public isLoggedIn: boolean = false;
 
-
-  login() {
-    this.as.loginWithUsernameAndPassword(this.email, this.password).subscribe(
-      (resp) => {
-        console.log(resp);
-        localStorage.setItem('token', resp['token']);
-        this.router.navigateByUrl('/chat');
-      },
-      (error) => {
-        alert('Login fehlgeschlagen');
-        console.error(error);
-      }
-    );
+  async login() {
+    try {
+      let resp: any = await this.as.loginWithUsernameAndPassword(
+        this.email,
+        this.password
+      );
+      console.log(resp);
+      localStorage.setItem('token', resp['token']);
+      localStorage.setItem('user', JSON.stringify(resp));
+      this.router.navigateByUrl('/chat');
+    } catch (e) {
+      alert('Login fehlgeschlagen');
+      console.error(e);
+    }
   }
 }

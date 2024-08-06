@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user) {
+      this.userSubject.next(user);
+      this.token = localStorage.getItem('token');
+    }
+  }
 
   private registrationData = {
     username: '',
@@ -18,14 +25,29 @@ export class AuthService {
   };
 
   private apiUrl = environment.baseUrl;
+  private userSubject = new BehaviorSubject<any>(null);
+  public user$ = this.userSubject.asObservable();
+  private token: string | null = null;
 
-  loginWithUsernameAndPassword(
-    email: string,
-    password: string
-  ): Observable<any> {
+  loginWithUsernameAndPassword(email: string, password: string) {
     const url = `${this.apiUrl}login/`;
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(url, { email, password }, { headers });
+    const body = { email: email, password: password };
+    return lastValueFrom(this.http.post(url, body));
+  }
+
+  logout() {
+    this.token = null;
+    this.userSubject.next(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  }
+
+  getUser() {
+    return this.userSubject.value;
+  }
+
+  getToken() {
+    return this.token;
   }
 
   register(
