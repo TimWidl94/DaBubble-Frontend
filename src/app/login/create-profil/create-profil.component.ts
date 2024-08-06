@@ -37,8 +37,8 @@ export class CreateProfilComponent {
   }
 
   goToLogin() {
-    const { username, email, password } = this.authService.getRegistrationData();
-    this.authService.register(username, password, email, this.profilPicture)
+    const { username, email, password, first_name, last_name } = this.authService.getRegistrationData();
+    this.authService.register(username, password, email, first_name, last_name)
       .subscribe(response => {
         console.log('Registration successful', response);
         this.router.navigate(['/login']);
@@ -68,11 +68,13 @@ export class CreateProfilComponent {
   password: string = '';
   email: string = '';
   avatar: string = '';
+  first_name: string = '';
+  last_name: string = '';
   regestrationComplete: boolean = false;
 
   registrate() {
     this.authService
-      .register(this.username, this.password, this.email, this.avatar)
+      .register(this.username, this.password, this.email, this.first_name, this.last_name)
       .subscribe(
         (response) => {
           console.log('Registration successful', response);

@@ -13,15 +13,22 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './regestration.component.scss',
 })
 export class RegestrationComponent {
-  constructor(private loginService: LoginService, private router: Router,private authService: AuthService) {}
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   isHovered: boolean = false;
   backgroundImage = 'assets/icons/checkbox_blank.svg';
   checkboxChecked: boolean = false;
 
   name: string = '';
+  first_name: string = '';
+  last_name: string = '';
   email: string = '';
   password: string = '';
+  username: string = '';
 
   nameEmpty: boolean = false;
   emailInvalid: boolean = false;
@@ -48,9 +55,24 @@ export class RegestrationComponent {
 
   changeToCreateProfilScreen() {
     if (!this.buttonDisabled) {
-      this.authService.setRegistrationData(this.name, this.email, this.password);
+      const [first_name, last_name] = this.splitName(this.name);
+      let username = first_name;
+      this.authService.setRegistrationData(
+        username,
+        this.email,
+        this.password,
+        first_name,
+        last_name
+      );
       this.router.navigate(['/create-profile']);
     }
+  }
+
+  splitName(fullName: string): [string, string] {
+    let nameParts = fullName.trim().split(' ');
+    let first_name = nameParts[0];
+    let last_name = nameParts.slice(1).join(' ');
+    return [first_name, last_name];
   }
 
   backToLogin() {

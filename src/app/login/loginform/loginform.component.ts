@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class LoginformComponent {
 
-  constructor(private loginService: LoginService, private router: Router){  }
+  constructor(private loginService: LoginService, private router: Router, private as: AuthService){  }
 
   EmailInvalid:boolean = false;
   PwOrEmailWrong:boolean = false;
@@ -24,5 +25,24 @@ export class LoginformComponent {
 
   changeToRegestration(){
     this.router.navigate(['/regestration']);
+  }
+
+  email: string = '';
+  password: string = '';
+  public isLoggedIn: boolean = false;
+
+
+  login() {
+    this.as.loginWithUsernameAndPassword(this.email, this.password).subscribe(
+      (resp) => {
+        console.log(resp);
+        localStorage.setItem('token', resp['token']);
+        this.router.navigateByUrl('/chat');
+      },
+      (error) => {
+        alert('Login fehlgeschlagen');
+        console.error(error);
+      }
+    );
   }
 }
