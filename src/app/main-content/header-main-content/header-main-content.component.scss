@@ -54,8 +54,8 @@ section {
 }
 
 .user-box {
-  @include dFlex();
-  max-width: 20%;
+  @include dFlex($g: 12px);
+  // max-width: 20%;
   >span{
     text-align: center;
     font-family: $nunito;
@@ -66,7 +66,9 @@ section {
 
   }
   >img{
-
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
   }
   >button{
     background-color: $BGShadow;

@@ -46,8 +46,8 @@ export class AuthService {
     return this.userSubject.value;
   }
 
-  getToken() {
-    return this.token;
+  getToken(): string | null {
+    return localStorage.getItem('auth_token');
   }
 
   register(
@@ -85,5 +85,9 @@ export class AuthService {
 
   getRegistrationData() {
     return this.registrationData;
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('auth_token', token);
   }
 }
