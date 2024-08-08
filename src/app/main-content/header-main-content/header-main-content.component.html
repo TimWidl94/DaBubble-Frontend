@@ -7,6 +7,10 @@
   <div class="user-box">
     <span>{{user.first_name}} {{ user.last_name}}</span>
     <img src="{{profil_img}}" alt="profilpicture">
-    <button></button>
+    <button (click)="openHeaderMenu()"></button>
+    <div class="fullsize-shadow" *ngIf="menuOpen" (click)="openHeaderMenu()"></div>
+    <div *ngIf="menuOpen" class="header-menu">
+      <button>Profil</button><button (click)="logout()">Log out</button>
+    </div>
   </div>
 </section>

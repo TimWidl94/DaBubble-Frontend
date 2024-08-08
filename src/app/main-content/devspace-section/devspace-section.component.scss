@@ -1,0 +1,182 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex($g: 25px, $ai: start, $jc: start);
+  background-color: $White;
+  margin-left: 16px;
+  margin-bottom: 16px;
+  padding: 32px 30px;
+  flex-direction: column;
+  border-radius: 30px;
+  height: calc(100% - 16px);
+  width: calc(20% - 16px);
+}
+
+.devspace-header {
+  @include dFlex($jc: space-between);
+  border-radius: 30px 40px 40px 30px;
+  width: 100%;
+  height: 60px;
+  > div {
+    @include dFlex($g: 15px);
+    > div {
+      @include dFlex();
+      width: 60px;
+      height: 60px;
+      background-image: url("./../../../assets/icons/devspace_icon.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 40px;
+    }
+    > img {
+      width: 60px;
+      height: 60px;
+    }
+
+    > span {
+      font-family: $nunito;
+      font-weight: 700;
+      line-height: 32.74px;
+      font-size: 24px;
+    }
+  }
+  > button {
+    border: 1px solid transparent;
+    background-color: $White;
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    background-image: url("./../../../assets/icons/edit_square_black.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.15s ease, background-image 0.15s ease;
+    &:hover {
+      cursor: pointer;
+      background-color: $BGShadow;
+      background-image: url("./../../../assets/icons/edit_square_blue.svg");
+    }
+  }
+}
+
+.channel-box {
+  @include dFlex($g: 25px, $ai: start,$jc: space-between);
+  background-color: $White;
+  border-radius: 30px;
+  width: 100%;
+}
+
+.channel-header {
+  @include dFlex($g: 25px, $jc: start);
+  background-color: $White;
+  border-radius: 30px;
+  height: 100%;
+  transition: color 0.15s ease;
+  &:hover{
+    color: $PurpleFont;
+    cursor: pointer;
+  }
+  > div {
+    @include dFlex($g: 10px);
+    > span {
+      font-family: $nunito;
+      font-size: 20px;
+      line-height: 27.28px;
+      font-weight: 700;
+    }
+    >div{
+      background-image: url("./../../../assets/icons/workspaces_icon.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 24px;
+      height: 24px;
+      transition: background-image 0.15s ease;
+    }
+  }
+}
+
+.dropdown-btn {
+  border: 1px solid transparent;
+  background-color: $White;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  background-image: url("./../../../assets/icons/arrow_drop_down.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-color 0.15s ease, background-image 0.15s ease;
+  &:hover{
+    background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
+  }
+}
+
+.new-channel-btn {
+  border: 1px solid transparent;
+  background-color: $White;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  background-image: url("./../../../assets/icons/plus_icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-color 0.15s ease, background-image 0.15s ease;
+  &:hover{
+    cursor: pointer;
+    background-color: $BGShadow;
+    background-image: url("./../../../assets/icons/add_blue.svg");
+  }
+}
+
+.is-hovered-btn{
+  background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
+  cursor: pointer;
+}
+
+.is-hovered-image-workspace{
+  background-image: url("./../../../assets/icons/workspaces_blue.svg") !important;
+}
+
+
+.direct-message-box{
+  @include dFlex($g: 25px, $ai: start,$jc: space-between);
+  background-color: $White;
+  border-radius: 30px;
+  width: 100%;
+}
+
+.channel-message-header{
+  @include dFlex($g: 25px, $jc: start);
+  background-color: $White;
+  border-radius: 30px;
+  height: 100%;
+  transition: color 0.15s ease;
+  &:hover{
+    color: $PurpleFont;
+    cursor: pointer;
+  }
+  > div {
+    @include dFlex($g: 10px);
+    > span {
+      font-family: $nunito;
+      font-size: 20px;
+      line-height: 27.28px;
+      font-weight: 700;
+    }
+    >div{
+      background-image: url("./../../../assets/icons/account_circle_black.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 24px;
+      height: 24px;
+      transition: background-image 0.15s ease;
+    }
+  }
+}
+
+.is-hovered-btn-dm{
+  background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
+  cursor: pointer;
+}
+
+.is-hovered-image-dm{
+  background-image: url("./../../../assets/icons/account_circle_blue.svg") !important;
+}

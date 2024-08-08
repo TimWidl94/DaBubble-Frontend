@@ -9,11 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
   constructor(private http: HttpClient) {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user) {
-      this.userSubject.next(user);
-      this.token = localStorage.getItem('token');
-    }
+    this.getActuellUser();
   }
 
   private registrationData = {
@@ -29,17 +25,32 @@ export class AuthService {
   public user$ = this.userSubject.asObservable();
   private token: string | null = null;
 
+  getActuellUser(){
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user) {
+      this.userSubject.next(user);
+      this.token = localStorage.getItem('token');
+    }
+  }
+
   loginWithUsernameAndPassword(email: string, password: string) {
     const url = `${this.apiUrl}login/`;
     const body = { email: email, password: password };
     return lastValueFrom(this.http.post(url, body));
   }
 
-  logout() {
+  async logout() {
+    const url = `${this.apiUrl}/logout/`;
+    try {
+      await lastValueFrom(this.http.post(url, {}));
+    } catch (e) {
+      console.error('Logout failed', e);
+    }
     this.token = null;
     this.userSubject.next(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('auth_token');
   }
 
   getUser() {
@@ -90,4 +101,6 @@ export class AuthService {
   setToken(token: string) {
     localStorage.setItem('auth_token', token);
   }
+
+
 }

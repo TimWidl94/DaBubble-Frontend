@@ -1,1 +1,32 @@
-<p>devspace-section works!</p>
+<section>
+  <div class="devspace-header">
+    <div>
+      <div>
+        <img src="./../../../assets/icons/devspace_lines_icon.svg" alt="" />
+      </div>
+      <span>Devspace</span>
+    </div>
+    <button></button>
+  </div>
+
+  <div class="channel-box">
+    <div class="channel-header" (mouseover)="onHoverChannel(true)" (mouseout)="onHoverChannel(false)">
+      <button class="dropdown-btn" [class.is-hovered-btn]="isHoveredChannel"></button>
+      <div>
+        <div [class.is-hovered-image-workspace]="isHoveredChannel"></div>
+        <span>Channels</span>
+      </div>
+    </div>
+    <button class="new-channel-btn"></button>
+  </div>
+
+  <div class="direct-message-box">
+    <div class="channel-message-header" (mouseover)="onHoverDm(true)" (mouseout)="onHoverDm(false)">
+      <button class="dropdown-btn" [class.is-hovered-btn-dm]="isHoveredDirectMessage"></button>
+      <div>
+        <div [class.is-hovered-image-dm]="isHoveredDirectMessage"></div>
+        <span>Direktnachrichten</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -78,11 +78,14 @@ export class CreateProfilComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
+      this.onFileChange(event);
       this.imagePath = null;
     } else {
       this.selectedFile = null;
     }
   }
+
+
 
   goToRegestration() {
     this.router.navigate(['/regestration']);
@@ -98,7 +101,8 @@ export class CreateProfilComponent {
   }
 
   triggerFileInput() {
-    document.getElementById('fileUpload')?.click();
+    const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
+    fileInput.click();
   }
 
   username: string = '';

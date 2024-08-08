@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './devspace-section.component.scss'
 })
 export class DevspaceSectionComponent {
+  isHoveredChannel:boolean = false;
+  isHoveredDirectMessage:boolean = false;
 
+  onHoverChannel(isHovered: boolean) {
+    this.isHoveredChannel = isHovered;
+  }
+
+  onHoverDm(isHovered: boolean){
+    this.isHoveredDirectMessage = isHovered;
+  }
 }
