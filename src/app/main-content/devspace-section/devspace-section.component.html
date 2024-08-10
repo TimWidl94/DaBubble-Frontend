@@ -10,8 +10,15 @@
   </div>
 
   <div class="channel-box">
-    <div class="channel-header" (mouseover)="onHoverChannel(true)" (mouseout)="onHoverChannel(false)">
-      <button class="dropdown-btn" [class.is-hovered-btn]="isHoveredChannel"></button>
+    <div
+      class="channel-header"
+      (mouseover)="onHoverChannel(true)"
+      (mouseout)="onHoverChannel(false)"
+    >
+      <button
+        class="dropdown-btn"
+        [class.is-hovered-btn]="isHoveredChannel"
+      ></button>
       <div>
         <div [class.is-hovered-image-workspace]="isHoveredChannel"></div>
         <span>Channels</span>
@@ -21,11 +28,26 @@
   </div>
 
   <div class="direct-message-box">
-    <div class="channel-message-header" (mouseover)="onHoverDm(true)" (mouseout)="onHoverDm(false)">
-      <button class="dropdown-btn" [class.is-hovered-btn-dm]="isHoveredDirectMessage"></button>
+    <div
+      class="channel-message-header"
+      (mouseover)="onHoverDm(true)"
+      (mouseout)="onHoverDm(false)"
+       (click)="showDmUser()"
+    >
+      <button
+        class="dropdown-btn"
+        [class.is-hovered-btn-dm]="isHoveredDirectMessage"
+        [class.transform90deg]="showUser"
+      ></button>
       <div>
         <div [class.is-hovered-image-dm]="isHoveredDirectMessage"></div>
         <span>Direktnachrichten</span>
+      </div>
+    </div>
+    <div class="user-list" *ngIf="showUser">
+      <div *ngFor="let user of users">
+        <img [src]="user.imagepath || user.image" alt="User Image" />
+        <span>{{ user.first_name }} {{ user.last_name }}</span>
       </div>
     </div>
   </div>

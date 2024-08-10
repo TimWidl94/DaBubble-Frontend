@@ -5,12 +5,41 @@
     <img class="search-icon" src="assets/icons/search_icon.svg" alt="" />
   </div>
   <div class="user-box">
-    <span>{{user.first_name}} {{ user.last_name}}</span>
-    <img src="{{profil_img}}" alt="profilpicture">
+    <span>{{ user.first_name }} {{ user.last_name }}</span>
+    <img src="{{ profil_img }}" alt="profilpicture" />
     <button (click)="openHeaderMenu()"></button>
-    <div class="fullsize-shadow" *ngIf="menuOpen" (click)="openHeaderMenu()"></div>
+    <div
+      class="fullsize-shadow"
+      *ngIf="menuOpen || profilOpen"
+      (click)="openHeaderMenu()"
+    ></div>
     <div *ngIf="menuOpen" class="header-menu">
-      <button>Profil</button><button (click)="logout()">Log out</button>
+      <button (click)="openProfil()">Profil</button
+      ><button (click)="logout()">Log out</button>
+    </div>
+    <div class="profil-box" *ngIf="profilOpen">
+      <div class="profil-box-headline">
+        <h3>Profil</h3>
+        <div (click)="openProfil()"></div>
+      </div>
+      <img class="openProfilImg" src="{{ profil_img }}" alt="" />
+      <div class="user-name-and-edit-box">
+        <div class="user-name-box">
+          <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+          <button>Bearbeiten</button>
+        </div>
+        <div class="user-status-box">
+          <div></div>
+          <span>Aktiv</span>
+        </div>
+      </div>
+      <div class="user-email-box">
+        <img src="assets/icons/mail_black.svg" alt="" />
+        <div>
+          <span>E-Mail-Adresse</span
+          ><a href="mailto:{{ user.email }}">{{ user.email }}</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

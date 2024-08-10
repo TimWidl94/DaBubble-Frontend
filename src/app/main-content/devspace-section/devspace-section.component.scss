@@ -10,6 +10,8 @@ section {
   border-radius: 30px;
   height: calc(100% - 16px);
   width: calc(20% - 16px);
+  width: 100%;
+  max-width: 270px;
 }
 
 .devspace-header {
@@ -32,7 +34,6 @@ section {
       width: 60px;
       height: 60px;
     }
-
     > span {
       font-family: $nunito;
       font-weight: 700;
@@ -59,7 +60,7 @@ section {
 }
 
 .channel-box {
-  @include dFlex($g: 25px, $ai: start,$jc: space-between);
+  @include dFlex($g: 25px, $ai: start, $jc: space-between);
   background-color: $White;
   border-radius: 30px;
   width: 100%;
@@ -71,7 +72,7 @@ section {
   border-radius: 30px;
   height: 100%;
   transition: color 0.15s ease;
-  &:hover{
+  &:hover {
     color: $PurpleFont;
     cursor: pointer;
   }
@@ -83,7 +84,7 @@ section {
       line-height: 27.28px;
       font-weight: 700;
     }
-    >div{
+    > div {
       background-image: url("./../../../assets/icons/workspaces_icon.svg");
       background-repeat: no-repeat;
       background-position: center;
@@ -104,7 +105,7 @@ section {
   background-position: center;
   background-repeat: no-repeat;
   transition: background-color 0.15s ease, background-image 0.15s ease;
-  &:hover{
+  &:hover {
     background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
   }
 }
@@ -119,37 +120,63 @@ section {
   background-position: center;
   background-repeat: no-repeat;
   transition: background-color 0.15s ease, background-image 0.15s ease;
-  &:hover{
+  &:hover {
     cursor: pointer;
     background-color: $BGShadow;
     background-image: url("./../../../assets/icons/add_blue.svg");
   }
 }
 
-.is-hovered-btn{
+.is-hovered-btn {
   background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
   cursor: pointer;
 }
 
-.is-hovered-image-workspace{
+.is-hovered-image-workspace {
   background-image: url("./../../../assets/icons/workspaces_blue.svg") !important;
 }
 
-
-.direct-message-box{
-  @include dFlex($g: 25px, $ai: start,$jc: space-between);
+.direct-message-box {
+  @include dFlex($g: 25px, $ai: start, $jc: space-between);
   background-color: $White;
   border-radius: 30px;
   width: 100%;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
-.channel-message-header{
+.direct-message-box::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.direct-message-box::-webkit-scrollbar-thumb {
+  background: $PalePurple;
+  border-radius: 6px;
+  height: 200px;
+}
+
+.direct-message-box::-webkit-scrollbar-thumb:hover {
+  background: $PurpleFont;
+}
+
+.direct-message-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.direct-message-box::-webkit-scrollbar-track:hover {
+  background: #e0e0e0;
+}
+
+.channel-message-header {
   @include dFlex($g: 25px, $jc: start);
   background-color: $White;
   border-radius: 30px;
-  height: 100%;
+  // height: 100%;
   transition: color 0.15s ease;
-  &:hover{
+  position: fixed;
+  &:hover {
     color: $PurpleFont;
     cursor: pointer;
   }
@@ -161,7 +188,7 @@ section {
       line-height: 27.28px;
       font-weight: 700;
     }
-    >div{
+    > div {
       background-image: url("./../../../assets/icons/account_circle_black.svg");
       background-repeat: no-repeat;
       background-position: center;
@@ -172,11 +199,39 @@ section {
   }
 }
 
-.is-hovered-btn-dm{
+.is-hovered-btn-dm {
   background-image: url("./../../../assets/icons/arrow_drop_down_blue.svg");
   cursor: pointer;
 }
 
-.is-hovered-image-dm{
+.is-hovered-image-dm {
   background-image: url("./../../../assets/icons/account_circle_blue.svg") !important;
+}
+
+.user-list {
+  @include dFlex($ai: start, $g: 5px);
+  flex-direction: column;
+  margin-top: 40px;
+  > div {
+    @include dFlex($g:15px);
+    // width: 306px;
+    height: 58px;
+    border-radius: 30px;
+    padding: 0 25px 0 25px;
+    margin-left: 24px;
+    &:hover{
+      background-color: $BGShadow;
+    }
+    >span{
+      text-align: start;
+      font-size: 18px;
+      font-family: $nunito;
+      line-height: 24.55px;
+    }
+    >img{
+      width: 50px;
+      height: 50px;
+      border-radius: 30px;
+    }
+  }
 }

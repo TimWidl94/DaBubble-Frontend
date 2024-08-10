@@ -1,4 +1,24 @@
 <app-header-main-content> </app-header-main-content>
 <section>
-  <app-devspace-section></app-devspace-section>
+  <div
+    *ngIf="devspaceOpen"
+    class="devspace-section-btn"
+    (mouseover)="onHoverDevspace(true)"
+    (mouseout)="onHoverDevspace(false)"
+    (click)="closeDevspace()"
+  >
+    <span>Workspace-Menü schließen</span>
+    <img [src]="menuIconOpen" alt="openDevspaceIcon" />
+  </div>
+  <div
+    *ngIf="!devspaceOpen"
+    class="devspace-section-btn"
+    (mouseover)="onHoverDevspace(true)"
+    (mouseout)="onHoverDevspace(false)"
+    (click)="closeDevspace()"
+  >
+    <span>Workspace-Menü öffnen</span>
+    <img [src]="menuIconClose" alt="openDevspaceIcon" />
+  </div>
+  <app-devspace-section *ngIf="devspaceOpen"></app-devspace-section>
 </section>

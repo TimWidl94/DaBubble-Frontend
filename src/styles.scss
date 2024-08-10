@@ -10,6 +10,9 @@ $PurpleFont: #535af1;
 $Error: #ed1e79;
 $BGShadow: #eceefe;
 $White: #ffffff;
+$Online: #92C83E;
+$LinkBlue: #1381FF;
+
 
 //   fonts     //
 
@@ -187,4 +190,8 @@ body {
       opacity: 1;
     }
   }
+}
+
+.transform90deg{
+  transform: rotate(90deg);;
 }

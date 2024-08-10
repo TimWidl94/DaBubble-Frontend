@@ -9,15 +9,19 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header-main-content.component.html',
-  styleUrl: './header-main-content.component.scss'
+  styleUrl: './header-main-content.component.scss',
 })
 export class HeaderMainContentComponent {
-
-  constructor(private authService: AuthService, private uploadService: UploadService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private uploadService: UploadService,
+    private router: Router
+  ) {}
 
   user: any;
   profil_img: string = 'assets/img/avatar/avatar_empty.svg';
-  menuOpen:boolean = false;
+  menuOpen: boolean = false;
+  profilOpen: boolean = false;
 
   async ngOnInit() {
     this.authService.getActuellUser();
@@ -31,13 +35,15 @@ export class HeaderMainContentComponent {
         if (images.length > 0) {
           for (let i = 0; i < images.length; i++) {
             const userImage = images[i];
-          if (userImage.image && this.user.user_id == userImage.user) {
-            this.profil_img = userImage.image;
-          } else if (userImage.image_path && this.user.user_id == userImage.user) {
-            this.profil_img = userImage.image_path;
+            if (userImage.image && this.user.user_id == userImage.user) {
+              this.profil_img = userImage.image;
+            } else if (
+              userImage.image_path &&
+              this.user.user_id == userImage.user
+            ) {
+              this.profil_img = userImage.image_path;
+            }
           }
-          }
-
         }
       },
       (error) => {
@@ -46,8 +52,8 @@ export class HeaderMainContentComponent {
     );
   }
 
-  openHeaderMenu(){
-    this.menuOpen = !this.menuOpen
+  openHeaderMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 
   async logout() {
@@ -60,4 +66,10 @@ export class HeaderMainContentComponent {
     }
   }
 
+  openProfil(){
+    this.profilOpen = !this.profilOpen;
+    if(this.menuOpen){
+      this.menuOpen = !this.menuOpen;
+    }
+  }
 }
