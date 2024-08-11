@@ -12,7 +12,6 @@ export class UploadService {
 
   uploadImage(formData: FormData): Observable<any> {
     const token = localStorage.getItem('auth_token'); // Hole das Token aus dem LocalStorage
-    console.log('Token:', token); // Überprüfe, ob das Token vorhanden ist
     const headers = new HttpHeaders({
       Authorization: `Token ${token}`
     });

@@ -17,6 +17,7 @@
       <button (click)="openProfil()">Profil</button
       ><button (click)="logout()">Log out</button>
     </div>
+
     <div class="profil-box" *ngIf="profilOpen">
       <div class="profil-box-headline">
         <h3>Profil</h3>
@@ -26,7 +27,7 @@
       <div class="user-name-and-edit-box">
         <div class="user-name-box">
           <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-          <button>Bearbeiten</button>
+          <button (click)="openEditProfilInformation()">Bearbeiten</button>
         </div>
         <div class="user-status-box">
           <div></div>
@@ -39,6 +40,43 @@
           <span>E-Mail-Adresse</span
           ><a href="mailto:{{ user.email }}">{{ user.email }}</a>
         </div>
+      </div>
+    </div>
+
+    <div class="profil-edit-box" *ngIf="profilEditOpen">
+      <div class="profil-box-headline">
+        <h3>Dein Profil bearbeiten</h3>
+      </div>
+      <img class="openProfilImg" src="{{ profil_img }}" alt="" />
+      <div class="user-edit-name-email-box">
+        <div>
+          <img src="assets/icons/account_circle_black.svg" alt="" />
+          <span>Vollständiger Name</span>
+        </div>
+
+        <input
+          class="edit-input"
+          type="text"
+          [(ngModel)]="fullName"
+          name="fullName"
+        />
+      </div>
+      <div class="user-edit-name-email-box">
+        <div>
+          <img src="assets/icons/mail_black.svg" alt="" />
+          <span>E-Mail-Adresse</span>
+        </div>
+
+        <input
+          class="edit-input"
+          type="email"
+          [(ngModel)]="user.email"
+          name="email"
+        />
+      </div>
+      <div class="btn-box">
+        <button class="btn-white">Abbrechen</button
+        ><button class="btn-purple" (click)="editUserInformation()">Speichern</button>
       </div>
     </div>
   </div>

@@ -4,15 +4,15 @@
 
 $Purple: #444df2;
 $PalePurple: #797ef3;
-$lightPurple: #ADB0D9;
+$lightPurple: #adb0d9;
 $Gray: #686868;
 $PurpleFont: #535af1;
 $Error: #ed1e79;
 $BGShadow: #eceefe;
 $White: #ffffff;
-$Online: #92C83E;
-$LinkBlue: #1381FF;
-
+$Online: #92c83e;
+$LinkBlue: #1381ff;
+$InputBorder: #ADB0D9;
 
 //   fonts     //
 
@@ -106,19 +106,19 @@ $openSans: "Open Sans";
 /* figtree-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Figtree';
+  font-family: "Figtree";
   font-style: normal;
   font-weight: 400;
-  src: url('assets/fonts/figtree-v5-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("assets/fonts/figtree-v5-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* open-sans-regular - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: 400;
-  src: url('assets/fonts/open-sans-v40-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url("assets/fonts/open-sans-v40-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 //    General    //
@@ -128,7 +128,7 @@ $openSans: "Open Sans";
   justify-content: $jc;
   align-items: $ai;
   gap: $g;
-};
+}
 
 body {
   margin: 0;
@@ -186,12 +186,13 @@ body {
     background-color: $Gray;
     border-color: $Gray;
     cursor: auto;
-    &:hover{
+    &:hover {
       opacity: 1;
     }
   }
 }
 
-.transform90deg{
-  transform: rotate(90deg);;
+
+.transform90deg {
+  transform: rotate(90deg);
 }

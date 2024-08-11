@@ -29,24 +29,31 @@ export class DevspaceSectionComponent {
       this.userImages = userImages;
       this.setUserImageToUser();
     });
+
+    this.userService.allUser$.subscribe((users) => { // Abonniere alle Benutzer
+      this.users = users;
+      if (this.users) {
+        this.loadUserImages(); // Lade Benutzerbilder neu, falls nötig
+      }
+    });
   }
 
-  loadUsers() {
-    if (this.userService.getUsers().length === 0) {
-      this.userService.fetchUsers().subscribe((data) => {
-        this.users = data;
-        console.log(this.users);
-      });
-    } else {
-      this.users = this.userService.getUsers();
-    }
+  loadUser(){
+    this.userService.allUser$.subscribe((users) => { // Aboniere die Aktuellen allUsers Daten, um aktuelle Werte zu erhalten.
+      this.users = users;
+      // console.log('Aktueller Benutzer:', this.users);
+      if (this.users) {
+        console.log('Geladen in Devspace section', this.users)
+        this.loadUserImages();
+      }
+    });
   }
+
 
   loadUserImages() {
     if (this.userService.getUsersImages().length === 0) {
       this.userService.fetchUserImage().subscribe((data) => {
         this.userImages = data;
-        console.log(this.userImages);
         this.setUserImageToUser();
       });
     } else {
@@ -73,7 +80,6 @@ export class DevspaceSectionComponent {
         if(userid == userImgId){
           user.imagepath = userImage.image_path;
           user.image = userImage.image;
-          console.log('nach Bild zuweisung:',this.users)
         }
       }
     }
