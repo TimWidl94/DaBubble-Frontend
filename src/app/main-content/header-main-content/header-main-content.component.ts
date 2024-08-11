@@ -18,7 +18,7 @@ export class HeaderMainContentComponent {
     private authService: AuthService,
     private uploadService: UploadService,
     private router: Router,
-    private userService: UsersService,
+    private userService: UsersService
   ) {}
 
   user: any;
@@ -47,26 +47,18 @@ export class HeaderMainContentComponent {
   }
 
   loadUserImages() {
-    this.uploadService.getUserImages().subscribe(
-      (images: any) => {
-        if (images.length > 0) {
-          for (let i = 0; i < images.length; i++) {
-            const userImage = images[i];
-            if (userImage.image && this.user.id == userImage.user) {
-              this.profil_img = userImage.image;
-            } else if (
-              userImage.image_path &&
-              this.user.user_id == userImage.user
-            ) {
-              this.profil_img = userImage.image_path;
-            }
-          }
+    this.userService.userImage$.subscribe((image) => {
+      if (image) {
+        if (image.image) {
+          this.profil_img = image.image;
+        } else {
+          this.profil_img = image.image_path;
         }
-      },
-      (error) => {
-        console.error('Error loading user images', error);
       }
-    );
+      if (this.profil_img) {
+        console.log('abboniertes Profilimg:', this.profil_img);
+      }
+    });
   }
 
   openHeaderMenu() {
@@ -95,6 +87,10 @@ export class HeaderMainContentComponent {
     this.profilEditOpen = !this.profilEditOpen;
     this.fullName = this.getFullName();
     console.log(this.fullName);
+  }
+
+  closeEditProfilInformation() {
+    this.profilEditOpen = !this.profilEditOpen;
   }
 
   async editUserInformation() {

@@ -11,6 +11,7 @@ export class UsersService {
   constructor(private http: HttpClient) {
     this.loadUserFromToken();
     this.loadAllUser();
+    this.loadUserImage();
    }
 
   private users: any[] = [];
@@ -22,6 +23,9 @@ export class UsersService {
 
   private allUserSubject = new BehaviorSubject<any>(null);
   public allUser$ = this.allUserSubject.asObservable();
+
+  private userImageSubject = new BehaviorSubject<any>(null);
+  public userImage$ = this.userImageSubject.asObservable();
 
   private token: string | null = null;
 
@@ -73,6 +77,23 @@ export class UsersService {
     } else {
       console.error('Kein Token vorhanden. Benutzer ist nicht authentifiziert.');
       this.userSubject.next(null);
+    }
+  }
+
+  loadUserImage(){
+    const token = localStorage.getItem('token');
+    if (token){
+      const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+      this.http.get<any>(`${this.apiUrl}/activeUserImage/`, {headers}).subscribe(
+        (image) => {
+          this.userImageSubject.next(image);
+          console.log('userimage:', image)
+        },
+        (e) => {
+          console.error('Fehler beim laden des User Images', e)
+          this.userImageSubject.next(null);
+        }
+      )
     }
   }
 
