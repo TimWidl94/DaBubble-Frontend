@@ -1,20 +1,30 @@
 @import "./../../styles.scss";
 
 body {
-  width: 100vw;
-  height: 100vh;
+  // width: 100vw;
+  // height: 100vh;
   background-color: $BGShadow;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-section {
-  height: 80%;
+app-header-main-content {
+  width: 100%;
+  flex: 0 0 auto; /* Header nimmt nur so viel Platz wie nötig */
+}
+
+.main-content {
+  flex: 1; /* Nimmt den verbleibenden Platz ein */
+  display: flex;
+  height: calc(100% - /* Höhe des Headers */ 120px); /* Passe die Höhe an */
 }
 
 .devspace-section-btn {
   @include dFlex($g: 10px);
   position: absolute;
   left: 0;
-  // height: calc(347px - 2 * 23px);
   width: calc(60px - 2 * 14px);
   writing-mode: tb-rl;
   transform: rotate(-180deg);
@@ -27,9 +37,26 @@ section {
   font-size: 20px;
   line-height: 24px;
   top: 50%;
-  &:hover{
+  &:hover {
     font-weight: 700;
     color: $PurpleFont;
   }
+}
 
+.main-sections {
+  display: flex;
+  width: 100%;
+  // height: 100%;
+}
+
+app-devspace-section {
+  flex: 0 0 25%; /* Nimmt 25% der Breite ein */
+  max-width: 30%; /* Begrenze die maximale Breite */
+  height: 100%;
+}
+
+app-chat-section {
+  // flex: 0 0 75%;
+  // flex: 1; /* Nimmt den restlichen Platz ein */
+  width: 65%;
 }

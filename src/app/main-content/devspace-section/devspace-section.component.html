@@ -6,7 +6,7 @@
       </div>
       <span>Devspace</span>
     </div>
-    <button></button>
+    <button (click)="newChannelOpen()"></button>
   </div>
 
   <div class="channel-box">
@@ -52,3 +52,6 @@
     </div>
   </div>
 </section>
+
+<app-create-new-channel *ngIf="openCreateChannel"></app-create-new-channel>
+
