@@ -1,6 +1,6 @@
 <section>
-  <div class="new-channel-box">
-    <form action="">
+  <div class="new-channel-box" *ngIf="openChannelBox">
+    <form action="goToEditUser()">
       <div class="header-box">
         <h3>Channel erstellen</h3>
         <div (click)="closeCreateChannelBox()"></div>
@@ -14,16 +14,118 @@
       <div class="input-box">
         <h4>Channel-Name</h4>
         <div>
-          <img src="assets/icons/tag_gray.svg" alt="">
-          <input type="text" placeholder="z.B. Kooperationsprojekte" />
+          <img src="assets/icons/tag_gray.svg" alt="" />
+          <input
+            type="text"
+            placeholder="z.B. Kooperationsprojekte"
+            class="input-transparent"
+            [(ngModel)]="channelName"
+            name="channelName"
+          />
         </div>
       </div>
       <div class="input-box">
         <h4 class="optional-text">Beschreibung</h4>
-        <textarea name="" id="" placeholder="Dein Text hier"></textarea>
+        <textarea
+          name=""
+          id=""
+          placeholder="Dein Text hier"
+          [(ngModel)]="channelDescription"
+          name="channelDescription"
+        ></textarea>
       </div>
       <div class="btn-box">
-        <button class="btn-purple">Erstellen</button>
+        <button class="btn-purple" (click)="goToEditUser()">Erstellen</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="edit-user-box" *ngIf="openEditUserBox">
+    <form action="">
+      <div class="header-box">
+        <h3>Leute hinzufügen</h3>
+        <div (click)="closeCreateChannelBox()"></div>
+      </div>
+      <div class="checkbox-container">
+        <input
+          type="checkbox"
+          checked
+          [(ngModel)]="inputAllMember"
+          name="inputAllMember"
+        />
+        <label for="inputAllMember" class="custom-checkbox">
+          <span
+            class="checkbox-symbol"
+            (click)="activateSearchSpecificUser()"
+          ></span>
+          <div>
+            <span class="edit-people-text">Alle Mitglieder von </span>
+            <span class="edit-people-text blue-text">OfficeTeam</span>
+            <span class="edit-people-text">hinzufügen</span>
+          </div>
+        </label>
+      </div>
+      <div class="checkbox-container">
+        <input
+          type="checkbox"
+          [(ngModel)]="inputSpecificUsers"
+          name="inputSpecificUsers"
+        />
+        <label for="inputSpecificUsers" class="custom-checkbox">
+          <span
+            class="checkbox-symbol"
+            (click)="activateSearchSpecificUser()"
+          ></span>
+          <span class="edit-people-text">Bestimmte Leute hinzufügen</span>
+        </label>
+      </div>
+
+      <div *ngIf="selectedUser.length >= 1" class="selected-user-box">
+        <div *ngFor="let user of selectedUser; let i = index">
+          <img [src]="user.imagepath || user.image" alt="User Image" />
+          <span>{{ user.first_name }} {{ user.last_name }}</span>
+          <div></div>
+        </div>
+      </div>
+
+      <div *ngIf="inputSpecificUsers" class="input-user-box">
+        <input
+          type="text"
+          class="input-transparent padding1820"
+          placeholder="Name eingeben"
+          [(ngModel)]="searchUser"
+          name="searchUser"
+          (keyup)="searchSpecificUser()"
+        />
+        <div
+          class="adding-user-box"
+          *ngIf="ifUserIsFind"
+          [ngStyle]="{
+            'top.px': topPosition,
+            'max-height.px': selectedUser.length >= 4 ? 260 : 320
+          }"
+        >
+          <div
+            *ngFor="let user of searchedUser; let i = index"
+            [ngStyle]="{
+              'margin-top.px': i === 0 && searchedUser.length > 5 ? 150 : 0
+            }"
+            (click)="addSelectedUser(user)"
+          >
+            <img [src]="user.imagepath || user.image" alt="User Image" />
+            <span>{{ user.first_name }} {{ user.last_name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-box">
+        <button
+          class="btn-purple"
+          (click)="createNewChannel()"
+          [disabled]="btnDisabled"
+        >
+          Erstellen
+        </button>
       </div>
     </form>
   </div>

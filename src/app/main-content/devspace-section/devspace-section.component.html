@@ -6,7 +6,7 @@
       </div>
       <span>Devspace</span>
     </div>
-    <button (click)="newChannelOpen()"></button>
+    <button></button>
   </div>
 
   <div class="channel-box">
@@ -24,7 +24,7 @@
         <span>Channels</span>
       </div>
     </div>
-    <button class="new-channel-btn"></button>
+    <button class="new-channel-btn" (click)="newChannelOpen()"></button>
   </div>
 
   <div class="direct-message-box">
@@ -32,7 +32,7 @@
       class="channel-message-header"
       (mouseover)="onHoverDm(true)"
       (mouseout)="onHoverDm(false)"
-       (click)="showDmUser()"
+      (click)="showDmUser()"
     >
       <button
         class="dropdown-btn"
@@ -54,4 +54,3 @@
 </section>
 
 <app-create-new-channel *ngIf="openCreateChannel"></app-create-new-channel>
-

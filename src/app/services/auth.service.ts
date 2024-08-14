@@ -25,7 +25,7 @@ export class AuthService {
   public user$ = this.userSubject.asObservable();
   private token: string | null = null;
 
-  getActuellUser(){
+  getActuellUser() {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
     if (user) {
       this.userSubject.next(user);
@@ -101,7 +101,6 @@ export class AuthService {
   setToken(token: string) {
     localStorage.setItem('auth_token', token);
   }
-
 
   updateUser(user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${user.id}`, user);
