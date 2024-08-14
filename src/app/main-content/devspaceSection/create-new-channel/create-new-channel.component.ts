@@ -164,7 +164,7 @@ export class CreateNewChannelComponent {
     if (selectedUserBox) {
       const height = selectedUserBox.clientHeight;
       console.log('Höhe:', height);
-      this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert, den du anpassen kannst
+      this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert
     }
   }
 }
