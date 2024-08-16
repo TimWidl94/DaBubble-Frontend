@@ -36,9 +36,7 @@ export class HeaderMainContentComponent {
   async ngOnInit() {
     this.userService.user$.subscribe((user) => {
       this.user = user;
-      // console.log('Aktueller Benutzer:', this.user);
       if (this.user) {
-        console.log('Aktueller Benutzer:', this.user);
         this.loadUserImages();
       }
     });
@@ -54,9 +52,6 @@ export class HeaderMainContentComponent {
         } else {
           this.profil_img = image.image_path;
         }
-      }
-      if (this.profil_img) {
-        console.log('abboniertes Profilimg:', this.profil_img);
       }
     });
   }
@@ -86,7 +81,6 @@ export class HeaderMainContentComponent {
     this.openProfil();
     this.profilEditOpen = !this.profilEditOpen;
     this.fullName = this.getFullName();
-    console.log(this.fullName);
   }
 
   closeEditProfilInformation() {
@@ -103,7 +97,6 @@ export class HeaderMainContentComponent {
     };
     this.authService.updateUser(updatedUser).subscribe(
       (response) => {
-        console.log('Benutzer aktualisiert:', response);
         this.userService.loadUserFromToken(); // Lade die aktualisierten Benutzerdaten neu
         this.userService.loadAllUser(); // Optional: Wenn du alle Benutzer aktualisieren möchtest
         this.profilEditOpen = false;

@@ -43,7 +43,6 @@ export class CreateNewChannelComponent {
   ngOnInit() {
     this.userService.allUser$.subscribe((users) => {
       this.allUser = users;
-      console.log('Officeteam Member:', this.allUser);
     });
     this.calculateTopPosition();
   }
@@ -60,11 +59,12 @@ export class CreateNewChannelComponent {
   goToEditUser() {
     this.openChannelBox = !this.openChannelBox;
     this.openEditUserBox = !this.openEditUserBox;
+    this.checkEnableBtn();
   }
 
   searchSpecificUser() {
     let searchInput = this.searchUser.trim().toLowerCase();
-
+    this.calculateTopPosition();
     for (let i = 0; i < this.allUser.length; i++) {
       const user = this.allUser[i];
       const isUserSelected = this.selectedUser.some((u) => u.id === user.id);
@@ -87,19 +87,12 @@ export class CreateNewChannelComponent {
     if (this.searchedUser.length === 0) {
       this.ifUserIsFind = false;
     }
-    console.log('gefundene Nutzer:', this.searchedUser);
   }
 
   activateSearchSpecificUser() {
     this.inputAllMember = !this.inputAllMember;
     this.inputSpecificUsers = !this.inputSpecificUsers;
-    this.btnDisabled = !this.btnDisabled;
-  }
-
-  createNewChannel() {
-    console.log(this.channelName);
-    console.log(this.channelDescription);
-    console.log(this.allUser);
+    this.checkEnableBtn();
   }
 
   setUserImageToUser() {
@@ -130,15 +123,16 @@ export class CreateNewChannelComponent {
     }
   }
 
-  addSelectedUser(user: any[]) {
+  async addSelectedUser(user: any[]) {
     if (!this.selectedUser.includes(user)) {
-      this.selectedUser.push(user);
+      await this.selectedUser.push(user);
       this.calculateTopPosition();
-      console.log('selected User hinzugefügt:', this.selectedUser);
+      this.ifUserIsFind = false;
+      this.searchUser = '';
+      this.checkEnableBtn();
       let i = this.searchedUser.indexOf(user);
       if (i !== -1) {
         this.searchedUser.splice(i, 1);
-        console.log('User aus searchedUser entfernt:', this.searchedUser);
         if (this.searchedUser.length == 0) {
           this.ifUserIsFind = false;
         }
@@ -148,7 +142,7 @@ export class CreateNewChannelComponent {
 
   calculateTop(length: number) {
     if (length === 0) {
-      return 234;
+      return 290;
     } else if (length > 0 && length <= 3) {
       return 300;
     } else if (length > 3 && length <= 9) {
@@ -163,8 +157,64 @@ export class CreateNewChannelComponent {
     const selectedUserBox = document.querySelector('.selected-user-box');
     if (selectedUserBox) {
       const height = selectedUserBox.clientHeight;
-      console.log('Höhe:', height);
       this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert
     }
+  }
+
+  removeSelectedUser(user: any[]) {
+    let i = this.selectedUser.indexOf(user);
+    if (i !== -1) {
+      this.selectedUser.splice(i, 1);
+      this.calculateTopPosition();
+      this.checkEnableBtn();
+    }
+  }
+
+  checkEnableBtn() {
+    if (this.selectedUser.length >= 1) {
+      this.btnDisabled = true;
+    } else if (this.inputAllMember){
+      this.btnDisabled = true;
+    } else { this.btnDisabled = false}
+  }
+
+  //// create new Channel functions  ////
+
+  createNewChannel(): void {
+    let channelData  =  this.getChannelData();
+
+    // Debugging in der Konsole
+    console.log('Channel Data:', channelData);
+
+    // Senden der Daten an den Service
+    this.channelService.createChannel(channelData).subscribe(
+      (response) => {
+        console.log('Channel erfolgreich erstellt:', response);
+        this.channelService.setcreateChannelScreen(false);
+      },
+      (error) => {
+        console.error('Fehler beim Erstellen des Channels:', error);
+      }
+    );
+  }
+
+  getChannelData() {
+    let channelMembers = [];
+
+    if (this.inputAllMember) {
+      // Wenn inputAllMember true ist, verwende alle Benutzer
+      channelMembers = this.allUser.map((user) => user.id);
+    } else if (this.selectedUser.length > 0) {
+      // Wenn inputAllMember false ist und mindestens ein Benutzer ausgewählt wurde
+      channelMembers = this.selectedUser.map((user) => user.id);
+    }
+
+    const channelData = {
+      channelName: this.channelName,
+      channelDescription: this.channelDescription,
+      channelMembers: channelMembers,
+    };
+
+    return channelData;
   }
 }

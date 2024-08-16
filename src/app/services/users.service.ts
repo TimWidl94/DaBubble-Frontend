@@ -55,7 +55,6 @@ export class UsersService {
       (users) => {
         this.allUserSubject.next(users);
         this.fetchUsers();
-        // console.log('Alle Nutzer:', users)
       }
     )
   }
@@ -67,7 +66,6 @@ export class UsersService {
       this.http.get<any>(`${this.apiUrl}/user/`, { headers }).subscribe(
         (user) => {
           this.userSubject.next(user); // Setze die neuesten Benutzerdaten
-          // console.log('Benutzerdaten geladen und gespeichert:', user);
         },
         (error) => {
           console.error('Fehler beim Laden des Benutzers:', error);
@@ -87,7 +85,6 @@ export class UsersService {
       this.http.get<any>(`${this.apiUrl}/activeUserImage/`, {headers}).subscribe(
         (image) => {
           this.userImageSubject.next(image);
-          console.log('userimage:', image)
         },
         (e) => {
           console.error('Fehler beim laden des User Images', e)

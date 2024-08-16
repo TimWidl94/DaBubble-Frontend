@@ -16,23 +16,31 @@ export class DevspaceSectionComponent {
   constructor(
     private userService: UsersService,
     private cdRef: ChangeDetectorRef,
-    private channelService: ChannelService,
+    private channelService: ChannelService
   ) {}
 
   isHoveredChannel: boolean = false;
   isHoveredDirectMessage: boolean = false;
+  isHoveredNewChannel:boolean = false;
   users: any[] = [];
   userImages: any[] = [];
-  showUser: boolean = true;
+  showUser: boolean = false;
   openCreateChannel: boolean = false;
+  channels: any[] = [];
+
+  channelsOpen:boolean = false;
+  activeBox: HTMLElement | null = null;
 
   ngOnInit(): void {
     forkJoin({
       users: this.userService.fetchUsers(),
       userImages: this.userService.fetchUserImage(),
-    }).subscribe(({ users, userImages }) => {
+      channels: this.channelService.fetchAllChannel(),
+    }).subscribe(({ users, userImages, channels }) => {
       this.users = users;
       this.userImages = userImages;
+      this.channels = channels;
+      console.log('Folgende Channels wurden geladen:', this.channels);
       this.setUserImageToUser();
       this.loadNewChannelOpen();
     });
@@ -44,19 +52,28 @@ export class DevspaceSectionComponent {
         this.loadUserImages(); // Lade Benutzerbilder neu, falls nötig
       }
     });
+
+    // this.channelService.allChannel$.subscribe((channels) => {
+      // this.channels = channels;
+      // if(this.channels){
+        // console.log('Geladene Channel', this.channels)
+      // }
+    // })
+
   }
 
   newChannelOpen() {
-    this.channelService.setcreateChannelScreen(true)
+    this.channelService.setcreateChannelScreen(true);
   }
 
-  loadNewChannelOpen(){
+  loadNewChannelOpen() {
     this.channelService.createChannel$.subscribe((value: boolean | null) => {
       if (value !== null) {
         this.openCreateChannel = value; // Reagiere auf die Änderung
       }
     });
   }
+
 
   loadUser() {
     this.userService.allUser$.subscribe((users) => {
@@ -90,6 +107,10 @@ export class DevspaceSectionComponent {
     this.isHoveredDirectMessage = isHovered;
   }
 
+  onHoverNewChannel(isHovered: boolean){
+    this.isHoveredNewChannel = isHovered;
+  }
+
   setUserImageToUser() {
     for (let i = 0; i < this.users.length; i++) {
       const user = this.users[i];
@@ -108,5 +129,27 @@ export class DevspaceSectionComponent {
 
   showDmUser() {
     this.showUser = !this.showUser;
+  }
+
+  toggleChannels(){
+    this.channelsOpen = !this.channelsOpen
+  }
+
+  openChannel(channelId: number){
+    console.log('geöffneter Channel:', channelId);
+    this.channelService.loadSelectedChannel(channelId);
+  }
+
+
+  onBoxClick(event: MouseEvent): void {
+    const target = event.currentTarget as HTMLElement;
+
+    if (this.activeBox) {
+      this.activeBox.classList.remove('active');
+    }
+
+    target.classList.add('active');
+
+    this.activeBox = target;
   }
 }

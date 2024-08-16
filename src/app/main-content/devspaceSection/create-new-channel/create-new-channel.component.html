@@ -70,6 +70,7 @@
           type="checkbox"
           [(ngModel)]="inputSpecificUsers"
           name="inputSpecificUsers"
+          (click)="checkEnableBtn()"
         />
         <label for="inputSpecificUsers" class="custom-checkbox">
           <span
@@ -84,7 +85,7 @@
         <div *ngFor="let user of selectedUser; let i = index">
           <img [src]="user.imagepath || user.image" alt="User Image" />
           <span>{{ user.first_name }} {{ user.last_name }}</span>
-          <div></div>
+          <div (click)="removeSelectedUser(user)"></div>
         </div>
       </div>
 
@@ -96,19 +97,19 @@
           [(ngModel)]="searchUser"
           name="searchUser"
           (keyup)="searchSpecificUser()"
+          autocomplete="off"
         />
         <div
           class="adding-user-box"
           *ngIf="ifUserIsFind"
           [ngStyle]="{
             'top.px': topPosition,
-            'max-height.px': selectedUser.length >= 4 ? 260 : 320
           }"
         >
           <div
             *ngFor="let user of searchedUser; let i = index"
             [ngStyle]="{
-              'margin-top.px': i === 0 && searchedUser.length > 5 ? 150 : 0
+              'margin-top.px': i === 0 && searchedUser.length >= 5 ? calculateTop(i) : 0
             }"
             (click)="addSelectedUser(user)"
           >
@@ -122,7 +123,7 @@
         <button
           class="btn-purple"
           (click)="createNewChannel()"
-          [disabled]="btnDisabled"
+          [disabled]="!btnDisabled"
         >
           Erstellen
         </button>

@@ -8,7 +8,7 @@ section {
   padding: 32px 30px;
   flex-direction: column;
   border-radius: 30px;
-  height: calc(90% - 16px);
+  height: calc(100% - 16px - 2* 32px);
   width: calc(20% - 16px);
   width: 100%;
   max-width: 270px;
@@ -60,10 +60,62 @@ section {
 }
 
 .channel-box {
-  @include dFlex($g: 25px, $ai: start, $jc: space-between);
+  @include dFlex($g: 20px, $ai: start, $jc: space-between);
   background-color: $White;
   border-radius: 30px;
   width: 100%;
+  flex-direction: column;
+}
+
+.channel-header-box {
+  @include dFlex($g: 25px, $jc: space-between);
+  width: 100%;
+}
+
+.channels {
+  @include dFlex($ai: start, $g: 20px);
+  width: 100%;
+  flex-direction: column;
+}
+
+.single-channel-box {
+  @include dFlex($g: 10px);
+  margin-left: 35px;
+  padding: 4px 20px;
+  border-radius: 20px;
+  height: 25px;
+  > div {
+    background-image: url("./../../../assets/icons/tag_black.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+  }
+  > span {
+    font-family: $nunito;
+    font-size: 18px;
+    line-height: 24.55px;
+    font-weight: 500;
+  }
+}
+
+.single-channel-box:hover {
+  background-color: $BGShadow;
+  cursor: pointer;
+  >div{
+    background-image: url("./../../../assets/icons/tag_blue.svg");
+  }
+}
+
+.active{
+  background-color: $BGShadow;
+  color: $PurpleFont;
+  >div{
+    background-image: url("./../../../assets/icons/tag_blue.svg");
+  }
+  >span{
+    font-weight: 700;
+  }
 }
 
 .channel-header {
@@ -213,25 +265,53 @@ section {
   flex-direction: column;
   margin-top: 40px;
   > div {
-    @include dFlex($g:15px);
+    @include dFlex($g: 15px);
     // width: 306px;
     height: 58px;
     border-radius: 30px;
     padding: 0 25px 0 25px;
     margin-left: 24px;
-    &:hover{
+    &:hover {
       background-color: $BGShadow;
     }
-    >span{
+    > span {
       text-align: start;
       font-size: 18px;
       font-family: $nunito;
       line-height: 24.55px;
     }
-    >img{
+    > img {
       width: 50px;
       height: 50px;
       border-radius: 30px;
     }
   }
+}
+
+.add-new-channel-box {
+  @include dFlex($g: 10px, $jc: start);
+  padding: 4px 10px;
+  margin-left: 47px;
+  &:hover {
+    color: $PurpleFont;
+    cursor: pointer;
+  }
+  > div {
+    background-image: url("./../../../assets/icons/add_circle_black.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+  }
+  > span {
+    font-family: $nunito;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.55px;
+  }
+}
+
+.is-hovered-image-add-circle {
+  background-image: url("./../../../assets/icons/add_circle_blue.svg") !important;
+  transform: scale(1.05);
 }

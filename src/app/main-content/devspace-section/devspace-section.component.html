@@ -10,21 +10,44 @@
   </div>
 
   <div class="channel-box">
-    <div
-      class="channel-header"
-      (mouseover)="onHoverChannel(true)"
-      (mouseout)="onHoverChannel(false)"
-    >
-      <button
-        class="dropdown-btn"
-        [class.is-hovered-btn]="isHoveredChannel"
-      ></button>
-      <div>
-        <div [class.is-hovered-image-workspace]="isHoveredChannel"></div>
-        <span>Channels</span>
+    <div class="channel-header-box">
+      <div
+        class="channel-header"
+        (mouseover)="onHoverChannel(true)"
+        (mouseout)="onHoverChannel(false)"
+        (click)="toggleChannels()"
+      >
+        <button
+          class="dropdown-btn"
+          [class.is-hovered-btn]="isHoveredChannel"
+          [class.transform90deg]="channelsOpen"
+        ></button>
+        <div>
+          <div [class.is-hovered-image-workspace]="isHoveredChannel"></div>
+          <span>Channels</span>
+        </div>
+      </div>
+      <button class="new-channel-btn" (click)="newChannelOpen()"></button>
+    </div>
+    <div class="channels" *ngIf="channelsOpen">
+      <div
+        *ngFor="let channel of channels"
+        class="single-channel-box"
+        (click)="onBoxClick($event); openChannel(channel.id)"
+      >
+        <div></div>
+        <span>{{ channel.channelName }}</span>
+      </div>
+      <div
+        class="add-new-channel-box"
+        (mouseover)="onHoverNewChannel(true)"
+        (mouseout)="onHoverNewChannel(false)"
+        (click)="newChannelOpen()"
+      >
+        <div [class.is-hovered-image-add-circle]="isHoveredNewChannel"></div>
+        <span>Channel hinzufügen</span>
       </div>
     </div>
-    <button class="new-channel-btn" (click)="newChannelOpen()"></button>
   </div>
 
   <div class="direct-message-box">

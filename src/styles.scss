@@ -196,3 +196,20 @@ body {
 .transform90deg {
   transform: rotate(90deg);
 }
+
+@mixin btn-icon-styles($background-image) {
+  border: none;
+  background-color: $White;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url($background-image);
+  border-radius: 20px;
+}
+
+@mixin btn-icon-hover($background-image){
+  background-color: $BGShadow;
+  background-image: url($background-image);
+  cursor: pointer;
+}

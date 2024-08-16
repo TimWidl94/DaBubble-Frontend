@@ -1,16 +1,33 @@
 <section>
-  <div class="chat-box">
+  <div class="chat-box" *ngIf="channel">
     <div class="chat-header-box">
       <div>
         <img src="assets/icons/tag_black.svg" alt="" />
-        <span>Entwicklerteam</span>
+        <span>{{ channel.channelName }}</span>
         <img src="assets/icons/keyboard_arrow_down.svg" alt="" />
       </div>
       <div>
-        <div class="users-avatars-box">
-
-        </div>
+        <div class="users-avatars-box"></div>
         <div class="adding-user-btn"></div>
+      </div>
+    </div>
+
+    <div class="chat-messages-box"></div>
+
+    <div class="chat-new-message-box">
+      <textarea
+        name=""
+        id=""
+        placeholder="Nachricht an #{{ channel.channelName }}"
+      ></textarea>
+      <div>
+        <div>
+          <button class="btn-add"></button>
+          <span></span>
+          <button class="btn-smiley"></button>
+          <button class="btn-email"></button>
+        </div>
+        <button class="btn-sendmessage"></button>
       </div>
     </div>
   </div>
