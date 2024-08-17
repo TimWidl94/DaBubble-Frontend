@@ -52,7 +52,6 @@ export class ChannelService {
       //richtige channel id hinzufügen
       (channel) => {
         this.selectedChannelSubject.next(channel);
-        console.log('geladener Channel in channel.service', channel);
       },
       (error) => {
         console.error('Fehler beim Laden des Channels:', error);

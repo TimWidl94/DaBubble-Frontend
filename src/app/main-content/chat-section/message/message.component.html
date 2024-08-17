@@ -1,0 +1,11 @@
+<div class="chat-messages-box">
+    <div class="left-content-box"><img src="{{message.user?.image || message.user?.imagepath}}" alt=""></div>
+    <div class="right-content-box">
+      <div class="message-header-box">
+        <span class="message-header-name">{{message.user?.first_name}} {{message.user?.last_name}}</span>
+        <span class="message-header-time">{{ getTimeFromTimestamp() }}</span>
+      </div>
+      <div class="message-content-box">{{message.content}}</div>
+      <div class="message-reaction-box"></div>
+    </div>
+</div>

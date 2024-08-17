@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UploadService } from '../../services/upload.service';
 import { CommonModule } from '@angular/common';
@@ -11,9 +11,9 @@ import { UsersService } from '../../services/users.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './header-main-content.component.html',
-  styleUrl: './header-main-content.component.scss',
+  styleUrls: ['./header-main-content.component.scss'],
 })
-export class HeaderMainContentComponent {
+export class HeaderMainContentComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private uploadService: UploadService,
@@ -29,15 +29,15 @@ export class HeaderMainContentComponent {
   fullName: string = '';
   first_name: string = '';
   last_name: string = '';
-
   name: string = '';
   email: string = '';
 
-  async ngOnInit() {
+  ngOnInit() {
     this.userService.user$.subscribe((user) => {
       this.user = user;
       if (this.user) {
         this.loadUserImages();
+        this.fullName = this.getFullName(); // Voller Name initialisieren
       }
     });
     this.authService.getActuellUser();
@@ -47,11 +47,7 @@ export class HeaderMainContentComponent {
   loadUserImages() {
     this.userService.userImage$.subscribe((image) => {
       if (image) {
-        if (image.image) {
-          this.profil_img = image.image;
-        } else {
-          this.profil_img = image.image_path;
-        }
+        this.profil_img = image.image ? image.image : image.image_path;
       }
     });
   }
@@ -98,11 +94,11 @@ export class HeaderMainContentComponent {
     this.authService.updateUser(updatedUser).subscribe(
       (response) => {
         this.userService.loadUserFromToken(); // Lade die aktualisierten Benutzerdaten neu
-        this.userService.loadAllUser(); // Optional: Wenn du alle Benutzer aktualisieren möchtest
+        this.userService.loadAndCombineUsersAndImages(); // Optional: Wenn du alle Benutzer aktualisieren möchtest
         this.profilEditOpen = false;
       },
       (e) => {
-        console.error('Updating user dont work', e);
+        console.error('Fehler beim Aktualisieren des Benutzers', e);
       }
     );
   }
@@ -114,6 +110,6 @@ export class HeaderMainContentComponent {
   }
 
   getFullName() {
-    return this.user.first_name + ' ' + this.user.last_name;
+    return this.user ? `${this.user.first_name} ${this.user.last_name}` : '';
   }
 }

@@ -3,6 +3,7 @@ import { ChannelService } from '../../../services/channel.service';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../../services/users.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-create-new-channel',
@@ -12,11 +13,7 @@ import { UsersService } from '../../../services/users.service';
   styleUrl: './create-new-channel.component.scss',
 })
 export class CreateNewChannelComponent {
-  constructor(
-    private channelService: ChannelService,
-    private userService: UsersService,
-    private cdRef: ChangeDetectorRef
-  ) {}
+
 
   openChannelBox: boolean = true;
   openEditUserBox: boolean = false;
@@ -24,6 +21,7 @@ export class CreateNewChannelComponent {
 
   channelName: string = '';
   channelDescription: string = '';
+  createdFrom: string = '';
   inputAllMember: boolean = true;
   inputSpecificUsers: boolean = false;
   btnDisabled: boolean = false;
@@ -34,16 +32,28 @@ export class CreateNewChannelComponent {
 
   userImages: any[] = [];
 
-  allUser: any[] = [];
+  user!: User;
+  allUser: User [] = [];
   specificUser: any[] = [];
   selectedUser: any[] = [];
 
   topPosition: number = 234;
 
+  constructor(
+    private channelService: ChannelService,
+    private userService: UsersService,
+    private cdRef: ChangeDetectorRef
+  ) {
+    this.userService.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
   ngOnInit() {
     this.userService.allUser$.subscribe((users) => {
       this.allUser = users;
     });
+
     this.calculateTopPosition();
   }
 
@@ -183,9 +193,6 @@ export class CreateNewChannelComponent {
   createNewChannel(): void {
     let channelData  =  this.getChannelData();
 
-    // Debugging in der Konsole
-    console.log('Channel Data:', channelData);
-
     // Senden der Daten an den Service
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
@@ -213,6 +220,7 @@ export class CreateNewChannelComponent {
       channelName: this.channelName,
       channelDescription: this.channelDescription,
       channelMembers: channelMembers,
+      createdFrom: this.user.first_name + ' ' + this.user.last_name,
     };
 
     return channelData;

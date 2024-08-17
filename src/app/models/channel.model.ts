@@ -2,6 +2,6 @@ export interface Channel {
   id: number;
   channelName: string;
   channelDescription: string;
-  channelMembers: [];
+  channelMembers: number[];
   messages: [];
 }

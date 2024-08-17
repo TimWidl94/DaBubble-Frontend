@@ -1,34 +1,65 @@
 <section>
   <div class="chat-box" *ngIf="channel">
     <div class="chat-header-box">
-      <div>
-        <img src="assets/icons/tag_black.svg" alt="" />
+      <div
+        class="chat-name-box"
+        (mouseover)="onHover(true)"
+        (mouseleave)="onHover(false)"
+      >
+        <div
+          class="chat-tag-icon"
+          [class.chat-tag-icon-hovered]="channelNameHovered"
+        ></div>
         <span>{{ channel.channelName }}</span>
-        <img src="assets/icons/keyboard_arrow_down.svg" alt="" />
+        <div
+          class="chat-arrowdown-icon"
+          [class.chat-arrow-icon-hovered]="channelNameHovered"
+        ></div>
       </div>
       <div>
-        <div class="users-avatars-box"></div>
+        <div class="users-avatars-box">
+          <div class="user-avatars">
+            <div
+              *ngFor="
+                let user of usersFromChannel | slice : 0 : 3;
+                let i = index
+              "
+            >
+              <img src="{{ user.image || user.imagepath }}" alt="" />
+            </div>
+            <span class="user-count">{{ usersFromChannel.length }}</span>
+          </div>
+        </div>
         <div class="adding-user-btn"></div>
       </div>
     </div>
 
-    <div class="chat-messages-box"></div>
+    <div class="messages-box">
+      <app-message
+        *ngFor="let message of messages; let i = index; trackBy: trackByMessageId"
+        [message]="message"
+      ></app-message>
+    </div>
 
     <div class="chat-new-message-box">
-      <textarea
-        name=""
-        id=""
-        placeholder="Nachricht an #{{ channel.channelName }}"
-      ></textarea>
-      <div>
+      <form action="">
+        <textarea
+          name=""
+          id=""
+          placeholder="Nachricht an #{{ channel.channelName }}"
+          [(ngModel)]="newMessage"
+          name="newMessage"
+        ></textarea>
         <div>
-          <button class="btn-add"></button>
-          <span></span>
-          <button class="btn-smiley"></button>
-          <button class="btn-email"></button>
+          <div>
+            <button class="btn-add"></button>
+            <span></span>
+            <button class="btn-smiley"></button>
+            <button class="btn-email"></button>
+          </div>
+          <button class="btn-sendmessage" (click)="sendMessage()"></button>
         </div>
-        <button class="btn-sendmessage"></button>
-      </div>
+      </form>
     </div>
   </div>
 </section>
