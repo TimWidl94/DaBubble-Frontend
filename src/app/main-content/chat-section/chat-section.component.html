@@ -5,6 +5,7 @@
         class="chat-name-box"
         (mouseover)="onHover(true)"
         (mouseleave)="onHover(false)"
+        (click)="openChannelEditMenu()"
       >
         <div
           class="chat-tag-icon"
@@ -16,6 +17,7 @@
           [class.chat-arrow-icon-hovered]="channelNameHovered"
         ></div>
       </div>
+      <div class="fill-box"></div>
       <div>
         <div class="users-avatars-box">
           <div class="user-avatars">
@@ -32,13 +34,28 @@
         </div>
         <div class="adding-user-btn"></div>
       </div>
+      <app-channel-info
+        *ngIf="channelInfoOpen"
+        [channel]="channel"
+      ></app-channel-info>
     </div>
 
-    <div class="messages-box">
-      <app-message
-        *ngFor="let message of messages; let i = index; trackBy: trackByMessageId"
-        [message]="message"
-      ></app-message>
+    <div #messagesContainer class="messages-box">
+      <div
+        *ngFor="
+          let message of messages;
+          let i = index;
+          trackBy: trackByMessageId
+        "
+      >
+        <div *ngIf="isFirstMessageOfDay(message, i)" class="date-outside-box">
+          <div class="line-box"></div>
+          <div class="date-box">{{ getFormattedDate(message.timestamp) }}</div>
+          <div class="line-box"></div>
+        </div>
+
+        <app-message [message]="message"> </app-message>
+      </div>
     </div>
 
     <div class="chat-new-message-box">
@@ -63,3 +80,8 @@
     </div>
   </div>
 </section>
+<div
+  class="fullsize-shadow"
+  *ngIf="channelInfoOpen"
+  (click)="openChannelEditMenu()"
+></div>

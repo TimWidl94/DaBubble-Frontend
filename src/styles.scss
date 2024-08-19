@@ -12,7 +12,7 @@ $BGShadow: #eceefe;
 $White: #ffffff;
 $Online: #92c83e;
 $LinkBlue: #1381ff;
-$InputBorder: #ADB0D9;
+$InputBorder: #adb0d9;
 
 //   fonts     //
 
@@ -164,8 +164,6 @@ body {
 
 .btn-purple {
   @include dFlex();
-  width: 100%;
-  max-width: 137px;
   height: 100%;
   max-height: 49px;
   padding: 12px 25px;
@@ -192,7 +190,6 @@ body {
   }
 }
 
-
 .transform90deg {
   transform: rotate(90deg);
 }
@@ -208,8 +205,47 @@ body {
   border-radius: 20px;
 }
 
-@mixin btn-icon-hover($background-image){
+@mixin btn-icon-hover($background-image) {
   background-color: $BGShadow;
   background-image: url($background-image);
   cursor: pointer;
+}
+
+.close-icon {
+  width: 40px;
+  height: 40px;
+  background-image: url("./assets/icons/close_black.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  &:hover {
+    background-image: url("./assets/icons/close_blue.svg");
+    background-color: $BGShadow;
+    cursor: pointer;
+  }
+}
+
+.edit-font-btn {
+  color: $PurpleFont;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24.55px;
+  border: none;
+  background-color: $White;
+  transition: transform 0.15s ease;
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+}
+
+.fullsize-shadow {
+  @include dFlex();
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 2;
 }

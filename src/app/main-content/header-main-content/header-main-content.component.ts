@@ -112,4 +112,9 @@ export class HeaderMainContentComponent implements OnInit {
   getFullName() {
     return this.user ? `${this.user.first_name} ${this.user.last_name}` : '';
   }
+
+  closeHeaderMenus() {
+    this.profilOpen = false;
+    this.profilEditOpen = false;
+  }
 }

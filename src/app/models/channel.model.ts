@@ -4,4 +4,5 @@ export interface Channel {
   channelDescription: string;
   channelMembers: number[];
   messages: [];
+  createdFrom: string;
 }

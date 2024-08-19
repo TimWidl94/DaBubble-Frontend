@@ -1,11 +1,38 @@
-<div class="chat-messages-box">
-    <div class="left-content-box"><img src="{{message.user?.image || message.user?.imagepath}}" alt=""></div>
-    <div class="right-content-box">
-      <div class="message-header-box">
-        <span class="message-header-name">{{message.user?.first_name}} {{message.user?.last_name}}</span>
-        <span class="message-header-time">{{ getTimeFromTimestamp() }}</span>
-      </div>
-      <div class="message-content-box">{{message.content}}</div>
-      <div class="message-reaction-box"></div>
+<div
+  class="chat-messages-box"
+  [ngClass]="{ mirroring: message.user?.id === user?.id }"
+  (mouseenter)="hovered(true)"
+  (mouseleave)="hovered(false)"
+>
+  <div class="left-content-box">
+    <img
+      src="{{ message.user?.image || message.user?.imagepath }}"
+      alt=""
+      [ngClass]="{ mirroring: message.user?.id === user?.id }"
+    />
+  </div>
+  <div class="right-content-box">
+    <div class="message-header-box">
+      <span
+        class="message-header-name"
+        [ngClass]="{ mirroring: message.user?.id === user?.id }"
+        >{{ message.user?.first_name }} {{ message.user?.last_name }}</span
+      >
+      <span
+        class="message-header-time"
+        [ngClass]="{ mirroring: message.user?.id === user?.id }"
+        >{{ getTimeFromTimestamp() }}</span
+      >
     </div>
+    <div
+      class="message-content-box"
+      [ngClass]="{
+        'mirroring & mirroring-bubble': message.user?.id === user?.id
+      }"
+      [class.hoveredBubble]="isHovered"
+    >
+      {{ message.content }}
+    </div>
+    <div class="message-reaction-box"></div>
+  </div>
 </div>

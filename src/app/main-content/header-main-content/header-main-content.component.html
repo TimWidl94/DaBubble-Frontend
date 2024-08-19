@@ -11,7 +11,7 @@
     <div
       class="fullsize-shadow"
       *ngIf="menuOpen || profilOpen"
-      (click)="openHeaderMenu()"
+      (click)="closeHeaderMenus()"
     ></div>
     <div *ngIf="menuOpen" class="header-menu">
       <button (click)="openProfil()">Profil</button
@@ -27,7 +27,9 @@
       <div class="user-name-and-edit-box">
         <div class="user-name-box">
           <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-          <button (click)="openEditProfilInformation()">Bearbeiten</button>
+          <button (click)="openEditProfilInformation()" class="edit-font-btn">
+            Bearbeiten
+          </button>
         </div>
         <div class="user-status-box">
           <div></div>
@@ -76,7 +78,9 @@
       </div>
       <div class="btn-box">
         <button class="btn-white">Abbrechen</button
-        ><button class="btn-purple" (click)="editUserInformation()">Speichern</button>
+        ><button class="btn-purple" (click)="editUserInformation()">
+          Speichern
+        </button>
       </div>
     </div>
   </div>

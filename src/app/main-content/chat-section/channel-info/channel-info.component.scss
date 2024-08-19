@@ -1,0 +1,106 @@
+@import "./../../../../styles.scss";
+
+section {
+  @include dFlex($ai: start, $jc: start, $g: 20px);
+  position: absolute;
+  top: 74px;
+  left: 44px;
+  background-color: $White;
+  border-radius: 30px;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  z-index: 10;
+  padding: 40px;
+  flex-direction: column;
+  font-family: $nunito;
+}
+
+.edit-info-header-box {
+  @include dFlex($jc: space-between);
+  width: 100%;
+  > div {
+    @include dFlex($g: 15px);
+    > img {
+      width: 20px;
+      height: 20px;
+    }
+    > h2 {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32.74px;
+      margin: 0;
+    }
+  }
+}
+
+.edit-channelname-box{
+  @include dFlex($g:20px);
+  width: calc(100% - 2 * 20px);
+  padding: 20px;
+  border: 1px solid $lightPurple;
+  border-radius: 20px;
+  flex-direction: column;
+  >div:not(:last-child){
+    @include dFlex($jc:space-between);
+    width: 100%;
+    >span{
+     font-weight: 700;
+     font-size: 18px;
+     line-height: 24.55px;
+    }
+  }
+  >div{
+    @include dFlex($jc: start, $g:10px);
+    width: 100%;
+    >img{
+      width: 16px;
+      height: 16px;
+    }
+    >span{
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 24.55px;
+    }
+  }
+}
+
+
+.edit-channeldescription-box{
+    @include dFlex($g:20px);
+    width: calc(100% - 2 * 20px);
+    padding: 20px;
+    border: 1px solid $lightPurple;
+    border-radius: 20px;
+    flex-direction: column;
+    >div:not(:last-child){
+      @include dFlex($jc:space-between);
+      width: 100%;
+    }
+    >div{
+      @include dFlex($jc: start, $g:10px);
+      width: 100%;
+      >span{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24.55px;
+        width: 100%;
+        max-width: 752px;
+      }
+    }
+}
+
+.seperation-line{
+  width: 95%;
+  border: 1px solid $lightPurple;
+}
+
+.btn-box{
+  @include dFlex($jc: end);
+  width: 100%;
+}
+
+h3{
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24.55px;
+}

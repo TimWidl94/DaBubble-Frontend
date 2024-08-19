@@ -115,16 +115,7 @@ section {
   }
 }
 
-.fullsize-shadow {
-  @include dFlex();
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 2;
-}
+
 
 .profil-box {
   @include dFlex($g: 45px, $jc: start);
@@ -189,19 +180,6 @@ section {
     font-size: 32px;
     font-weight: 700;
     line-height: 43.65px;
-  }
-  > button {
-    color: $PurpleFont;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24.55px;
-    border: none;
-    background-color: $White;
-    transition: transform 0.15s ease;
-    &:hover {
-      transform: scale(1.05);
-      cursor: pointer;
-    }
   }
 }
 

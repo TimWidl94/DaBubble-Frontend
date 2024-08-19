@@ -208,8 +208,8 @@ section {
 .checkbox-symbol {
   width: 20px;
   height: 20px;
-  border: 1px solid #a0a0ff; /* Farbe des Randes */
-  border-radius: 50%; /* Kreisform */
+  border: 1px solid #a0a0ff;
+  border-radius: 50%;
   margin-right: 10px;
   position: relative;
   display: inline-block;
@@ -220,12 +220,12 @@ section {
 }
 
 input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol {
-  background-color: #6200ea; /* Deine Wunschfarbe */
+  background-color: #6200ea;
 }
 
 input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol {
-  background-color: #ffffff; /* Hintergrundfarbe (weiß) */
-  border-color: #6666ff; /* Randfarbe, wenn angehakt */
+  background-color: #ffffff;
+  border-color: #6666ff;
 }
 
 input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
@@ -236,8 +236,8 @@ input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
   transform: translate(-50%, -50%);
   width: 14px;
   height: 14px;
-  background-color: #5a5aff; /* Blauer Punkt in der Mitte */
-  border-radius: 50%; /* Kreisform */
+  background-color: #5a5aff;
+  border-radius: 50%;
 }
 
 .checkbox-container {

@@ -1,0 +1,42 @@
+<section>
+  <div class="edit-info-header-box">
+    <div>
+      <img src="assets/icons/tag_black.svg" alt="tag icon" />
+      <h2>{{ channel.channelName }}</h2>
+    </div>
+    <div class="close-icon" (click)="closeEditOpen()"></div>
+  </div>
+
+  <div class="edit-channelname-box">
+    <div>
+      <h3>Channel-Name</h3>
+      <button class="edit-font-btn">Bearbeiten</button>
+    </div>
+    <div>
+      <img src="assets/icons/tag_black.svg" alt="" />
+      <span>{{ channel.channelName }}</span>
+    </div>
+  </div>
+
+  <div class="edit-channeldescription-box">
+    <div>
+      <h3>Beschreibung</h3>
+      <button class="edit-font-btn">Bearbeiten</button>
+    </div>
+    <div>
+      <span>{{ channel.channelDescription }}</span>
+    </div>
+
+    <div class="seperation-line"></div>
+
+    <div>
+      <h3>Erstellt von</h3>
+    </div>
+    <div>
+      <span>{{channel.createdFrom}}</span>
+    </div>
+
+  </div>
+  <div class="btn-box"><button class="btn-purple">Channel verlassen</button></div>
+
+</section>

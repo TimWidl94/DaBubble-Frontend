@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Message } from '../../../models/message.model';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.model';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-message',
@@ -11,7 +12,18 @@ import { User } from '../../../models/user.model';
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {
-  constructor() {}
+  constructor(private usersService: UsersService) {}
+
+  isHovered: boolean = false;
+
+  ngOnInit() {
+    this.usersService.user$.subscribe((user) => {
+      this.user = user;
+    });
+    // console.log('geladener User:', this.user)
+  }
+
+  user: User | undefined;
 
   @Input() message: Message = {
     id: 0,
@@ -25,9 +37,9 @@ export class MessageComponent {
       last_name: '',
       email: '',
       imagepath: '',
-      image: ''
-    } // Optionales User-Feld
-  }; // Default-Wert
+      image: '',
+    },
+  };
 
   getTimeFromTimestamp(): string {
     if (!this.message.timestamp) {
@@ -39,5 +51,11 @@ export class MessageComponent {
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
     return `${hours}:${minutes}`;
+  }
+
+  hovered(isHovered: boolean) {
+    if (this.user?.id !== this.message.user?.id) {
+      this.isHovered = isHovered;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { ChannelService } from '../../services/channel.service';
 import { Channel } from '../../models/channel.model';
 import { UsersService } from '../../services/users.service';
@@ -9,11 +9,12 @@ import { MessageService } from '../../services/message.service';
 import { FormsModule } from '@angular/forms';
 import { MessageComponent } from './message/message.component';
 import { combineLatest } from 'rxjs';
+import { ChannelInfoComponent } from './channel-info/channel-info.component';
 
 @Component({
   selector: 'app-chat-section',
   standalone: true,
-  imports: [CommonModule, FormsModule, MessageComponent],
+  imports: [CommonModule, FormsModule, MessageComponent, ChannelInfoComponent],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -29,6 +30,7 @@ export class ChatSectionComponent {
     });
   }
 
+  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   user!: User;
   channel: Channel | null = null;
   users: User[] = [];
@@ -39,6 +41,9 @@ export class ChatSectionComponent {
   messages: any[] = [];
 
   channelNameHovered: boolean = false;
+  channelInfoOpen:boolean = false;
+
+  previousMessagesLength = 0;
 
   ngOnInit(): void {
     this.channelService.loadSelectedChannel(3);
@@ -47,6 +52,26 @@ export class ChatSectionComponent {
 
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
+    setInterval(() => {
+      this.scrollToBottomIfNewMessage();
+    }, 1000)
+    this.messageService.startPollingMessages(3);
+
+  }
+
+  private scrollToBottomIfNewMessage(): void {
+    if (this.messages.length !== this.previousMessagesLength) {
+      this.scrollToBottom();
+      this.previousMessagesLength = this.messages.length;
+    }
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll error:', err);
+    }
   }
 
   loadAndCombineMessagesWithUsers() {
@@ -57,7 +82,7 @@ export class ChatSectionComponent {
       this.users = users;
       this.messages = this.addCorrectUserToMessage(messages, users);
       this.cdRef.detectChanges();
-      console.log('loadAndCombine:', this.messages);
+      // console.log('loadAndCombine:', this.messages);
     });
   }
 
@@ -94,7 +119,7 @@ export class ChatSectionComponent {
           this.usersFromChannel.push(user);
         }
       }
-      console.log('Users vom Channel:', this.usersFromChannel);
+      // console.log('Users vom Channel:', this.usersFromChannel);
     }
   }
 
@@ -132,5 +157,37 @@ export class ChatSectionComponent {
 
   trackByMessageId(index: number, message: Message): number {
     return message.id;
+  }
+
+  isFirstMessageOfDay(message: Message, index: number): boolean {
+    if (index === 0) {
+      return true; // Erste Nachricht überhaupt, also erstes Datum anzeigen
+    }
+
+
+
+    let currentMessageDate = new Date(message.timestamp).setHours(0, 0, 0, 0);
+    let previousMessageDate = new Date(this.messages[index - 1].timestamp).setHours(0, 0, 0, 0);
+
+    return currentMessageDate !== previousMessageDate;
+  }
+
+  // Formatiert das Datum für die Anzeige
+  getFormattedDate(timestamp: string): string {
+
+    let today = new Date();
+    let date = new Date(timestamp);
+    let options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    if(today.getDate() === date.getDate()){
+      return 'Heute'
+    }
+
+    return date.toLocaleDateString('de-DE', options);
+  }
+
+  openChannelEditMenu(){
+    this.channelInfoOpen = !this.channelInfoOpen;
+    console.log(this.channel)
   }
 }

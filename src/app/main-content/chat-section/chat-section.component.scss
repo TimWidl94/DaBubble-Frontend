@@ -26,6 +26,7 @@ section {
   box-shadow: 0px 2px 10px 0px #00000014;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
+  position: relative;
   > div {
     @include dFlex($g: 10px);
   }
@@ -222,4 +223,42 @@ app-message{
   width: 100%;
   flex-direction: column;
   overflow: auto;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  >div{
+    @include dFlex();
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.date-outside-box{
+  @include dFlex();
+  width: 95%;
+  margin: 20px 0;
+}
+
+.date-box{
+  @include dFlex($g:10px);
+ border-radius: 30px;
+ padding: 5px 15px;
+ border: 1px solid $InputBorder;
+ font-family: $nunito;
+ font-weight: 400;
+ font-size: 18px;
+ line-height: 24.55px;
+
+}
+
+.line-box{
+flex: 1;
+@include dFlex();
+border: 1px solid $InputBorder;
+}
+
+.fill-box{
+  @include dFlex();
+  flex: 1;
 }
