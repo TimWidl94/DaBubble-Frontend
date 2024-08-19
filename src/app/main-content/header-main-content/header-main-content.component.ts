@@ -93,8 +93,8 @@ export class HeaderMainContentComponent implements OnInit {
     };
     this.authService.updateUser(updatedUser).subscribe(
       (response) => {
-        this.userService.loadUserFromToken(); // Lade die aktualisierten Benutzerdaten neu
-        this.userService.loadAndCombineUsersAndImages(); // Optional: Wenn du alle Benutzer aktualisieren möchtest
+        this.userService.loadUserFromToken();
+        this.userService.loadAndCombineUsersAndImages();
         this.profilEditOpen = false;
       },
       (e) => {

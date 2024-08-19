@@ -7,14 +7,28 @@
     <div class="close-icon" (click)="closeEditOpen()"></div>
   </div>
 
-  <div class="edit-channelname-box">
-    <div>
+  <div class="edit-channelname-box" [ngClass]="{'editing': isEditing}">
+    <div class="header">
       <h3>Channel-Name</h3>
-      <button class="edit-font-btn">Bearbeiten</button>
+      <button class="edit-font-btn" (click)="toggleEdit()">{{ isEditing ? 'Speichern' : 'Bearbeiten' }}</button>
     </div>
-    <div>
-      <img src="assets/icons/tag_black.svg" alt="" />
-      <span>{{ channel.channelName }}</span>
+    <div class="channel-info">
+      <img *ngIf="!isEditing" src="assets/icons/tag_black.svg" alt="" />
+      <ng-container *ngIf="isEditing; else viewMode">
+        <div class="input-box">
+          <img src="assets/icons/tag_black.svg" class="input-img" alt="" />
+          <input
+            type="text"
+            class="input-transparent"
+            [(ngModel)]="channelName"
+            name="channelName"
+            [placeholder]="channel.channelName"
+          />
+        </div>
+      </ng-container>
+      <ng-template #viewMode>
+        <span>{{ channel.channelName }}</span>
+      </ng-template>
     </div>
   </div>
 

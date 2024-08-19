@@ -190,4 +190,8 @@ export class ChatSectionComponent {
     this.channelInfoOpen = !this.channelInfoOpen;
     console.log(this.channel)
   }
+
+  updateChannel(channelId:number){
+    this.channelService.loadSelectedChannel(channelId);
+  }
 }

@@ -249,3 +249,32 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
+
+.input-transparent{
+  width: calc(100% - 2 * 20px);
+  height: calc(60px - 2 * 18px);
+  border-radius: 40px;
+  padding: 18px 20px 18px 60px;
+  border: 1px solid $lightPurple;
+  font-family: $nunito;
+  font-size: 18px;
+  line-height: 24.55px;
+  font-weight: 600;
+  color: black;
+  &:hover {
+    cursor: pointer;
+    border-color: $Gray;
+  }
+  &:focus {
+    border-color: $PurpleFont;
+    outline: none;
+  }
+  &:target {
+    border-color: $PurpleFont;
+    outline: none;
+  }
+  &::placeholder {
+    color: $Gray;
+    font-weight: 200;
+  }
+}

@@ -64,4 +64,8 @@ export class ChannelService {
       tap((data) => (this.allChannel = data)) // Channels in das Array speichern
     );
   }
+
+  updateChannel(channel: Channel, channelId:number): Observable<any>{
+    return this.http.put(`${this.apiUrl}/channel/${channelId}`, channel);
+  }
 }

@@ -32,35 +32,58 @@ section {
   }
 }
 
-.edit-channelname-box{
-  @include dFlex($g:20px);
+.edit-channelname-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: calc(100% - 2 * 20px);
   padding: 20px;
   border: 1px solid $lightPurple;
   border-radius: 20px;
-  flex-direction: column;
-  >div:not(:last-child){
-    @include dFlex($jc:space-between);
-    width: 100%;
-    >span{
-     font-weight: 700;
-     font-size: 18px;
-     line-height: 24.55px;
-    }
-  }
-  >div{
-    @include dFlex($jc: start, $g:10px);
-    width: 100%;
-    >img{
-      width: 16px;
-      height: 16px;
-    }
-    >span{
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 24.55px;
-    }
-  }
+  transition: padding 0.3s ease, border 0.3s ease, width 0.3s ease;
+}
+
+.edit-channelname-box.editing {
+  padding: 0;
+  border: none;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+}
+
+.channel-info img {
+  width: 16px;
+  height: 16px;
+}
+
+.input-img{
+  position: absolute;
+  top: 22px;
+  left: 30px;
+}
+
+.channel-info span,
+.channel-info input {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24.55px;
+  width: calc(100% - 78px);
+}
+
+.input-box{
+  width: 100%;
 }
 
 
