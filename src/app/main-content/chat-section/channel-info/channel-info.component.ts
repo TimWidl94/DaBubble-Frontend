@@ -4,6 +4,7 @@ import { Channel } from '../../../models/channel.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChannelService } from '../../../services/channel.service';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-channel-info',
@@ -21,7 +22,8 @@ export class ChannelInfoComponent {
 
   editName: boolean = false;
   editDescription: boolean = false;
-  isEditing = false;
+  isEditingName = false;
+  isEditingDescription = false;
 
   channelName: string = '';
   channelDescription: string = '';
@@ -35,21 +37,30 @@ export class ChannelInfoComponent {
     createdFrom: '',
   };
 
+  @Input() user: User = {
+    id: 0,
+    first_name: '',
+    last_name: '',
+  };
+
+  ngOnInit(){
+  }
+
   closeEditOpen(){
     this.chatSection.openChannelEditMenu();
   }
 
-  toggleEdit() {
-    if (this.isEditing) {
-      this.isEditing = false;
-      this.saveEdit();
+  toggleEditName() {
+    if (this.isEditingName) {
+      this.isEditingName = false;
+      this.saveEditChannelName();
     } else {
-      this.isEditing = true;
+      this.isEditingName = true;
     }
   }
 
 
-  saveEdit(){
+  saveEditChannelName(){
     const updatedChannelName = {
       ... this.channel,
       channelName: this.channelName,
@@ -62,5 +73,57 @@ export class ChannelInfoComponent {
         this.chatSection.updateChannel(this.channel.id);
       }
     )
+  }
+
+  toggleEditDescription() {
+    if (this.isEditingDescription) {
+      this.isEditingDescription = false;
+      this.saveEditChannelDescription();
+    } else {
+      this.isEditingDescription = true;
+      console.log(this.channel.channelDescription)
+    }
+  }
+
+  saveEditChannelDescription(){
+    const updateChannelDescription = {
+      ... this.channel,
+      channelDescription: this.channelDescription
+    }
+    let channelId = this.channel.id
+    this.channelService.updateChannel(updateChannelDescription, channelId).subscribe(
+      (respone) => {
+        console.log(respone);
+        this.chatSection.updateChannel(this.channel.id);
+      }
+    )
+  }
+
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto'; // Höhe zurücksetzen
+    textarea.style.height = 72 + 'px'; // Höhe anpassen
+  }
+
+  leaveChannel(){
+    let i = this.channel.channelMembers.findIndex(member => member === this.user.id)
+    if (i !== -1){
+      this.channel.channelMembers.splice(i, 1);
+      return this.channel.channelMembers
+    } else {
+      return this.channel.channelMembers
+    }
+  }
+
+  saveLeaveChannel(){
+    let updateChannelMember = {
+      ... this.channel,
+      channelMember: this.leaveChannel()
+    }
+    let channelId = this.channel.id;
+    this.channelService.updateChannel(updateChannelMember, channelId).subscribe(
+    (respone) => {
+      this.chatSection.updateChannel(this.channel.id);
+    })
   }
 }

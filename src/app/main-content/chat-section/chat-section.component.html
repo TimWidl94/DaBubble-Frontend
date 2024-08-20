@@ -26,18 +26,34 @@
                 let user of usersFromChannel | slice : 0 : 3;
                 let i = index
               "
+              (click)="openChannelMember()"
             >
               <img src="{{ user.image || user.imagepath }}" alt="" />
             </div>
             <span class="user-count">{{ usersFromChannel.length }}</span>
           </div>
         </div>
-        <div class="adding-user-btn"></div>
+        <div
+          class="adding-user-btn"
+          (click)="openAddNewChannelMemberOpen()"
+        ></div>
       </div>
       <app-channel-info
         *ngIf="channelInfoOpen"
         [channel]="channel"
+        [user]="user"
       ></app-channel-info>
+      <app-new-channel-member
+        *ngIf="addNewChannelMemberOpen"
+        [channel]="channel"
+        [allUser]="users"
+      ></app-new-channel-member>
+      <app-channel-member
+        *ngIf="channelMemberOpen"
+        [channel]="channel"
+        [allUser]="usersFromChannel"
+      >
+      </app-channel-member>
     </div>
 
     <div #messagesContainer class="messages-box">
@@ -82,6 +98,6 @@
 </section>
 <div
   class="fullsize-shadow"
-  *ngIf="channelInfoOpen"
-  (click)="openChannelEditMenu()"
+  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
+  (click)="closeAllComponents()"
 ></div>

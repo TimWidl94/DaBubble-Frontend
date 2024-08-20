@@ -116,5 +116,6 @@ export class HeaderMainContentComponent implements OnInit {
   closeHeaderMenus() {
     this.profilOpen = false;
     this.profilEditOpen = false;
+    this.menuOpen = false;
   }
 }

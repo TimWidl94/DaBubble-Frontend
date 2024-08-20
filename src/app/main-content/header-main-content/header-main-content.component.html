@@ -10,7 +10,7 @@
     <button (click)="openHeaderMenu()"></button>
     <div
       class="fullsize-shadow"
-      *ngIf="menuOpen || profilOpen"
+      *ngIf="menuOpen || profilOpen || profilEditOpen"
       (click)="closeHeaderMenus()"
     ></div>
     <div *ngIf="menuOpen" class="header-menu">

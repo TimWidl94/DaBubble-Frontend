@@ -7,14 +7,16 @@
     <div class="close-icon" (click)="closeEditOpen()"></div>
   </div>
 
-  <div class="edit-channelname-box" [ngClass]="{'editing': isEditing}">
+  <div class="edit-channelname-box" [ngClass]="{ editing: isEditingName }">
     <div class="header">
       <h3>Channel-Name</h3>
-      <button class="edit-font-btn" (click)="toggleEdit()">{{ isEditing ? 'Speichern' : 'Bearbeiten' }}</button>
+      <button class="edit-font-btn" (click)="toggleEditName()">
+        {{ isEditingName ? "Speichern" : "Bearbeiten" }}
+      </button>
     </div>
     <div class="channel-info">
-      <img *ngIf="!isEditing" src="assets/icons/tag_black.svg" alt="" />
-      <ng-container *ngIf="isEditing; else viewMode">
+      <img *ngIf="!isEditingName" src="assets/icons/tag_black.svg" alt="" />
+      <ng-container *ngIf="isEditingName; else viewMode">
         <div class="input-box">
           <img src="assets/icons/tag_black.svg" class="input-img" alt="" />
           <input
@@ -32,13 +34,31 @@
     </div>
   </div>
 
-  <div class="edit-channeldescription-box">
-    <div>
+  <div
+    class="edit-channeldescription-box"
+    [ngClass]="{ editing: isEditingDescription }"
+  >
+    <div class="header">
       <h3>Beschreibung</h3>
-      <button class="edit-font-btn">Bearbeiten</button>
+      <button class="edit-font-btn" (click)="toggleEditDescription()">
+        {{ isEditingDescription ? "Speichern" : "Bearbeiten" }}
+      </button>
     </div>
-    <div>
-      <span>{{ channel.channelDescription }}</span>
+    <div class="channel-description">
+      <ng-container *ngIf="isEditingDescription; else viewModeChannelDescription">
+        <div class="input-box">
+          <textarea
+            class="textarea-transparent"
+            [(ngModel)]="channelDescription"
+            name="channelDescription"
+            [placeholder]="channel.channelDescription"
+            (input)="autoResize($event)"
+          ></textarea>
+        </div>
+      </ng-container>
+      <ng-template #viewModeChannelDescription>
+        <span>{{ channel.channelDescription }}</span>
+      </ng-template>
     </div>
 
     <div class="seperation-line"></div>
@@ -47,10 +67,10 @@
       <h3>Erstellt von</h3>
     </div>
     <div>
-      <span>{{channel.createdFrom}}</span>
+      <span>{{ channel.createdFrom }}</span>
     </div>
-
   </div>
-  <div class="btn-box"><button class="btn-purple">Channel verlassen</button></div>
-
+  <div class="btn-box">
+    <button class="btn-purple" (click)="saveLeaveChannel()">Channel verlassen</button>
+  </div>
 </section>

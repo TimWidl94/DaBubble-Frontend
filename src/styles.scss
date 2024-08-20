@@ -250,7 +250,7 @@ body {
   z-index: 2;
 }
 
-.input-transparent{
+.input-transparent {
   width: calc(100% - 2 * 20px);
   height: calc(60px - 2 * 18px);
   border-radius: 40px;
@@ -272,6 +272,39 @@ body {
   &:target {
     border-color: $PurpleFont;
     outline: none;
+  }
+  &::placeholder {
+    color: $Gray;
+    font-weight: 200;
+  }
+}
+
+.textarea-transparent {
+  width: calc(100% - 2 * 20px);
+  height: calc(65px - 2 * 18px);
+  border-radius: 40px;
+  padding: 18px 20px;
+  border: 1px solid $lightPurple;
+  font-family: $nunito;
+  font-size: 18px;
+  line-height: 24.55px;
+  font-weight: 600;
+  color: black;
+  resize: none;
+  &:hover {
+    cursor: pointer;
+    border-color: $Gray;
+  }
+  &:focus {
+    border-color: $PurpleFont;
+    outline: none;
+  }
+  &:target {
+    border-color: $PurpleFont;
+    outline: none;
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
   &::placeholder {
     color: $Gray;

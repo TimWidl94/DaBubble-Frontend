@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ChannelService } from '../../services/channel.service';
 import { Channel } from '../../models/channel.model';
 import { UsersService } from '../../services/users.service';
@@ -10,11 +15,20 @@ import { FormsModule } from '@angular/forms';
 import { MessageComponent } from './message/message.component';
 import { combineLatest } from 'rxjs';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
+import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
+import { ChannelMemberComponent } from './channel-member/channel-member.component';
 
 @Component({
   selector: 'app-chat-section',
   standalone: true,
-  imports: [CommonModule, FormsModule, MessageComponent, ChannelInfoComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MessageComponent,
+    ChannelInfoComponent,
+    NewChannelMemberComponent,
+    ChannelMemberComponent
+  ],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -41,7 +55,10 @@ export class ChatSectionComponent {
   messages: any[] = [];
 
   channelNameHovered: boolean = false;
-  channelInfoOpen:boolean = false;
+  channelInfoOpen: boolean = false;
+
+  addNewChannelMemberOpen: boolean = false;
+  channelMemberOpen: boolean = false;
 
   previousMessagesLength = 0;
 
@@ -54,9 +71,7 @@ export class ChatSectionComponent {
     this.loadChannel();
     setInterval(() => {
       this.scrollToBottomIfNewMessage();
-    }, 1000)
-    this.messageService.startPollingMessages(3);
-
+    }, 1000);
   }
 
   private scrollToBottomIfNewMessage(): void {
@@ -68,7 +83,8 @@ export class ChatSectionComponent {
 
   private scrollToBottom(): void {
     try {
-      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+      this.messagesContainer.nativeElement.scrollTop =
+        this.messagesContainer.nativeElement.scrollHeight;
     } catch (err) {
       console.error('Scroll error:', err);
     }
@@ -91,8 +107,15 @@ export class ChatSectionComponent {
       this.channel = channel;
       if (this.users) {
         this.loadUserFromChannel();
+        if (this.channel) {
+          this.startPolling(this.channel.id);
+        }
       }
     });
+  }
+
+  startPolling(channelId: number) {
+    this.messageService.startPollingMessages(channelId);
   }
 
   loadMessages() {
@@ -164,34 +187,52 @@ export class ChatSectionComponent {
       return true; // Erste Nachricht überhaupt, also erstes Datum anzeigen
     }
 
-
-
     let currentMessageDate = new Date(message.timestamp).setHours(0, 0, 0, 0);
-    let previousMessageDate = new Date(this.messages[index - 1].timestamp).setHours(0, 0, 0, 0);
+    let previousMessageDate = new Date(
+      this.messages[index - 1].timestamp
+    ).setHours(0, 0, 0, 0);
 
     return currentMessageDate !== previousMessageDate;
   }
 
   // Formatiert das Datum für die Anzeige
   getFormattedDate(timestamp: string): string {
-
     let today = new Date();
     let date = new Date(timestamp);
-    let options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    let options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
 
-    if(today.getDate() === date.getDate()){
-      return 'Heute'
+    if (today.getDate() === date.getDate()) {
+      return 'Heute';
     }
 
     return date.toLocaleDateString('de-DE', options);
   }
 
-  openChannelEditMenu(){
+  openChannelEditMenu() {
     this.channelInfoOpen = !this.channelInfoOpen;
-    console.log(this.channel)
+    console.log(this.channel);
   }
 
-  updateChannel(channelId:number){
+  updateChannel(channelId: number) {
     this.channelService.loadSelectedChannel(channelId);
+  }
+
+  openAddNewChannelMemberOpen() {
+    this.addNewChannelMemberOpen = !this.addNewChannelMemberOpen;
+  }
+
+  openChannelMember(){
+    this.channelMemberOpen = !this.channelMemberOpen;
+  }
+
+  closeAllComponents(){
+    this.addNewChannelMemberOpen = false;
+    this.channelInfoOpen = false;
+    this.channelMemberOpen = false;
   }
 }

@@ -1,0 +1,51 @@
+<section>
+  <div class="outside-box">
+    <div class="header-box">
+      <h2>Leute hinzufügen</h2>
+      <div class="close-icon" (click)="closeAddNewMember()"></div>
+    </div>
+    <div class="channel-name-box">
+      <img src="assets/icons/tag_blue.svg" alt="">
+      <span>{{ channel.channelName }}</span>
+    </div>
+    <div *ngIf="selectedUser.length >= 1" class="selected-user-box">
+      <div *ngFor="let user of selectedUser; let i = index">
+        <img [src]="user.imagepath || user.image" alt="User Image" />
+        <span>{{ user.first_name }} {{ user.last_name }}</span>
+        <div (click)="removeSelectedUser(user)"></div>
+      </div>
+    </div>
+    <div class="input-user-box">
+      <input
+        type="text"
+        class="input-transparent padding1820"
+        placeholder="Name eingeben"
+        [(ngModel)]="searchUser"
+        name="searchUser"
+        (keyup)="searchSpecificUser()"
+        autocomplete="off"
+      />
+      <div
+        class="adding-user-box"
+        *ngIf="ifUserIsFind"
+        [ngStyle]="{
+          'top.px': topPosition,
+        }"
+      >
+        <div
+          *ngFor="let user of searchedUser; let i = index"
+          [ngStyle]="{
+            'margin-top.px': i === 0 && searchedUser.length >= 5 ? calculateTop(i) : 0
+          }"
+          (click)="addSelectedUser(user)"
+        >
+          <img [src]="user.imagepath || user.image" alt="User Image" />
+          <span>{{ user.first_name }} {{ user.last_name }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-box">
+      <button class="btn-purple" [disabled]="!btnDisabled" (click)="addChannelMember()">Hinzufügen</button>
+    </div>
+  </div>
+</section>

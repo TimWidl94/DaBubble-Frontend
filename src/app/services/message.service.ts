@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, interval } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, interval } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { tap, switchMap } from 'rxjs/operators';
 import { Message, MessageList } from '../models/message.model';
@@ -12,6 +12,7 @@ import { Message, MessageList } from '../models/message.model';
 export class MessageService {
   private apiUrl = environment.baseUrl;
   private pollingInterval = 5000;
+  private pollingSubscription: Subscription | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -36,10 +37,19 @@ export class MessageService {
   }
 
   startPollingMessages(channelId: number): void {
-    interval(this.pollingInterval)
+    this.stopPollingMessages();
+
+    this.pollingSubscription = interval(this.pollingInterval)
       .pipe(switchMap(() => this.http.get<any>(`${this.apiUrl}/channel/${channelId}/message`)))
       .subscribe((messages) => {
         this.messagesSubject.next(messages);
       });
+  }
+
+  stopPollingMessages(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+      this.pollingSubscription = null;
+    }
   }
 }

@@ -1,0 +1,123 @@
+@import "./../../../../styles.scss";
+
+section {
+  @include dFlex($g: 20px, $ai: start, $jc: start);
+  width: calc(415px - 2 * 40px);
+  // height: calc(294px - 2 * 40px);
+  padding: 40px;
+  position: absolute;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  right: 96px;
+  top: 78px;
+  z-index: 10;
+  background-color: $White;
+  border-radius: 30px 0 30px 30px;
+  font-family: $nunito;
+  > div {
+    @include dFlex($ai: start, $jc: start, $g: 5px);
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.header-box {
+  @include dFlex($jc: space-between);
+  width: 100%;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32.74px;
+}
+
+
+
+.btn-box{
+  @include dFlex($jc:start, $g: 15px );
+  width: 100%;
+  max-width: 274px;
+  border-radius: 100px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  transition: background-color 0.3s ease;
+  >div{
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+    padding: 4px;
+    background-image: url("./../../../../assets/icons/person_add_black.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $BGShadow;
+    transition: background-image 0.3s ease;
+  }
+  >span{
+    font-family: $nunito;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24.55px;
+    transition: color 0.3s ease;
+  }
+}
+
+.user-box{
+  @include dFlex($jc: start, $g: 13px);
+  width: 100%;
+  flex-direction: column;
+  max-height: 372px;
+  overflow-y: auto;
+}
+
+.single-user-box{
+  @include dFlex($jc:start, $g: 15px);
+  width: 100%;
+  >img{
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+  }
+  >span{
+    font-family: $nunito;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.55px;
+  }
+}
+
+.user-box::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.user-box::-webkit-scrollbar-thumb {
+  background: $PalePurple;
+  border-radius: 6px;
+  height: 200px;
+}
+
+.user-box::-webkit-scrollbar-thumb:hover {
+  background: $PurpleFont;
+}
+
+.user-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.user-box::-webkit-scrollbar-track:hover {
+  background: #e0e0e0;
+}
+
+.btn-box-hovered{
+  background-color: $BGShadow;
+  cursor: pointer;
+  >div{
+    background-image: url("./../../../../assets/icons/person_add_blue.svg");
+  }
+  >span{
+    color: $PurpleFont;
+  }
+}
+

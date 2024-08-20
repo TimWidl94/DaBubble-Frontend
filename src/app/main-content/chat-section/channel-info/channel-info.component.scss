@@ -12,6 +12,8 @@ section {
   padding: 40px;
   flex-direction: column;
   font-family: $nunito;
+  width: 100%;
+  max-width: 752px;
 }
 
 .edit-info-header-box {
@@ -79,13 +81,20 @@ section {
   font-weight: 400;
   font-size: 18px;
   line-height: 24.55px;
-  width: calc(100% - 78px);
 }
 
 .input-box{
   width: 100%;
 }
 
+.channel-description textarea{
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24.55px;
+  // width: calc(100% - 78px);
+  resize: none;
+  max-height: 110px;
+}
 
 .edit-channeldescription-box{
     @include dFlex($g:20px);
@@ -94,6 +103,7 @@ section {
     border: 1px solid $lightPurple;
     border-radius: 20px;
     flex-direction: column;
+    transition: padding 0.3s ease, border 0.3s ease, width 0.3s ease;
     >div:not(:last-child){
       @include dFlex($jc:space-between);
       width: 100%;
@@ -109,6 +119,12 @@ section {
         max-width: 752px;
       }
     }
+}
+
+.edit-channeldescription-box.editing{
+  padding: 0;
+  border: none;
+  width: 100%;
 }
 
 .seperation-line{
