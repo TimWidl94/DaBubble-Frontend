@@ -1,9 +1,11 @@
 import { UsersService } from './../services/users.service';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HeaderMainContentComponent } from './header-main-content/header-main-content.component';
 import { DevspaceSectionComponent } from './devspace-section/devspace-section.component';
 import { CommonModule } from '@angular/common';
 import { ChatSectionComponent } from './chat-section/chat-section.component';
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-main-content',
@@ -20,6 +22,8 @@ import { ChatSectionComponent } from './chat-section/chat-section.component';
 export class MainContentComponent {
   constructor(
     private userService: UsersService,
+    private authService: AuthService,
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   isHoveredDevspaceClose: boolean = false;
@@ -27,11 +31,22 @@ export class MainContentComponent {
   menuIconOpen: string = 'assets/icons/open_devspace_black.svg';
   menuIconClose: string = 'assets/icons/close_devspace_black.svg';
   devspaceOpen: boolean = true;
-  users: any[] = [];
+  users: User[] = [];
   chatChannelOpen: boolean = true;
+  user!: User;
 
   ngOnInit(): void {
-    this.users = this.userService.getUsers();
+    this.authService.getActuellUser();
+    this.user = this.authService.getUser();
+
+    this.loadUsers();
+  }
+
+  loadUsers(){
+    this.userService.allUser$.subscribe((users) => {
+      this.users = users;
+      this.cdRef.detectChanges();
+    });
   }
 
   onHoverDevspace(isHovered: boolean) {

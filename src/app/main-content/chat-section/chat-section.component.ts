@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ElementRef,
+  Input,
 } from '@angular/core';
 import { ChannelService } from '../../services/channel.service';
 import { Channel } from '../../models/channel.model';
@@ -27,7 +28,7 @@ import { ChannelMemberComponent } from './channel-member/channel-member.componen
     MessageComponent,
     ChannelInfoComponent,
     NewChannelMemberComponent,
-    ChannelMemberComponent
+    ChannelMemberComponent,
   ],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
@@ -40,14 +41,16 @@ export class ChatSectionComponent {
     private messageService: MessageService
   ) {
     this.usersService.user$.subscribe((user) => {
-      this.user = user;
+      if (user) {
+        this.user = user;
+      }
     });
   }
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   user!: User;
   channel: Channel | null = null;
-  users: User[] = [];
+  // users: User[] = [];
   usersFromChannel: User[] = [];
 
   newMessage: string = '';
@@ -62,10 +65,11 @@ export class ChatSectionComponent {
 
   previousMessagesLength = 0;
 
+  @Input() users: User[] = [];
+
   ngOnInit(): void {
     this.channelService.loadSelectedChannel(3);
     this.messageService.getMessages(3);
-    this.usersService.loadAndCombineUsersAndImages();
 
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
@@ -137,13 +141,13 @@ export class ChatSectionComponent {
   loadUserFromChannel() {
     this.usersFromChannel = [];
     if (this.channel && this.channel.channelMembers) {
-      for (const user of this.users) {
+      for (let user of this.users) {
         if (this.channel.channelMembers.includes(user.id)) {
           this.usersFromChannel.push(user);
         }
       }
-      // console.log('Users vom Channel:', this.usersFromChannel);
     }
+    console.log('chat-section:', this.usersFromChannel);
   }
 
   onHover(isHovered: boolean) {
@@ -226,11 +230,11 @@ export class ChatSectionComponent {
     this.addNewChannelMemberOpen = !this.addNewChannelMemberOpen;
   }
 
-  openChannelMember(){
+  openChannelMember() {
     this.channelMemberOpen = !this.channelMemberOpen;
   }
 
-  closeAllComponents(){
+  closeAllComponents() {
     this.addNewChannelMemberOpen = false;
     this.channelInfoOpen = false;
     this.channelMemberOpen = false;

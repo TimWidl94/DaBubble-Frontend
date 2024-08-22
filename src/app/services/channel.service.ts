@@ -13,6 +13,7 @@ export class ChannelService {
 
   private apiUrl = environment.baseUrl;
 
+  private privateChannels: Channel []= [];
   private allChannel: any[] = [];
   private createChannelSubject = new BehaviorSubject<any>(null);
   public createChannel$ = this.createChannelSubject.asObservable();
@@ -32,7 +33,7 @@ export class ChannelService {
   }
 
   createChannel(channelData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/channel`, channelData);
+    return this.http.put(`${this.apiUrl}/channel/`, channelData);
   }
 
   loadAllChannels() {
@@ -67,5 +68,15 @@ export class ChannelService {
 
   updateChannel(channel: Channel, channelId:number): Observable<any>{
     return this.http.put(`${this.apiUrl}/channel/${channelId}`, channel);
+  }
+
+  fetchPrivatChannel(): Observable<Channel[]>{
+    return this.http.get<Channel[]>(`${this.apiUrl}/private-channel/`).pipe(
+      tap((data)=> (this.privateChannels = data))
+    )
+  }
+
+  createPrivateChannel(channelData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/private-channel/`, channelData);
   }
 }

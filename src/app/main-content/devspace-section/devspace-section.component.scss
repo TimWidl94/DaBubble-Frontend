@@ -8,7 +8,7 @@ section {
   padding: 32px 30px;
   flex-direction: column;
   border-radius: 30px;
-  height: calc(100% - 16px - 2* 32px);
+  height: calc(100% - 16px - 2 * 32px);
   width: calc(20% - 16px);
   width: 100%;
   max-width: 270px;
@@ -102,18 +102,18 @@ section {
 .single-channel-box:hover {
   background-color: $BGShadow;
   cursor: pointer;
-  >div{
+  > div {
     background-image: url("./../../../assets/icons/tag_blue.svg");
   }
 }
 
-.active{
+.active {
   background-color: $BGShadow;
   color: $PurpleFont;
-  >div{
+  > div {
     background-image: url("./../../../assets/icons/tag_blue.svg");
   }
-  >span{
+  > span {
     font-weight: 700;
   }
 }
@@ -273,12 +273,17 @@ section {
     margin-left: 24px;
     &:hover {
       background-color: $BGShadow;
+      cursor: pointer;
     }
-    > span {
-      text-align: start;
-      font-size: 18px;
-      font-family: $nunito;
-      line-height: 24.55px;
+    > div {
+      @include dFlex();
+      width: 100%;
+      > span {
+        text-align: start;
+        font-size: 18px;
+        font-family: $nunito;
+        line-height: 24.55px;
+      }
     }
     > img {
       width: 50px;

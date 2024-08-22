@@ -23,7 +23,7 @@ export class MessageComponent {
     // console.log('geladener User:', this.user)
   }
 
-  user: User | undefined;
+  user: User | null = null;
 
   @Input() message: Message = {
     id: 0,

@@ -13,8 +13,6 @@ import { User } from '../../../models/user.model';
   styleUrl: './create-new-channel.component.scss',
 })
 export class CreateNewChannelComponent {
-
-
   openChannelBox: boolean = true;
   openEditUserBox: boolean = false;
   selectUser: boolean = false;
@@ -32,8 +30,8 @@ export class CreateNewChannelComponent {
 
   userImages: any[] = [];
 
-  user!: User;
-  allUser: User [] = [];
+  user: User | null = null;
+  allUser: User[] = [];
   specificUser: any[] = [];
   selectedUser: any[] = [];
 
@@ -183,15 +181,17 @@ export class CreateNewChannelComponent {
   checkEnableBtn() {
     if (this.selectedUser.length >= 1) {
       this.btnDisabled = true;
-    } else if (this.inputAllMember){
+    } else if (this.inputAllMember) {
       this.btnDisabled = true;
-    } else { this.btnDisabled = false}
+    } else {
+      this.btnDisabled = false;
+    }
   }
 
   //// create new Channel functions  ////
 
   createNewChannel(): void {
-    let channelData  =  this.getChannelData();
+    let channelData = this.getChannelData();
 
     // Senden der Daten an den Service
     this.channelService.createChannel(channelData).subscribe(
@@ -216,11 +216,11 @@ export class CreateNewChannelComponent {
       channelMembers = this.selectedUser.map((user) => user.id);
     }
 
-    const channelData = {
+    let channelData = {
       channelName: this.channelName,
       channelDescription: this.channelDescription,
       channelMembers: channelMembers,
-      createdFrom: this.user.first_name + ' ' + this.user.last_name,
+      createdFrom: this.user?.first_name + ' ' + this.user?.last_name,
     };
 
     return channelData;

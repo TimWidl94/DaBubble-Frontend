@@ -10,17 +10,12 @@ import { NewChannelMemberComponent } from '../new-channel-member/new-channel-mem
   standalone: true,
   imports: [CommonModule],
   templateUrl: './channel-member.component.html',
-  styleUrl: './channel-member.component.scss'
+  styleUrl: './channel-member.component.scss',
 })
 export class ChannelMemberComponent {
+  newMemberBtnHovered: boolean = false;
 
-  newMemberBtnHovered:boolean = false;
-
-    constructor(
-      private chatSection: ChatSectionComponent,
-    ){
-
-    }
+  constructor(private chatSection: ChatSectionComponent) {}
 
   @Input() channel: Channel = {
     id: 0,
@@ -31,19 +26,24 @@ export class ChannelMemberComponent {
     createdFrom: '',
   };
 
-  @Input() allUser: any[] = [];
+  @Input() allUser: User[] = [
+    {
+      id: 0,
+      first_name: '',
+      last_name: '',
+      email: '',
+      imagepath: '',
+      image: '',
+    },
+  ];
 
+  ngOnInit() {}
 
-  ngOnInit(){
-    console.log(this.channel);
-    console.log(this.allUser);
-  }
-
-  closeChannelMember(){
+  closeChannelMember() {
     this.chatSection.channelMemberOpen = false;
   }
 
-  addNewChannelMember(){
+  addNewChannelMember() {
     this.chatSection.channelMemberOpen = false;
     this.chatSection.addNewChannelMemberOpen = true;
   }

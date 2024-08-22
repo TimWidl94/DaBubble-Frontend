@@ -21,7 +21,7 @@
     <img [src]="menuIconClose" alt="openDevspaceIcon" />
   </div>
   <div class="main-sections">
-    <app-devspace-section *ngIf="devspaceOpen"></app-devspace-section>
-    <app-chat-section *ngIf="chatChannelOpen"></app-chat-section>
+    <app-devspace-section *ngIf="devspaceOpen" [user]="user" ></app-devspace-section>
+    <app-chat-section *ngIf="chatChannelOpen" [users]="users"></app-chat-section>
   </div>
 </section>

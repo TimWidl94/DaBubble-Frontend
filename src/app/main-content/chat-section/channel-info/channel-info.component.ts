@@ -41,9 +41,14 @@ export class ChannelInfoComponent {
     id: 0,
     first_name: '',
     last_name: '',
+    email: '',
+    imagepath: '',
+    image: '',
   };
 
   ngOnInit(){
+    console.log('channel-info:', this.user)
+    console.log('channel-info:', this.channel)
   }
 
   closeEditOpen(){

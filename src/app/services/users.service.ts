@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { forkJoin } from 'rxjs';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,14 @@ export class UsersService {
     this.loadUserImage();
   }
 
-  private users: any[] = [];
+  private users: User[] = [];
   private userImages: any[] = [];
   private apiUrl = environment.baseUrl;
 
-  private userSubject = new BehaviorSubject<any>(null);
+  private userSubject = new BehaviorSubject<User | null>(null);
   public user$ = this.userSubject.asObservable();
 
-  private allUserSubject = new BehaviorSubject<any[]>([]);
+  private allUserSubject = new BehaviorSubject<User[]>([]);
   public allUser$ = this.allUserSubject.asObservable();
 
   private userImageSubject = new BehaviorSubject<any>(null);
@@ -55,7 +56,7 @@ export class UsersService {
     );
   }
 
-  getUsers(): any[] {
+  getUsers(): User[] {
     return this.users;
   }
 
@@ -114,11 +115,11 @@ export class UsersService {
   // Methode, um die Benutzerbilder den Benutzern zuzuordnen
   private setUserImageToUser() {
     for (let i = 0; i < this.users.length; i++) {
-      const user = this.users[i];
-      const userid = user.id;
+      let user = this.users[i];
+      let userid = user.id;
       for (let x = 0; x < this.userImages.length; x++) {
-        const userImage = this.userImages[x];
-        const userImgId = userImage.user;
+        let userImage = this.userImages[x];
+        let userImgId = userImage.user;
         if (userid === userImgId) {
           user.imagepath = userImage.image_path;
           user.image = userImage.image;

@@ -43,8 +43,8 @@ export class NewChannelMemberComponent {
   @Input() allUser: User[] = [];
 
   ngOnInit() {
-    console.log(this.allUser);
-    console.log(this.channel);
+    // console.log(this.allUser);
+    // console.log(this.channel);
   }
 
   searchSpecificUser() {
