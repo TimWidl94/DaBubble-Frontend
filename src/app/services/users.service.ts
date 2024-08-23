@@ -14,6 +14,9 @@ export class UsersService {
     this.loadUserFromToken();
     this.loadAllUser();
     this.loadUserImage();
+    if(this.users){
+      this.loadAndCombineUsersAndImages();
+    }
   }
 
   private users: User[] = [];

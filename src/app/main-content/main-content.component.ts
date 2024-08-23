@@ -49,6 +49,8 @@ export class MainContentComponent {
     });
   }
 
+
+
   onHoverDevspace(isHovered: boolean) {
     this.isHoveredDevspaceClose = isHovered;
     if (!this.isHoveredDevspaceClose) {

@@ -26,19 +26,21 @@ export class DevspaceSectionComponent implements OnInit {
     private userService: UsersService,
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   isHoveredChannel: boolean = false;
   isHoveredDirectMessage: boolean = false;
   isHoveredNewChannel: boolean = false;
-  users: User[] = [];
+  // users: User[] = [];
   showUser: boolean = false;
   openCreateChannel: boolean = false;
   channels: Channel[] = [];
-  privatChannels: Channel[] = [];
   channelsOpen: boolean = false;
   activeBox: HTMLElement | null = null;
+  isPrivatChannelExist: boolean = false;
+  privateChannelId: number = 0 ;
+  privatChatPartner: User | null = null;
 
   @Input() user: User = {
     id: 0,
@@ -49,27 +51,26 @@ export class DevspaceSectionComponent implements OnInit {
     image: '',
   };
 
+  @Input() users: User [] = [];
+
   ngOnInit(): void {
-    this.userService.loadAndCombineUsersAndImages(); // Lädt Benutzer und Bilder und kombiniert sie
+    // this.userService.loadAndCombineUsersAndImages(); // Lädt Benutzer und Bilder und kombiniert sie
 
-    this.userService.allUser$.subscribe((users) => {
-      this.users = users;
-      this.cdRef.detectChanges(); // View aktualisieren, um neue Daten anzuzeigen
-    });
-
-    this.channelService.fetchAllChannel().subscribe((channels) => {
-      this.channels = channels;
-    });
-
-    this.channelService.fetchPrivatChannel().subscribe((privatChannels) => {
-      this.privatChannels = privatChannels;
-      if (this.privatChannels) {
-        console.log('devspace:', this.privatChannels);
-      }
-    });
+    // this.userService.allUser$.subscribe((users) => {
+      // this.users = users;
+      // this.cdRef.detectChanges(); // View aktualisieren, um neue Daten anzuzeigen
+    // });
+    this.fetchAllChannel();
 
     this.loadNewChannelOpen();
-    console.log(this.user);
+    // console.log(this.user);
+  }
+
+  fetchAllChannel() {
+    this.channelService.fetchAllChannel().subscribe((channels) => {
+      this.channels = channels;
+      // console.log(this.channels);
+    });
   }
 
   newChannelOpen() {
@@ -109,6 +110,11 @@ export class DevspaceSectionComponent implements OnInit {
     this.messageService.getMessages(channelId);
   }
 
+  openPrivatChannel(channelId: number) {
+    this.channelService.loadSelectedPrivatChannel(channelId);
+    this.messageService.getMessages(channelId);
+  }
+
   onBoxClick(event: MouseEvent): void {
     const target = event.currentTarget as HTMLElement;
 
@@ -121,60 +127,66 @@ export class DevspaceSectionComponent implements OnInit {
     this.activeBox = target;
   }
 
-  createPrivatChannel(user: User): void {
-    if (!this.checkIfPrivatChannelExist(user)) {
-      let privateChannelData = this.getPrivatChannelData(user);
-
-      this.channelService
-        .createPrivateChannel(privateChannelData)
-        .subscribe((response) => {
-          console.log('Privater Channel erfolgreich erstellt:', response);
-        });
-    } else {
-      let channelId = this.checkIfPrivatChannelExist(user);
-      if(channelId){
-        this.openChannel(channelId);
-      }
-      console.log(channelId);
-    }
-  }
-
   getPrivatChannelData(user: User) {
     let channelMembers = [];
+
     channelMembers.push(this.user.id);
     channelMembers.push(user.id);
-    // console.log(channelMembers);
+
     let channelData = {
-      channelName: 'PrivatChannel',
-      channelDescription: 'this is a privat Channel',
+      channelName: user.first_name + ' ' + user.last_name,
+      channelDescription: 'Privat Channel',
       channelMembers: channelMembers,
-      createdFrom: this.user.first_name + ' ' + this.user.last_name,
+      createdFrom: this.user?.first_name + ' ' + this.user?.last_name,
+      privateChannel: true,
     };
-    // console.log(channelData);
-    return channelData;
+    this.createNewChannel(channelData, user);
   }
 
-  checkIfPrivatChannelExist(user: User) {
-    for (let channel of this.privatChannels) {
-      // Prüfe, ob der Kanal genau 2 Mitglieder hat
-      if (channel.channelMembers.length === 2) {
-        // Sortiere die Mitglieder-IDs im Kanal
-        const sortedMemberIds = channel.channelMembers.sort((a, b) => a - b);
-        // Sortiere die zu prüfenden IDs (this.user.id und userId)
-        const sortedGivenIds = [this.user.id, user.id].sort((a, b) => a - b);
+  createNewChannel(channelData: any, user: User): void {
+    this.channelService.createChannel(channelData).subscribe(
+      (response) => {
+        // console.log('Channel erfolgreich erstellt:', response);
+        this.fetchAllChannel();
+        // console.log(
+          // 'channels nach dem erstellen eines privat channels:',
+          // this.channels
+        // );
+        this.checkIfChannelExist(user);
+      },
+      (error) => {
+        console.error('Fehler beim Erstellen des Channels:', error);
+      }
+    );
+  }
 
-        // Vergleiche die sortierten Arrays
+  checkIfChannelExist(user: User) {
+    for (let channel of this.channels) {
+      if (channel.privateChannel) {
         if (
-          sortedMemberIds[0] === sortedGivenIds[0] &&
-          sortedMemberIds[1] === sortedGivenIds[1]
+          channel.channelMembers.includes(user.id) &&
+          channel.channelMembers.includes(this.user.id)
         ) {
-          console.log('Channel found with ID:', channel.id);
-          return channel.id; // Kanal mit den gleichen Mitgliedern gefunden, gib die channel.id zurück
+          // console.log('channel exisitert');
+          this.openChannel(channel.id);
+          this.privateChannelId = channel.id;
+          console.log('privatChatPartner:',this.privatChatPartner);
+          return true;
         }
       }
     }
-    // Kein übereinstimmender Kanal gefunden
-    console.log('No matching channel found');
-    return false; // Gib null zurück, wenn kein Kanal gefunden wurde
+    return false;
   }
+
+  createAndCheckHelpFunction(user:User){
+    if(this.checkIfChannelExist(user)){
+      this.openChannel(this.privateChannelId);
+      console.log('geöffneter Nutzer:',user);
+    } if(!this.checkIfChannelExist(user)){
+      this.getPrivatChannelData(user);
+    }
+
+
+  }
+
 }

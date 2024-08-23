@@ -35,6 +35,7 @@ export class ChannelInfoComponent {
     channelMembers: [],
     messages: [],
     createdFrom: '',
+    privateChannel: false,
   };
 
   @Input() user: User = {

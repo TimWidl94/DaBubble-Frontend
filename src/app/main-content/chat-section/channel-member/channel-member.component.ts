@@ -24,6 +24,7 @@ export class ChannelMemberComponent {
     channelMembers: [],
     messages: [],
     createdFrom: '',
+    privateChannel: false,
   };
 
   @Input() allUser: User[] = [

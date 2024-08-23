@@ -7,4 +7,6 @@ export interface Channel {
   channelMembers: number[];
   messages: Message [];
   createdFrom: string;
+  channelPartner?: number;
+  privateChannel: boolean;
 }

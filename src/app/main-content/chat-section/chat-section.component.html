@@ -6,19 +6,39 @@
         (mouseover)="onHover(true)"
         (mouseleave)="onHover(false)"
         (click)="openChannelEditMenu()"
+        *ngIf="!channel.privateChannel"
       >
         <div
+          *ngIf="!channel.privateChannel"
           class="chat-tag-icon"
           [class.chat-tag-icon-hovered]="channelNameHovered"
         ></div>
-        <span>{{ channel.channelName }}</span>
+
+        <span *ngIf="!channel.privateChannel">{{ channel.channelName }}</span>
+
         <div
           class="chat-arrowdown-icon"
           [class.chat-arrow-icon-hovered]="channelNameHovered"
         ></div>
       </div>
+      <div
+        *ngIf="channel.privateChannel"
+        class="chat-name-box"
+        (mouseover)="onHover(true)"
+        (mouseleave)="onHover(false)"
+        (click)="openProfilInformation()"
+      >
+        <img
+          src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}"
+          class="privat-channel-user-icon"
+          alt="user-image"
+        />
+        <span *ngIf="channel.privateChannel"
+          >{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</span
+        >
+      </div>
       <div class="fill-box"></div>
-      <div>
+      <div *ngIf="!channel.privateChannel">
         <div class="users-avatars-box">
           <div class="user-avatars">
             <div
@@ -74,6 +94,18 @@
       </div>
     </div>
 
+    <div *ngIf="channel.privateChannel && messages.length == 0" class="privat-channel-message-box">
+      <div class="privat-channel-message-header-box">
+        <img src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}" alt="channelPartner image">
+        <span>{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</span>
+      </div>
+      <div class="privat-channel-message-infotext-box">
+        <span>Diese Unterhaltung findet nur zwischen </span>
+        <button>&#64;{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</button>
+        <span>und dir statt.</span>
+      </div>
+    </div>
+
     <div class="chat-new-message-box">
       <form action="">
         <textarea
@@ -98,6 +130,7 @@
 </section>
 <div
   class="fullsize-shadow"
-  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
+  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen || profilInformationOpen"
   (click)="closeAllComponents()"
 ></div>
+<app-profil-info [user]="chatPartner" *ngIf="profilInformationOpen"></app-profil-info>

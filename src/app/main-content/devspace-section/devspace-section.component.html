@@ -68,7 +68,7 @@
       </div>
     </div>
     <div class="user-list" *ngIf="showUser">
-      <div *ngFor="let singleUser of users; let i = index" (click)="createPrivatChannel(singleUser)">
+      <div *ngFor="let singleUser of users; let i = index" (click)="createAndCheckHelpFunction(singleUser)">
         <img [src]="singleUser.imagepath || singleUser.image" alt="User Image" />
         <div>
           <span>{{ singleUser.first_name }} {{ singleUser.last_name }}</span>

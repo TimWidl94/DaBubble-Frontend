@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { tap } from 'rxjs/operators';
 import { Channel } from '../models/channel.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,9 @@ export class ChannelService {
   private selectedChannelSubject = new BehaviorSubject<Channel | null>(null);
   public selectedChannel$ = this.selectedChannelSubject.asObservable();
 
+  private selectedPrivatChannelSubject = new BehaviorSubject<Channel | null>(null);
+  public selectedPrivatChannel$ = this.selectedPrivatChannelSubject.asObservable();
+
   setcreateChannelScreen(value: boolean) {
     this.createChannelSubject.next(value);
   }
@@ -33,7 +37,7 @@ export class ChannelService {
   }
 
   createChannel(channelData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/channel/`, channelData);
+    return this.http.post(`${this.apiUrl}/channel/`, channelData);
   }
 
   loadAllChannels() {
@@ -60,6 +64,18 @@ export class ChannelService {
     );
   }
 
+  loadSelectedPrivatChannel(channelId: number){
+    this.http.get<any>(`${this.apiUrl}/private-channel/${channelId}`).subscribe(
+      //richtige channel id hinzufügen
+      (channel) => {
+        this.selectedPrivatChannelSubject.next(channel);
+      },
+      (error) => {
+        console.error('Fehler beim Laden des Channels:', error);
+      }
+    );
+  }
+
   fetchSingleChannel(channelId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).pipe(
       tap((data) => (this.allChannel = data)) // Channels in das Array speichern
@@ -68,15 +84,5 @@ export class ChannelService {
 
   updateChannel(channel: Channel, channelId:number): Observable<any>{
     return this.http.put(`${this.apiUrl}/channel/${channelId}`, channel);
-  }
-
-  fetchPrivatChannel(): Observable<Channel[]>{
-    return this.http.get<Channel[]>(`${this.apiUrl}/private-channel/`).pipe(
-      tap((data)=> (this.privateChannels = data))
-    )
-  }
-
-  createPrivateChannel(channelData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/private-channel/`, channelData);
   }
 }

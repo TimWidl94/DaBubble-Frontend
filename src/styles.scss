@@ -163,7 +163,7 @@ body {
 }
 
 .btn-purple {
-  @include dFlex();
+  @include dFlex($g: 10px);
   height: 100%;
   max-height: 49px;
   padding: 12px 25px;
@@ -188,6 +188,12 @@ body {
       opacity: 1;
     }
   }
+}
+
+.btn-icon{
+  width: 20px;
+  height: 18.61px;
+
 }
 
 .transform90deg {

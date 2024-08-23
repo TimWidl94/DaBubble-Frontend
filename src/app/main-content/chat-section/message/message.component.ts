@@ -21,6 +21,7 @@ export class MessageComponent {
       this.user = user;
     });
     // console.log('geladener User:', this.user)
+    // console.log(this.message);
   }
 
   user: User | null = null;

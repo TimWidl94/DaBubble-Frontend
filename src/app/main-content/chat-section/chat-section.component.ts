@@ -18,6 +18,7 @@ import { combineLatest } from 'rxjs';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
+import { ProfilInfoComponent } from "./profil-info/profil-info.component";
 
 @Component({
   selector: 'app-chat-section',
@@ -29,7 +30,8 @@ import { ChannelMemberComponent } from './channel-member/channel-member.componen
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
-  ],
+    ProfilInfoComponent
+],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -45,6 +47,9 @@ export class ChatSectionComponent {
         this.user = user;
       }
     });
+    if (this.channel) {
+      console.log('chat-section:', this.channel);
+    }
   }
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
@@ -52,6 +57,7 @@ export class ChatSectionComponent {
   channel: Channel | null = null;
   // users: User[] = [];
   usersFromChannel: User[] = [];
+  chatPartner: User | null = null;
 
   newMessage: string = '';
 
@@ -62,6 +68,7 @@ export class ChatSectionComponent {
 
   addNewChannelMemberOpen: boolean = false;
   channelMemberOpen: boolean = false;
+  profilInformationOpen: boolean = false;
 
   previousMessagesLength = 0;
 
@@ -112,7 +119,7 @@ export class ChatSectionComponent {
       if (this.users) {
         this.loadUserFromChannel();
         if (this.channel) {
-          this.startPolling(this.channel.id);
+          // this.startPolling(this.channel.id);
         }
       }
     });
@@ -139,15 +146,15 @@ export class ChatSectionComponent {
   }
 
   loadUserFromChannel() {
-    this.usersFromChannel = [];
     if (this.channel && this.channel.channelMembers) {
+      this.usersFromChannel = [];
       for (let user of this.users) {
         if (this.channel.channelMembers.includes(user.id)) {
           this.usersFromChannel.push(user);
         }
       }
     }
-    console.log('chat-section:', this.usersFromChannel);
+    this.checkForPrivatChannelPartner();
   }
 
   onHover(isHovered: boolean) {
@@ -238,5 +245,20 @@ export class ChatSectionComponent {
     this.addNewChannelMemberOpen = false;
     this.channelInfoOpen = false;
     this.channelMemberOpen = false;
+    this.profilInformationOpen = false;
   }
+
+  checkForPrivatChannelPartner(){
+    for(let user of this.usersFromChannel){
+      if(user.id != this.user.id){
+        this.chatPartner = user;
+        console.log('user match:', user)
+      }
+    }
+  }
+
+  openProfilInformation(){
+    this.profilInformationOpen = !this.profilInformationOpen;
+  }
+
 }

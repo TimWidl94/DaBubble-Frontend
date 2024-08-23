@@ -17,6 +17,7 @@ section {
   background-color: $White;
   border-radius: 30px;
   flex-direction: column;
+  position: relative;
 }
 
 .chat-header-box {
@@ -55,8 +56,8 @@ section {
   width: calc(100% - 2 * 45px);
   position: relative;
   > form {
-     @include dFlex();
-     width: 100%;
+    @include dFlex();
+    width: 100%;
     > textarea {
       width: 100%;
       border: 1px solid $lightPurple;
@@ -212,53 +213,100 @@ section {
   background-image: url("./../../../assets/icons/arrow_down_blue.svg");
 }
 
-app-message{
+app-message {
   width: 100%;
   height: 100%;
   @include dFlex($g: 5px);
 }
 
-.messages-box{
+.messages-box {
   @include dFlex($g: 5px, $jc: start);
   width: 100%;
   flex-direction: column;
   overflow: auto;
   scroll-behavior: smooth;
+  height: 100%;
   &::-webkit-scrollbar {
     display: none;
   }
-  >div{
+  > div {
     @include dFlex();
     width: 100%;
     flex-direction: column;
   }
 }
 
-.date-outside-box{
+.date-outside-box {
   @include dFlex();
   width: 95%;
   margin: 20px 0;
 }
 
-.date-box{
-  @include dFlex($g:10px);
- border-radius: 30px;
- padding: 5px 15px;
- border: 1px solid $InputBorder;
- font-family: $nunito;
- font-weight: 400;
- font-size: 18px;
- line-height: 24.55px;
-
+.date-box {
+  @include dFlex($g: 10px);
+  border-radius: 30px;
+  padding: 5px 15px;
+  border: 1px solid $InputBorder;
+  font-family: $nunito;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24.55px;
 }
 
-.line-box{
-flex: 1;
-@include dFlex();
-border: 1px solid $InputBorder;
+.line-box {
+  flex: 1;
+  @include dFlex();
+  border: 1px solid $InputBorder;
 }
 
-.fill-box{
+.fill-box {
   @include dFlex();
   flex: 1;
+}
+
+.privat-channel-user-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+}
+
+.privat-channel-message-box {
+  @include dFlex($g: 10px, $ai: start, $jc: start);
+  flex-direction: column;
+  width: 90%;
+  position: absolute;
+  bottom: 210px;
+}
+
+.privat-channel-message-header-box {
+  @include dFlex($ai: end, $jc: end, $g: 10px);
+
+  > img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+  }
+  > span {
+    font-family: $nunito;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32.74px;
+  }
+}
+
+.privat-channel-message-infotext-box {
+  @include dFlex();
+  font-family: $nunito;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27.28px;
+  > button {
+    background-color: $White;
+    border: none;
+    color: $PurpleFont;
+    font-family: $nunito;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27.28px;
+  }
 }

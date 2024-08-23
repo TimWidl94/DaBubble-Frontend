@@ -190,10 +190,7 @@ export class CreateNewChannelComponent {
 
   //// create new Channel functions  ////
 
-  createNewChannel(): void {
-    let channelData = this.getChannelData();
-
-    // Senden der Daten an den Service
+  createNewChannel(channelData:any): void {
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
         console.log('Channel erfolgreich erstellt:', response);
@@ -221,8 +218,9 @@ export class CreateNewChannelComponent {
       channelDescription: this.channelDescription,
       channelMembers: channelMembers,
       createdFrom: this.user?.first_name + ' ' + this.user?.last_name,
+      privatChannel: false,
     };
 
-    return channelData;
+    this.createNewChannel(channelData);
   }
 }
