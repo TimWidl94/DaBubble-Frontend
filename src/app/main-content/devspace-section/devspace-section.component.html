@@ -30,14 +30,16 @@
       <button class="new-channel-btn" (click)="newChannelOpen()"></button>
     </div>
     <div class="channels" *ngIf="channelsOpen">
-      <div
-        *ngFor="let channel of channels"
-        class="single-channel-box"
-        (click)="onBoxClick($event); openChannel(channel.id)"
-      >
-        <div></div>
-        <span>{{ channel.channelName }}</span>
-      </div>
+      <ng-container *ngFor="let channel of channels">
+        <div
+          class="single-channel-box"
+          (click)="onBoxClick($event); openChannel(channel.id)"
+          *ngIf="!channel.privateChannel"
+        >
+          <div></div>
+          <span>{{ channel.channelName }}</span>
+        </div>
+      </ng-container>
       <div
         class="add-new-channel-box"
         (mouseover)="onHoverNewChannel(true)"
@@ -68,11 +70,17 @@
       </div>
     </div>
     <div class="user-list" *ngIf="showUser">
-      <div *ngFor="let singleUser of users; let i = index" (click)="createAndCheckHelpFunction(singleUser)">
-        <img [src]="singleUser.imagepath || singleUser.image" alt="User Image" />
+      <div
+        *ngFor="let singleUser of users; let i = index"
+        (click)="createAndCheckHelpFunction(singleUser)"
+      >
+        <img
+          [src]="singleUser.imagepath || singleUser.image"
+          alt="User Image"
+        />
         <div>
           <span>{{ singleUser.first_name }} {{ singleUser.last_name }}</span>
-          <span *ngIf="singleUser.id === user.id" >(Du)</span>
+          <span *ngIf="singleUser.id === user.id">(Du)</span>
         </div>
       </div>
     </div>

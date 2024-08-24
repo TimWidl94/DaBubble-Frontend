@@ -26,7 +26,7 @@ export class DevspaceSectionComponent implements OnInit {
     private userService: UsersService,
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   isHoveredChannel: boolean = false;
@@ -39,7 +39,7 @@ export class DevspaceSectionComponent implements OnInit {
   channelsOpen: boolean = false;
   activeBox: HTMLElement | null = null;
   isPrivatChannelExist: boolean = false;
-  privateChannelId: number = 0 ;
+  privateChannelId: number = 0;
   privatChatPartner: User | null = null;
 
   @Input() user: User = {
@@ -51,19 +51,11 @@ export class DevspaceSectionComponent implements OnInit {
     image: '',
   };
 
-  @Input() users: User [] = [];
+  @Input() users: User[] = [];
 
   ngOnInit(): void {
-    // this.userService.loadAndCombineUsersAndImages(); // Lädt Benutzer und Bilder und kombiniert sie
-
-    // this.userService.allUser$.subscribe((users) => {
-      // this.users = users;
-      // this.cdRef.detectChanges(); // View aktualisieren, um neue Daten anzuzeigen
-    // });
     this.fetchAllChannel();
-
     this.loadNewChannelOpen();
-    // console.log(this.user);
   }
 
   fetchAllChannel() {
@@ -105,11 +97,6 @@ export class DevspaceSectionComponent implements OnInit {
     this.channelsOpen = !this.channelsOpen;
   }
 
-  openChannel(channelId: number) {
-    this.channelService.loadSelectedChannel(channelId);
-    this.messageService.getMessages(channelId);
-  }
-
   openPrivatChannel(channelId: number) {
     this.channelService.loadSelectedPrivatChannel(channelId);
     this.messageService.getMessages(channelId);
@@ -143,16 +130,16 @@ export class DevspaceSectionComponent implements OnInit {
     this.createNewChannel(channelData, user);
   }
 
+  openChannel(channelId: number) {
+    this.channelService.loadSelectedChannel(channelId);
+    this.messageService.getMessages(channelId);
+  }
+
   createNewChannel(channelData: any, user: User): void {
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
-        // console.log('Channel erfolgreich erstellt:', response);
-        this.fetchAllChannel();
-        // console.log(
-          // 'channels nach dem erstellen eines privat channels:',
-          // this.channels
-        // );
         this.checkIfChannelExist(user);
+        this.openChannel(response.id);
       },
       (error) => {
         console.error('Fehler beim Erstellen des Channels:', error);
@@ -161,16 +148,15 @@ export class DevspaceSectionComponent implements OnInit {
   }
 
   checkIfChannelExist(user: User) {
+    this.fetchAllChannel();
     for (let channel of this.channels) {
       if (channel.privateChannel) {
         if (
-          channel.channelMembers.includes(user.id) &&
-          channel.channelMembers.includes(this.user.id)
+          this.checkChannelIncludesUser(channel, user) ||
+          this.checkIfChannelIncludeSingleUser(channel, user)
         ) {
-          // console.log('channel exisitert');
           this.openChannel(channel.id);
           this.privateChannelId = channel.id;
-          console.log('privatChatPartner:',this.privatChatPartner);
           return true;
         }
       }
@@ -178,15 +164,38 @@ export class DevspaceSectionComponent implements OnInit {
     return false;
   }
 
-  createAndCheckHelpFunction(user:User){
-    if(this.checkIfChannelExist(user)){
-      this.openChannel(this.privateChannelId);
-      console.log('geöffneter Nutzer:',user);
-    } if(!this.checkIfChannelExist(user)){
-      this.getPrivatChannelData(user);
+  checkChannelIncludesUser(channel: Channel, user: User) {
+    if (
+      channel.channelMembers.includes(user.id) &&
+      channel.channelMembers.includes(this.user.id) &&
+      user.id != this.user.id
+    ) {
+      return true;
+    } else {
+      return false;
     }
-
-
   }
 
+  checkIfChannelIncludeSingleUser(channel: Channel, user: User) {
+    if (
+      channel.channelMembers.length <= 1 &&
+      channel.channelMembers.includes(user.id) &&
+      channel.channelMembers.includes(this.user.id)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  createAndCheckHelpFunction(user: User) {
+    if (this.checkIfChannelExist(user)) {
+      this.channelService.fetchAllChannel();
+      this.openChannel(this.privateChannelId);
+      console.log('geöffneter Nutzer:', user);
+    }
+    if (!this.checkIfChannelExist(user)) {
+      this.getPrivatChannelData(user);
+    }
+  }
 }

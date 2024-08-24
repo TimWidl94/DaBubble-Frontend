@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-header-main-content',
@@ -21,7 +22,7 @@ export class HeaderMainContentComponent implements OnInit {
     private userService: UsersService
   ) {}
 
-  user: any;
+  user: User | null = null;
   profil_img: string = 'assets/img/avatar/avatar_empty.svg';
   menuOpen: boolean = false;
   profilOpen: boolean = false;
@@ -33,6 +34,7 @@ export class HeaderMainContentComponent implements OnInit {
   email: string = '';
 
   ngOnInit() {
+    this.userService.loadUserImage();
     this.userService.user$.subscribe((user) => {
       this.user = user;
       if (this.user) {
@@ -89,7 +91,7 @@ export class HeaderMainContentComponent implements OnInit {
       ...this.user,
       first_name: this.first_name,
       last_name: this.last_name,
-      email: this.user.email,
+      email: this.user?.email,
     };
     this.authService.updateUser(updatedUser).subscribe(
       (response) => {

@@ -11,12 +11,8 @@ import { User } from '../models/user.model';
 })
 export class UsersService {
   constructor(private http: HttpClient) {
+    this.loadAndCombineUsersAndImages();
     this.loadUserFromToken();
-    this.loadAllUser();
-    this.loadUserImage();
-    if(this.users){
-      this.loadAndCombineUsersAndImages();
-    }
   }
 
   private users: User[] = [];
@@ -43,19 +39,19 @@ export class UsersService {
       this.users = users;
       this.userImages = userImages;
       this.setUserImageToUser();
-      this.allUserSubject.next(this.users); // Aktualisierte Nutzerliste bereitstellen
+      this.allUserSubject.next(this.users); // Nur einmal aktualisieren
     });
   }
 
-  fetchUsers(): Observable<any> {
-    return this.http.get<any>('http://localhost:8000/users/').pipe(
-      tap((data) => (this.users = data)) // Nutzer in das Array speichern
+  private fetchUsers(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:8000/users/').pipe(
+      tap((data) => this.users = data)
     );
   }
 
-  fetchUserImage(): Observable<any> {
-    return this.http.get<any>('http://localhost:8000/api/images/').pipe(
-      tap((data) => (this.userImages = data)) // Nutzerbilder in das Array speichern
+  fetchUserImage(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8000/api/images/').pipe(
+      tap((data) => this.userImages = data)
     );
   }
 
@@ -117,17 +113,12 @@ export class UsersService {
 
   // Methode, um die Benutzerbilder den Benutzern zuzuordnen
   private setUserImageToUser() {
-    for (let i = 0; i < this.users.length; i++) {
-      let user = this.users[i];
-      let userid = user.id;
-      for (let x = 0; x < this.userImages.length; x++) {
-        let userImage = this.userImages[x];
-        let userImgId = userImage.user;
-        if (userid === userImgId) {
-          user.imagepath = userImage.image_path;
-          user.image = userImage.image;
-        }
+    this.users.forEach(user => {
+      const matchingImage = this.userImages.find(image => image.user === user.id);
+      if (matchingImage) {
+        user.imagepath = matchingImage.image_path;
+        user.image = matchingImage.image;
       }
-    }
+    });
   }
 }
