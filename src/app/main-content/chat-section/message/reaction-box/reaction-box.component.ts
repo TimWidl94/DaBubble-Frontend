@@ -9,36 +9,41 @@ import { User } from '../../../../models/user.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './reaction-box.component.html',
-  styleUrl: './reaction-box.component.scss'
+  styleUrl: './reaction-box.component.scss',
 })
 export class ReactionBoxComponent {
+  @Input() message!: Message;
+  user: User | null = null;
+  loggedInUser: boolean = false;
+  editMessageBox: boolean = false;
+  hoveredReactionEmoji: boolean = false;
+  hoveredMessageEmoji: boolean = false;
 
-@Input() message!: Message;
-user: User | null = null;
-loggedInUser: boolean = false;
-editMessageBox: boolean = false;
+  constructor(private usersService: UsersService) {}
 
-
-constructor(private usersService: UsersService){
-}
-
-ngOnInit(){
-  console.log(this.message);
-  this.checkIfMessageUser();
-}
-
-checkIfMessageUser(){
-  this.usersService.user$.subscribe((user) => {
-    this.user = user;
-  });
-  if(this.user!.id == this.message.sender){
-    this.loggedInUser = !this.loggedInUser;
+  ngOnInit() {
+    console.log(this.message);
+    this.checkIfMessageUser();
   }
-}
 
-isHoveredEditMessageBox(hovered:boolean){
-  this.editMessageBox = hovered;
-}
+  checkIfMessageUser() {
+    this.usersService.user$.subscribe((user) => {
+      this.user = user;
+    });
+    if (this.user!.id == this.message.sender) {
+      this.loggedInUser = !this.loggedInUser;
+    }
+  }
 
+  isHoveredEditMessageBox(hovered: boolean) {
+    this.editMessageBox = hovered;
+  }
 
+  isHoveredReactionEmoji(hovered: boolean) {
+    this.hoveredReactionEmoji = hovered;
+  }
+
+  isHoveredMessageEmoji(hovered: boolean) {
+    this.hoveredMessageEmoji = hovered;
+  }
 }

@@ -11,11 +11,31 @@
   <button (mouseenter)="isHoveredEditMessageBox(false)">
     <img src="assets/icons/emoji_raise_hands.svg" alt="emoji raise hands" />
   </button>
-  <button (mouseenter)="isHoveredEditMessageBox(false)">
-    <img src="assets/icons/add_reaction_black.svg" alt="add reaction" />
+  <button
+    (mouseenter)="isHoveredEditMessageBox(false); isHoveredReactionEmoji(true)"
+    (mouseleave)="isHoveredReactionEmoji(false)"
+  >
+    <img
+      [src]="
+        hoveredReactionEmoji
+          ? 'assets/icons/add_reaction_blue.svg'
+          : 'assets/icons/add_reaction_black.svg'
+      "
+      alt="add reaction"
+    />
   </button>
-  <button (mouseenter)="isHoveredEditMessageBox(false)">
-    <img src="assets/icons/comment_black.svg" alt="comment" />
+  <button
+    (mouseenter)="isHoveredEditMessageBox(false); isHoveredMessageEmoji(true)"
+    (mouseleave)="isHoveredMessageEmoji(false)"
+  >
+    <img
+      [src]="
+        hoveredMessageEmoji
+          ? 'assets/icons/comment_blue.svg'
+          : 'assets/icons/comment_black.svg'
+      "
+      alt="comment"
+    />
   </button>
   <button *ngIf="loggedInUser" (mouseenter)="isHoveredEditMessageBox(true)">
     <img src="assets/icons/dots_lineup.svg" alt="uplined dots" />
