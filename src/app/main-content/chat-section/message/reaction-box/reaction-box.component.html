@@ -1,0 +1,30 @@
+<div
+  class="reaction-box"
+  [ngClass]="{
+    scaleX: loggedInUser
+  }"
+  (mouseleave)="isHoveredEditMessageBox(false)"
+>
+  <button (mouseenter)="isHoveredEditMessageBox(false)">
+    <img src="assets/icons/emoji_check_green.svg" alt="emoji check green" />
+  </button>
+  <button (mouseenter)="isHoveredEditMessageBox(false)">
+    <img src="assets/icons/emoji_raise_hands.svg" alt="emoji raise hands" />
+  </button>
+  <button (mouseenter)="isHoveredEditMessageBox(false)">
+    <img src="assets/icons/add_reaction_black.svg" alt="add reaction" />
+  </button>
+  <button (mouseenter)="isHoveredEditMessageBox(false)">
+    <img src="assets/icons/comment_black.svg" alt="comment" />
+  </button>
+  <button *ngIf="loggedInUser" (mouseenter)="isHoveredEditMessageBox(true)">
+    <img src="assets/icons/dots_lineup.svg" alt="uplined dots" />
+  </button>
+  <div
+    class="btn-editMessage-box"
+    *ngIf="editMessageBox"
+    (mouseleave)="isHoveredEditMessageBox(false)"
+  >
+    <button>Nachricht bearbeiten</button>
+  </div>
+</div>

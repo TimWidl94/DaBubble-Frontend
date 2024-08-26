@@ -121,7 +121,7 @@ export class ChatSectionComponent {
         this.loadUserFromChannel();
         if (this.channel) {
           // this.startPolling(this.channel.id);
-          console.log('chat-section:', this.channel)
+          // console.log('chat-section:', this.channel)
         }
       }
     });
@@ -153,7 +153,7 @@ export class ChatSectionComponent {
       for (let user of this.users) {
         if (this.channel.channelMembers.includes(user.id)) {
           this.usersFromChannel.push(user);
-          console.log('chat-section usersFromChannel:', this.usersFromChannel)
+          // console.log('chat-section usersFromChannel:', this.usersFromChannel)
         }
       }
     }

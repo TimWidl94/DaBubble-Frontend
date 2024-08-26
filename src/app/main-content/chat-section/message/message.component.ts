@@ -3,11 +3,12 @@ import { Message } from '../../../models/message.model';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.model';
 import { UsersService } from '../../../services/users.service';
+import { ReactionBoxComponent } from "./reaction-box/reaction-box.component";
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactionBoxComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
@@ -42,6 +43,8 @@ export class MessageComponent {
     },
   };
 
+  reactionBox:boolean = false;
+
   getTimeFromTimestamp(): string {
     if (!this.message.timestamp) {
       return '';
@@ -58,5 +61,9 @@ export class MessageComponent {
     if (this.user?.id !== this.message.user?.id) {
       this.isHovered = isHovered;
     }
+  }
+
+  showReactionBox(isHovered: boolean){
+    this.reactionBox = !this.reactionBox
   }
 }

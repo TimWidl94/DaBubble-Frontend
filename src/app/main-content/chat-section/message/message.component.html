@@ -1,8 +1,8 @@
 <div
   class="chat-messages-box"
   [ngClass]="{ mirroring: message.user?.id === user?.id }"
-  (mouseenter)="hovered(true)"
-  (mouseleave)="hovered(false)"
+  (mouseenter)="hovered(true); showReactionBox(true)"
+  (mouseleave)="hovered(false); showReactionBox(false)"
 >
   <div class="left-content-box">
     <img
@@ -35,4 +35,5 @@
     </div>
     <div class="message-reaction-box"></div>
   </div>
+  <app-reaction-box *ngIf="reactionBox" [message]="message"></app-reaction-box>
 </div>

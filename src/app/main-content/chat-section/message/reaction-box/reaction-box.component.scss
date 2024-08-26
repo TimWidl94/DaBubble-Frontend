@@ -1,0 +1,59 @@
+@import "./../../../../../styles.scss";
+
+.reaction-box {
+  @include dFlex($g: 5px);
+  border: 1px solid $lightPurple;
+  padding: 3px 15px 3px 20px;
+  border-radius: 25px 25px 0 25px;
+  background-color: $White;
+  position: absolute;
+  right: 50px;
+  top: -30px;
+  > button {
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: $White;
+    &:hover {
+      background-color: $BGShadow;
+      cursor: pointer;
+    }
+  }
+}
+
+.scaleX {
+  transform: scaleX(-1);
+  border-radius: 25px 25px 25px 0;
+}
+
+.btn-editMessage-box {
+  @include dFlex($g: 15px);
+  position: absolute;
+  border: none;
+  background-color: $White;
+  padding: 10px 20px;
+  box-shadow: 0px 6px 14px 0px #00000033;
+  text-wrap: nowrap;
+  border-radius: 0px 30px 30px 30px;
+  bottom: -44px;
+  right: -260px;
+  > button {
+    @include dFlex();
+    font-family: $nunito;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 32.74px;
+    border: none;
+    background-color: $White;
+    border-radius: 100px;
+    padding: 10px 20px;
+    &:hover{
+      cursor: pointer;
+      background-color: $BGShadow;
+      color: $PurpleFont;
+    }
+  }
+}
+
