@@ -58,6 +58,7 @@ export class ChatSectionComponent {
   // users: User[] = [];
   usersFromChannel: User[] = [];
   chatPartner: User | null = null;
+  userId: number | null = null;
 
   newMessage: string = '';
 
@@ -261,7 +262,12 @@ export class ChatSectionComponent {
     }
   }
 
-  openProfilInformation(){
+  openProfilInformation(channelMemberId:number){
+    this.userId = channelMemberId;
+    this.profilInformationOpen = !this.profilInformationOpen;
+  }
+
+  closeProfilInformation(){
     this.profilInformationOpen = !this.profilInformationOpen;
   }
 

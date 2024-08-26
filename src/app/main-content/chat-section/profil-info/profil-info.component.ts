@@ -8,18 +8,29 @@ import { ChatSectionComponent } from '../chat-section.component';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profil-info.component.html',
-  styleUrl: './profil-info.component.scss'
+  styleUrl: './profil-info.component.scss',
 })
 export class ProfilInfoComponent {
+  constructor(private chatSection: ChatSectionComponent) {}
 
-  constructor(private chatSection: ChatSectionComponent){
+  @Input() userId: number | null = null;
+  @Input() users: User[] = [];
+  user: User | null = null;
 
+  ngOnInit() {
+    console.log('profil-info:', this.users);
+    this.checkForUser();
   }
 
-@Input() user: User | null = null;
+  closeProfilInformation() {
+    this.chatSection.closeProfilInformation();
+  }
 
-
-closeProfilInformation(){
-  this.chatSection.openProfilInformation();
-}
+  checkForUser() {
+    for (let user of this.users) {
+      if (user.id == this.userId) {
+        this.user = user;
+      }
+    }
+  }
 }

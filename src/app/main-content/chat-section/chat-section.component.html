@@ -26,7 +26,7 @@
         class="chat-name-box"
         (mouseover)="onHover(true)"
         (mouseleave)="onHover(false)"
-        (click)="openProfilInformation()"
+        (click)="openProfilInformation(this.chatPartner!.id)"
       >
         <img
           src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}"
@@ -130,7 +130,8 @@
 </section>
 <div
   class="fullsize-shadow"
-  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen || profilInformationOpen"
+  [class.fullsize-shadow-second-level]="profilInformationOpen"
+  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
   (click)="closeAllComponents()"
 ></div>
-<app-profil-info [user]="chatPartner" *ngIf="profilInformationOpen"></app-profil-info>
+<app-profil-info [users]="usersFromChannel" [userId]="userId" *ngIf="profilInformationOpen"></app-profil-info>

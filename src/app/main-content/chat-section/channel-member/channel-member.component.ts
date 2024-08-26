@@ -4,16 +4,18 @@ import { User } from '../../../models/user.model';
 import { ChatSectionComponent } from '../chat-section.component';
 import { CommonModule } from '@angular/common';
 import { NewChannelMemberComponent } from '../new-channel-member/new-channel-member.component';
+import { ProfilInfoComponent } from "../profil-info/profil-info.component";
 
 @Component({
   selector: 'app-channel-member',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProfilInfoComponent],
   templateUrl: './channel-member.component.html',
   styleUrl: './channel-member.component.scss',
 })
 export class ChannelMemberComponent {
   newMemberBtnHovered: boolean = false;
+  profilInformationOpen: boolean = false;
 
   constructor(private chatSection: ChatSectionComponent) {}
 
@@ -51,5 +53,9 @@ export class ChannelMemberComponent {
 
   onHover(isHovered: boolean) {
     this.newMemberBtnHovered = isHovered;
+  }
+
+  openProfilInfo(chatPartnerId:number){
+    this.chatSection.openProfilInformation(chatPartnerId);
   }
 }

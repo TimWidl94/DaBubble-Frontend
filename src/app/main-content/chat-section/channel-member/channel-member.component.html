@@ -5,7 +5,7 @@
       <div class="close-icon" (click)="closeChannelMember()"></div>
     </div>
     <div class="user-box">
-      <div *ngFor="let user of allUser" class="single-user-box">
+      <div *ngFor="let user of allUser" class="single-user-box" (click)="openProfilInfo(user.id)">
         <img src="{{ user.image || user.imagepath }}" alt="" />
         <span>{{ user.first_name }} {{ user.last_name }}</span>
       </div>
@@ -18,3 +18,5 @@
     </div>
   </div>
 </section>
+
+
