@@ -28,6 +28,9 @@ export class ChannelService {
   private selectedPrivatChannelSubject = new BehaviorSubject<Channel | null>(null);
   public selectedPrivatChannel$ = this.selectedPrivatChannelSubject.asObservable();
 
+  private selectedThreadChannelSubject = new BehaviorSubject<Channel | null>(null);
+  public selectedThreadChannel$ = this.selectedThreadChannelSubject.asObservable();
+
   setcreateChannelScreen(value: boolean) {
     this.createChannelSubject.next(value);
   }
@@ -66,15 +69,10 @@ export class ChannelService {
 
   loadSelectedPrivatChannel(channelId: number){
     this.http.get<any>(`${this.apiUrl}/private-channel/${channelId}`).subscribe(
-      //richtige channel id hinzufügen
-      (channel) => {
-        this.selectedPrivatChannelSubject.next(channel);
-      },
-      (error) => {
-        console.error('Fehler beim Laden des Channels:', error);
-      }
-    );
+      (channel) => {this.selectedThreadChannelSubject.next(channel)})
   }
+
+
 
   fetchSingleChannel(channelId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).pipe(
@@ -84,5 +82,16 @@ export class ChannelService {
 
   updateChannel(channel: Channel, channelId:number): Observable<any>{
     return this.http.put(`${this.apiUrl}/channel/${channelId}`, channel);
+  }
+
+  loadChannelForThread(channelId: number){
+    this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).subscribe(
+      (channel) => {
+        this.selectedThreadChannelSubject.next(channel);
+      },
+      (error) => {
+        console.error('Fehler beim Laden des Channels:', error);
+      }
+    );
   }
 }

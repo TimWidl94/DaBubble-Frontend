@@ -1,8 +1,12 @@
+import { ThreadSectionComponent } from './../../../thread-section/thread-section.component';
+import { MainContentComponent } from './../../../main-content.component';
 import { UsersService } from './../../../../services/users.service';
 import { Component, Input } from '@angular/core';
 import { Message } from '../../../../models/message.model';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.model';
+import { MessageService } from '../../../../services/message.service';
+import { ThreadService } from '../../../../services/thread.service';
 
 @Component({
   selector: 'app-reaction-box',
@@ -18,11 +22,17 @@ export class ReactionBoxComponent {
   editMessageBox: boolean = false;
   hoveredReactionEmoji: boolean = false;
   hoveredMessageEmoji: boolean = false;
+  threadId: number = 0;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private messageService: MessageService,
+    private mainContentComponent: MainContentComponent,
+    private threadService: ThreadService
+  ) {}
 
   ngOnInit() {
-    console.log(this.message);
+    // console.log(this.message);
     this.checkIfMessageUser();
   }
 
@@ -45,5 +55,22 @@ export class ReactionBoxComponent {
 
   isHoveredMessageEmoji(hovered: boolean) {
     this.hoveredMessageEmoji = hovered;
+  }
+
+  openThread() {
+    let channelId = this.message.channel;
+    let messageId = this.message.id;
+    this.threadService.openThread(channelId, messageId).subscribe(
+      (response) => {
+        if (response.id) {
+          this.threadService.threadSubject.next(response);
+          this.mainContentComponent.threadOpen = true;
+        }
+        console.log('Thread created/loaded reactionBox:', response);
+      },
+      (error) => {
+        console.error('Error creating thread:', error);
+      }
+    );
   }
 }

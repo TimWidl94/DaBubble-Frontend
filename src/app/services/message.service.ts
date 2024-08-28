@@ -27,11 +27,11 @@ export class MessageService {
       sender: messageData.sender,
       channel: channelId // Hier wird die Channel-ID übermittelt
     };
-    return this.http.post(`${this.apiUrl}/channel/${channelId}/message`, body);
+    return this.http.post(`${this.apiUrl}/channel/${channelId}/messages/`, body);
   }
 
   getMessages(channelId: number){
-    this.http.get<any>(`${this.apiUrl}/channel/${channelId}/message`).subscribe((messages) => {
+    this.http.get<any>(`${this.apiUrl}/channel/${channelId}/messages/`).subscribe((messages) => {
       this.messagesSubject.next(messages);
     });
   }
@@ -40,7 +40,7 @@ export class MessageService {
     this.stopPollingMessages();
 
     this.pollingSubscription = interval(this.pollingInterval)
-      .pipe(switchMap(() => this.http.get<any>(`${this.apiUrl}/channel/${channelId}/message`)))
+      .pipe(switchMap(() => this.http.get<any>(`${this.apiUrl}/channel/${channelId}/messages/`)))
       .subscribe((messages) => {
         this.messagesSubject.next(messages);
       });

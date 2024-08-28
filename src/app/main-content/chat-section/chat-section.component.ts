@@ -19,6 +19,7 @@ import { ChannelInfoComponent } from './channel-info/channel-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
 import { ProfilInfoComponent } from "./profil-info/profil-info.component";
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-chat-section',
@@ -40,16 +41,14 @@ export class ChatSectionComponent {
     private channelService: ChannelService,
     private usersService: UsersService,
     private cdRef: ChangeDetectorRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private threadService: ThreadService,
   ) {
     this.usersService.user$.subscribe((user) => {
       if (user) {
         this.user = user;
       }
     });
-    if (this.channel) {
-      console.log('chat-section:', this.channel);
-    }
   }
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
@@ -76,13 +75,14 @@ export class ChatSectionComponent {
   @Input() users: User[] = [];
 
   ngOnInit(): void {
-    this.channelService.loadSelectedChannel(3);
-    this.messageService.getMessages(3);
+    this.channelService.loadSelectedChannel(1);
+    this.messageService.getMessages(1);
+    // this.loadThreadsForChannel(1);
 
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
     setInterval(() => {
-      this.scrollToBottomIfNewMessage();
+      // this.scrollToBottomIfNewMessage();
     }, 1000);
   }
 
@@ -121,12 +121,26 @@ export class ChatSectionComponent {
       if (this.users) {
         this.loadUserFromChannel();
         if (this.channel) {
+          console.log('chat-section:',this.channel);
+          // this.loadThreadsForChannel(this.channel.id);
           // this.startPolling(this.channel.id);
           // console.log('chat-section:', this.channel)
         }
       }
     });
   }
+
+  // loadThreadsForChannel(channelId: number) {
+    // this.threadService.getThreadsForChannel(channelId).subscribe(
+      // (data: ThreadData[]) => {
+        // this.threads = data;
+        // console.log('Threads and messages:', this.threads);
+      // },
+      // (error) => {
+        // console.error('Fehler beim Laden der Threads:', error);
+      // }
+    // );
+  // }
 
   startPolling(channelId: number) {
     this.messageService.startPollingMessages(channelId);

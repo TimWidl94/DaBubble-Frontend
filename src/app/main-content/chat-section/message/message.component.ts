@@ -3,7 +3,8 @@ import { Message } from '../../../models/message.model';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user.model';
 import { UsersService } from '../../../services/users.service';
-import { ReactionBoxComponent } from "./reaction-box/reaction-box.component";
+import { ReactionBoxComponent } from './reaction-box/reaction-box.component';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-message',
@@ -13,7 +14,10 @@ import { ReactionBoxComponent } from "./reaction-box/reaction-box.component";
   styleUrl: './message.component.scss',
 })
 export class MessageComponent {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private threadService: ThreadService
+  ) {}
 
   isHovered: boolean = false;
 
@@ -43,7 +47,7 @@ export class MessageComponent {
     },
   };
 
-  reactionBox:boolean = false;
+  reactionBox: boolean = false;
 
   getTimeFromTimestamp(): string {
     if (!this.message.timestamp) {
@@ -63,7 +67,21 @@ export class MessageComponent {
     }
   }
 
-  showReactionBox(isHovered: boolean){
-    this.reactionBox = !this.reactionBox
+  showReactionBox(isHovered: boolean) {
+    this.reactionBox = !this.reactionBox;
+  }
+
+  openThread() {
+    let channelId = this.message.channel;
+    let messageId = this.message.id;
+    this.threadService.openThread(channelId, messageId).subscribe(
+      (response) => {
+        console.log('Thread created/loaded:', response);
+        // Die Thread-Daten werden nun im ThreadService gespeichert und können von anderen Komponenten abgerufen werden
+      },
+      (error) => {
+        console.error('Error creating thread:', error);
+      }
+    );
   }
 }

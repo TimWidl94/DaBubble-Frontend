@@ -1,1 +1,63 @@
-<p>thread-section works!</p>
+<section >
+  <div class="chat-box" *ngIf="channel">
+    <div class="chat-header-box">
+      <div
+        class="chat-name-box"
+      >
+        <div
+          class="chat-tag-icon"
+        ></div>
+
+        <span >Thread</span>
+        <span class="channel-name-box"># {{ channel.channelName }}</span>
+
+      </div>
+      <div class="fill-box"></div>
+      <div >
+        <div
+          class="close-icon"
+        ></div>
+      </div>
+    </div>
+
+    <div #messagesContainer class="messages-box">
+      <div
+        *ngFor="
+          let message of threadMessages;
+          let i = index;
+          trackBy: trackByMessageId
+        "
+      >
+
+        <app-message [message]="message"> </app-message>
+      </div>
+    </div>
+
+    <div class="chat-new-message-box">
+      <form action="">
+        <textarea
+          name=""
+          id=""
+          placeholder="Antworten..."
+          [(ngModel)]="newMessage"
+          name="newMessage"
+        ></textarea>
+        <div>
+          <div>
+            <button class="btn-add"></button>
+            <span></span>
+            <button class="btn-smiley"></button>
+            <button class="btn-email"></button>
+          </div>
+          <button class="btn-sendmessage" (click)="sendMessage()"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<div
+  class="fullsize-shadow"
+  [class.fullsize-shadow-second-level]="profilInformationOpen"
+  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
+  (click)="closeAllComponents()"
+></div>

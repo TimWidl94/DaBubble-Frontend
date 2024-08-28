@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ChatSectionComponent } from './chat-section/chat-section.component';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user.model';
+import { ThreadSectionComponent } from "./thread-section/thread-section.component";
 
 @Component({
   selector: 'app-main-content',
@@ -15,7 +16,8 @@ import { User } from '../models/user.model';
     DevspaceSectionComponent,
     CommonModule,
     ChatSectionComponent,
-  ],
+    ThreadSectionComponent
+],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',
 })
@@ -34,6 +36,7 @@ export class MainContentComponent {
   users: User[] = [];
   chatChannelOpen: boolean = true;
   user!: User;
+  threadOpen:boolean = false;
 
   ngOnInit(): void {
     this.authService.getActuellUser();
@@ -64,5 +67,9 @@ export class MainContentComponent {
 
   closeDevspace() {
     this.devspaceOpen = !this.devspaceOpen;
+  }
+
+  openThread(){
+    this.threadOpen = !this.threadOpen;
   }
 }

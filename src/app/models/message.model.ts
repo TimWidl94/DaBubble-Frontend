@@ -7,6 +7,8 @@ export interface Message {
   content: string;
   timestamp: string;
   user?: User;
+  threadOpen?: boolean;
+  thread_Channel?: number;
 }
 
 export type MessageList = Message[];

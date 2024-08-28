@@ -27,6 +27,7 @@
   <button
     (mouseenter)="isHoveredEditMessageBox(false); isHoveredMessageEmoji(true)"
     (mouseleave)="isHoveredMessageEmoji(false)"
+    (click)="openThread()"
   >
     <img
       [src]="
@@ -37,7 +38,7 @@
       alt="comment"
     />
   </button>
-  <button *ngIf="loggedInUser" (mouseenter)="isHoveredEditMessageBox(true)">
+  <button *ngIf="loggedInUser" (mouseenter)="isHoveredEditMessageBox(true)" >
     <img src="assets/icons/dots_lineup.svg" alt="uplined dots" />
   </button>
   <div
