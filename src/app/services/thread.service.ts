@@ -10,9 +10,9 @@ import { Channel } from '../models/channel.model';
   providedIn: 'root',
 })
 export class ThreadService {
-  private apiUrl = environment.baseUrl; // Passe den URL entsprechend an
+  private apiUrl = environment.baseUrl;
 
-  threadSubject = new BehaviorSubject<MessageList>([]);
+  threadSubject = new BehaviorSubject<any>(null); // Angepasst zu `any`
   thread$ = this.threadSubject.asObservable();
 
   private selectedThreadMessagesSubject = new BehaviorSubject<Message[]>([]);
@@ -23,40 +23,41 @@ export class ThreadService {
   // Methode zum Aktualisieren einer Nachricht, um einen Thread zu öffnen
   openThread(channelId: number, messageId: number): Observable<any> {
     const body = { threadOpen: true };
-    return this.http
-      .patch(`${this.apiUrl}/channel/${channelId}/messages/${messageId}/`, body)
+    return this.http.patch(`${this.apiUrl}/channel/${channelId}/messages/${messageId}/`, body)
       .pipe(
-        map((response: any) => {
-          if (response.id) {
-            this.threadSubject.next(response);
-          }
-          return response;
+        tap((response: any) => {
+          this.threadSubject.next(response); // Direkte Aktualisierung der `threadSubject`
         })
       );
   }
 
   // Methode zum Erstellen oder Aktualisieren einer Nachricht
   getThreadMessages(threadChannelId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/channelThread/${threadChannelId}/`);
+    return this.http.get<any>(`${this.apiUrl}/channelThread/${threadChannelId}/messages/`)
+      .pipe(
+        tap((messages: any) => {
+          this.selectedThreadMessagesSubject.next(messages); // Aktualisiert die Nachrichten
+        })
+      );
   }
 
-  // Methode zum Senden einer Nachricht in einem Thread
-  sendThreadMessage(threadChannelId: number, content: any): Observable<any> {
+  sendThreadMessage(threadChannelId: number, content: string): Observable<any> {
     const body = { content: content, thread_channel_id: threadChannelId };
-    return this.http.post(
-      `${this.apiUrl}/channelThread/${threadChannelId}/messages/`,
-      body
-    );
+    return this.http.post(`${this.apiUrl}/channelThread/${threadChannelId}/messages/`, body)
+      .pipe(
+        tap((message: any) => {
+          this.selectedThreadMessagesSubject.next([...this.selectedThreadMessagesSubject.getValue(), message]);
+        })
+      );
   }
 
-  loadThread(channelId: number){
-    this.http.get<any>(`${this.apiUrl}/channelThread/${channelId}`).subscribe(
-      //richtige channel id hinzufügen
-      (channel) => {
-        this.selectedThreadMessagesSubject.next(channel);
+  loadThread(channelId: number): void {
+    this.getThreadMessages(channelId).subscribe(
+      (messages) => {
+        this.selectedThreadMessagesSubject.next(messages);
       },
       (error) => {
-        console.error('Fehler beim Laden des Channels:', error);
+        console.error('Fehler beim Laden des Threads:', error);
       }
     );
   }

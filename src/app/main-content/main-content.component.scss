@@ -15,10 +15,16 @@ app-header-main-content {
   flex: 0 0 auto; /* Header nimmt nur so viel Platz wie nötig */
 }
 
+app-chat-section {
+  flex: 1;
+  margin-right: 16px;
+}
+
 .main-content {
   flex: 1; /* Nimmt den verbleibenden Platz ein */
   display: flex;
   height: calc(100% - /* Höhe des Headers */ 120px); /* Passe die Höhe an */
+  gap: 16px;
 }
 
 .devspace-section-btn {
@@ -51,8 +57,8 @@ app-header-main-content {
 }
 
 app-devspace-section {
-  flex: 0 0 25%; /* Nimmt 25% der Breite ein */
-  max-width: 30%; /* Begrenze die maximale Breite */
+  // flex: 0 0 25%; /* Nimmt 25% der Breite ein */
+  // max-width: 30%; /* Begrenze die maximale Breite */
   height: 100%;
 }
 

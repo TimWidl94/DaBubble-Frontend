@@ -19,7 +19,7 @@ export class ChannelService {
   private createChannelSubject = new BehaviorSubject<any>(null);
   public createChannel$ = this.createChannelSubject.asObservable();
 
-  private allChannelSubject = new BehaviorSubject<any>(null);
+  private allChannelSubject = new BehaviorSubject<Channel[]>([]);
   public allChannel$ = this.allChannelSubject.asObservable();
 
   private selectedChannelSubject = new BehaviorSubject<Channel | null>(null);
@@ -44,20 +44,13 @@ export class ChannelService {
   }
 
   loadAllChannels() {
-    this.http.get<any>(`${this.apiUrl}/channel`).subscribe((channels) => {
+    this.http.get<any>(`${this.apiUrl}/channel/`).subscribe((channels) => {
       this.allChannelSubject.next(channels);
     });
   }
 
-  fetchAllChannel(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/channel`).pipe(
-      tap((data) => (this.allChannel = data)) // Channels in das Array speichern
-    );
-  }
-
   loadSelectedChannel(channelId: number) {
-    this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).subscribe(
-      //richtige channel id hinzufügen
+    this.http.get<any>(`${this.apiUrl}/channel/${channelId}/`).subscribe(
       (channel) => {
         this.selectedChannelSubject.next(channel);
       },
@@ -68,24 +61,24 @@ export class ChannelService {
   }
 
   loadSelectedPrivatChannel(channelId: number){
-    this.http.get<any>(`${this.apiUrl}/private-channel/${channelId}`).subscribe(
+    this.http.get<any>(`${this.apiUrl}/private-channel/${channelId}/`).subscribe(
       (channel) => {this.selectedThreadChannelSubject.next(channel)})
   }
 
 
 
   fetchSingleChannel(channelId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).pipe(
-      tap((data) => (this.allChannel = data)) // Channels in das Array speichern
+    return this.http.get<any>(`${this.apiUrl}/channel/${channelId}/`).pipe(
+      tap((data) => (this.allChannel = data))
     );
   }
 
   updateChannel(channel: Channel, channelId:number): Observable<any>{
-    return this.http.put(`${this.apiUrl}/channel/${channelId}`, channel);
+    return this.http.put(`${this.apiUrl}/channel/${channelId}/`, channel);
   }
 
   loadChannelForThread(channelId: number){
-    this.http.get<any>(`${this.apiUrl}/channel/${channelId}`).subscribe(
+    this.http.get<any>(`${this.apiUrl}/channel/${channelId}/`).subscribe(
       (channel) => {
         this.selectedThreadChannelSubject.next(channel);
       },

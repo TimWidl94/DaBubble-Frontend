@@ -6,7 +6,12 @@ export interface Channel {
   channelDescription: string;
   channelMembers: number[];
   messages: Message [];
-  createdFrom: string;
+  createdFrom: {
+    email: string;
+    first_name: string;
+    id: number;
+    last_name: string;
+  };
   channelPartner?: number;
   privateChannel: boolean;
 }

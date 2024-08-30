@@ -20,6 +20,7 @@ import { NewChannelMemberComponent } from './new-channel-member/new-channel-memb
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
 import { ProfilInfoComponent } from "./profil-info/profil-info.component";
 import { ThreadService } from '../../services/thread.service';
+import { MainContentComponent } from '../main-content.component';
 
 @Component({
   selector: 'app-chat-section',
@@ -77,7 +78,6 @@ export class ChatSectionComponent {
   ngOnInit(): void {
     this.channelService.loadSelectedChannel(1);
     this.messageService.getMessages(1);
-    // this.loadThreadsForChannel(1);
 
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
@@ -110,7 +110,6 @@ export class ChatSectionComponent {
       this.users = users;
       this.messages = this.addCorrectUserToMessage(messages, users);
       this.cdRef.detectChanges();
-      // console.log('loadAndCombine:', this.messages);
     });
   }
 
@@ -120,27 +119,9 @@ export class ChatSectionComponent {
       this.cdRef.detectChanges();
       if (this.users) {
         this.loadUserFromChannel();
-        if (this.channel) {
-          console.log('chat-section:',this.channel);
-          // this.loadThreadsForChannel(this.channel.id);
-          // this.startPolling(this.channel.id);
-          // console.log('chat-section:', this.channel)
-        }
       }
     });
   }
-
-  // loadThreadsForChannel(channelId: number) {
-    // this.threadService.getThreadsForChannel(channelId).subscribe(
-      // (data: ThreadData[]) => {
-        // this.threads = data;
-        // console.log('Threads and messages:', this.threads);
-      // },
-      // (error) => {
-        // console.error('Fehler beim Laden der Threads:', error);
-      // }
-    // );
-  // }
 
   startPolling(channelId: number) {
     this.messageService.startPollingMessages(channelId);
@@ -158,7 +139,7 @@ export class ChatSectionComponent {
   addCorrectUserToMessage(messages: Message[], users: User[]): Message[] {
     return messages.map((message) => {
       const user = users.find((u) => u.id === message.sender);
-      return { ...message, user }; // Fügt den Benutzer als `user`-Feld hinzu
+      return { ...message, user };
     });
   }
 
@@ -168,7 +149,6 @@ export class ChatSectionComponent {
       for (let user of this.users) {
         if (this.channel.channelMembers.includes(user.id)) {
           this.usersFromChannel.push(user);
-          // console.log('chat-section usersFromChannel:', this.usersFromChannel)
         }
       }
     }
@@ -213,7 +193,7 @@ export class ChatSectionComponent {
 
   isFirstMessageOfDay(message: Message, index: number): boolean {
     if (index === 0) {
-      return true; // Erste Nachricht überhaupt, also erstes Datum anzeigen
+      return true;
     }
 
     let currentMessageDate = new Date(message.timestamp).setHours(0, 0, 0, 0);
@@ -224,7 +204,6 @@ export class ChatSectionComponent {
     return currentMessageDate !== previousMessageDate;
   }
 
-  // Formatiert das Datum für die Anzeige
   getFormattedDate(timestamp: string): string {
     let today = new Date();
     let date = new Date(timestamp);
@@ -284,5 +263,4 @@ export class ChatSectionComponent {
   closeProfilInformation(){
     this.profilInformationOpen = !this.profilInformationOpen;
   }
-
 }

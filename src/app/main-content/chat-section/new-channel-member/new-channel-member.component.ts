@@ -31,15 +31,7 @@ export class NewChannelMemberComponent {
   userImages: any[] = [];
   btnDisabled: boolean = false;
 
-  @Input() channel: Channel = {
-    id: 0,
-    channelName: '',
-    channelDescription: '',
-    channelMembers: [],
-    messages: [],
-    createdFrom: '',
-    privateChannel: false,
-  };
+  @Input() channel!: Channel;
 
   @Input() allUser: User[] = [];
 

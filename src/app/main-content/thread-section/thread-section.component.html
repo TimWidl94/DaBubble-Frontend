@@ -16,6 +16,7 @@
       <div >
         <div
           class="close-icon"
+          (click)="closeThreadSection()"
         ></div>
       </div>
     </div>
@@ -25,10 +26,8 @@
         *ngFor="
           let message of threadMessages;
           let i = index;
-          trackBy: trackByMessageId
-        "
-      >
-
+          trackBy: trackByMessageId">
+          <span *ngIf="i === 1" class="answer-counter-box">{{threadMessages.length - 1 }} Antworten</span>
         <app-message [message]="message"> </app-message>
       </div>
     </div>
@@ -55,9 +54,3 @@
     </div>
   </div>
 </section>
-<div
-  class="fullsize-shadow"
-  [class.fullsize-shadow-second-level]="profilInformationOpen"
-  *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
-  (click)="closeAllComponents()"
-></div>

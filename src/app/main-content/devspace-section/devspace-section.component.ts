@@ -59,9 +59,13 @@ export class DevspaceSectionComponent implements OnInit {
   }
 
   fetchAllChannel() {
-    this.channelService.fetchAllChannel().subscribe((channels) => {
+    this.channelService.loadAllChannels();
+    this.channelService.allChannel$.subscribe((channels) => {
       this.channels = channels;
-      // console.log(this.channels);
+      if(this.channels){
+        console.log(this.channels)
+      }
+      this.cdRef.detectChanges();
     });
   }
 
@@ -190,7 +194,7 @@ export class DevspaceSectionComponent implements OnInit {
 
   createAndCheckHelpFunction(user: User) {
     if (this.checkIfChannelExist(user)) {
-      this.channelService.fetchAllChannel();
+      this.channelService.loadAllChannels();
       this.openChannel(this.privateChannelId);
       console.log('geöffneter Nutzer:', user);
     }

@@ -8,7 +8,7 @@ export interface Message {
   timestamp: string;
   user?: User;
   threadOpen?: boolean;
-  thread_Channel?: number;
+  thread_channel: number;
 }
 
 export type MessageList = Message[];

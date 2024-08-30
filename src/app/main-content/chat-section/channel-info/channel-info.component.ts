@@ -28,15 +28,7 @@ export class ChannelInfoComponent {
   channelName: string = '';
   channelDescription: string = '';
 
-  @Input() channel: Channel = {
-    id: 0,
-    channelName: '',
-    channelDescription: '',
-    channelMembers: [],
-    messages: [],
-    createdFrom: '',
-    privateChannel: false,
-  };
+  @Input() channel!: Channel;
 
   @Input() user: User = {
     id: 0,
@@ -124,12 +116,13 @@ export class ChannelInfoComponent {
   saveLeaveChannel(){
     let updateChannelMember = {
       ... this.channel,
-      channelMember: this.leaveChannel()
+      channelMembers: this.leaveChannel()
     }
     let channelId = this.channel.id;
     this.channelService.updateChannel(updateChannelMember, channelId).subscribe(
     (respone) => {
       this.chatSection.updateChannel(this.channel.id);
+      this.closeEditOpen();
     })
   }
 }

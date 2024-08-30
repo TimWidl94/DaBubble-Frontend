@@ -229,11 +229,12 @@ app-message {
   &::-webkit-scrollbar {
     display: none;
   }
-  > div {
-    @include dFlex();
-    width: 100%;
-    flex-direction: column;
-  }
+}
+
+.message-inside-box {
+  @include dFlex();
+  width: 100%;
+  flex-direction: column;
 }
 
 .date-outside-box {
@@ -309,4 +310,38 @@ app-message {
     font-size: 20px;
     line-height: 27.28px;
   }
+}
+
+.message-channel-empty-box {
+  @include dFlex($g: 7px, $ai: start);
+  margin-left: 46px;
+  flex-direction: column;
+  font-family: $nunito;
+  width: 100%;
+  > div {
+    @include dFlex($g: 7px);
+  }
+}
+
+.message-channel-empty-header {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32.74px;
+}
+
+.message-channel-empty-text {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27.28px;
+}
+
+.message-channel-empty-bluetext {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27.28px;
+  color: $PurpleFont;
+}
+
+.justify-content-end {
+  justify-content: end;
 }

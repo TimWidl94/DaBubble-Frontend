@@ -195,6 +195,7 @@ export class CreateNewChannelComponent {
       (response) => {
         console.log('Channel erfolgreich erstellt:', response);
         this.channelService.setcreateChannelScreen(false);
+        this.channelService.loadAllChannels();
       },
       (error) => {
         console.error('Fehler beim Erstellen des Channels:', error);

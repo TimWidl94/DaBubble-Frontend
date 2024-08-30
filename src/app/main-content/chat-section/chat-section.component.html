@@ -76,8 +76,9 @@
       </app-channel-member>
     </div>
 
-    <div #messagesContainer class="messages-box">
+    <div #messagesContainer class="messages-box" [ngClass]="{'justify-content-end': messages.length === 0}">
       <div
+      class="message-inside-box"
         *ngFor="
           let message of messages;
           let i = index;
@@ -92,16 +93,42 @@
 
         <app-message [message]="message"> </app-message>
       </div>
+      <div *ngIf="messages.length <= 0 && !channel.privateChannel" class="message-channel-empty-box">
+        <div>
+          <div
+            *ngIf="!channel.privateChannel"
+            class="chat-tag-icon"
+            [class.chat-tag-icon-hovered]="channelNameHovered"
+          ></div>
+
+          <span *ngIf="!channel.privateChannel" class="message-channel-empty-header">{{ channel.channelName }}</span>
+        </div>
+        <div>
+          <span class="message-channel-empty-text">
+            Du hast diesen Channel heute erstellt. Das ist der Anfang des
+            Channels
+          </span>
+          <span class="message-channel-empty-bluetext"># {{ channel.channelName }}</span>
+        </div>
+      </div>
     </div>
 
-    <div *ngIf="channel.privateChannel && messages.length == 0" class="privat-channel-message-box">
+    <div
+      *ngIf="channel.privateChannel && messages.length == 0"
+      class="privat-channel-message-box"
+    >
       <div class="privat-channel-message-header-box">
-        <img src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}" alt="channelPartner image">
+        <img
+          src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}"
+          alt="channelPartner image"
+        />
         <span>{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</span>
       </div>
       <div class="privat-channel-message-infotext-box">
         <span>Diese Unterhaltung findet nur zwischen </span>
-        <button>&#64;{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</button>
+        <button>
+          &#64;{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}
+        </button>
         <span>und dir statt.</span>
       </div>
     </div>
@@ -134,4 +161,8 @@
   *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
   (click)="closeAllComponents()"
 ></div>
-<app-profil-info [users]="usersFromChannel" [userId]="userId" *ngIf="profilInformationOpen"></app-profil-info>
+<app-profil-info
+  [users]="usersFromChannel"
+  [userId]="userId"
+  *ngIf="profilInformationOpen"
+></app-profil-info>

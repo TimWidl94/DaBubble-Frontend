@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.model';
 import { MessageService } from '../../../../services/message.service';
 import { ThreadService } from '../../../../services/thread.service';
+import { MessageComponent } from '../message.component';
 
 @Component({
   selector: 'app-reaction-box',
@@ -28,7 +29,8 @@ export class ReactionBoxComponent {
     private usersService: UsersService,
     private messageService: MessageService,
     private mainContentComponent: MainContentComponent,
-    private threadService: ThreadService
+    private threadService: ThreadService,
+    private messageComponent: MessageComponent,
   ) {}
 
   ngOnInit() {
@@ -72,5 +74,9 @@ export class ReactionBoxComponent {
         console.error('Error creating thread:', error);
       }
     );
+  }
+
+  editingMessage(){
+    this.messageComponent.editMessage();
   }
 }

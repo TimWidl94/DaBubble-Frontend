@@ -46,6 +46,6 @@
     *ngIf="editMessageBox"
     (mouseleave)="isHoveredEditMessageBox(false)"
   >
-    <button>Nachricht bearbeiten</button>
+    <button (click)="editingMessage()">Nachricht bearbeiten</button>
   </div>
 </div>

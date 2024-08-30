@@ -1,4 +1,4 @@
-<div
+<div (click)="getInformation()"
   class="chat-messages-box"
   [ngClass]="{ mirroring: message.user?.id === user?.id }"
   (mouseenter)="hovered(true); showReactionBox(true)"
@@ -25,17 +25,45 @@
       >
     </div>
     <div
-      class="message-content-box"
-      [ngClass]="{
-        'mirroring & mirroring-bubble': message.user?.id === user?.id
-      }"
-      [class.hoveredBubble]="isHovered"
-    >
-      {{ message.content }}
+  class="message-content-box"
+  [ngClass]="{
+    'mirroring & mirroring-bubble': message.user?.id === user?.id,
+    'width90': isEditingMessage
+  }"
+  [class.hoveredBubble]="isHovered"
+>
+  <ng-container *ngIf="isEditingMessage; else viewModeMessageContent">
+    <div class="message-input-box">
+      <textarea
+        class="textarea-transparent"
+        [(ngModel)]="messageContent"
+        name="messageContent"
+        (input)="autoResize($event)"
+
+      ></textarea>
+      <div class="button-group">
+
+        <button (click)="cancelEditing()" class="btn-white">Abbrechen</button>
+        <button (click)="saveMessage()" class="btn-purple">Speichern</button>
+      </div>
     </div>
-    <div *ngIf="message.threadOpen">
-      <div (click)="openThread()"><span>??</span><span>Antworten</span></div>
-      <span>Letzte Antwort ??:??</span>
+  </ng-container>
+  <ng-template #viewModeMessageContent>
+    <span>{{ message.content }}</span>
+  </ng-template>
+</div>
+    <div
+      *ngIf="message.threadOpen && threadMessages.length > 1"
+      class="thread-answer-box"
+      [ngClass]="{
+        'mirroring': message.user?.id === user?.id
+      }"
+    >
+      <div (click)="openThread()">
+        <span>{{ threadMessages.length - 1 }}</span
+        ><span>Antworten</span>
+      </div>
+      <span>Letzte Antwort {{ lastMessageTime }}</span>
     </div>
     <div class="message-reaction-box"></div>
   </div>

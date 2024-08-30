@@ -29,7 +29,10 @@
         </div>
       </ng-container>
       <ng-template #viewMode>
-        <span>{{ channel.channelName }}</span>
+        <span
+          >{{ channel.channelName }}
+         </span
+        >
       </ng-template>
     </div>
   </div>
@@ -45,7 +48,9 @@
       </button>
     </div>
     <div class="channel-description">
-      <ng-container *ngIf="isEditingDescription; else viewModeChannelDescription">
+      <ng-container
+        *ngIf="isEditingDescription; else viewModeChannelDescription"
+      >
         <div class="input-box">
           <textarea
             class="textarea-transparent"
@@ -67,10 +72,13 @@
       <h3>Erstellt von</h3>
     </div>
     <div>
-      <span>{{ channel.createdFrom }}</span>
+      <span>{{ channel.createdFrom.first_name }}
+        {{ channel.createdFrom.last_name }}</span>
     </div>
   </div>
   <div class="btn-box">
-    <button class="btn-purple" (click)="saveLeaveChannel()">Channel verlassen</button>
+    <button class="btn-purple" (click)="saveLeaveChannel()">
+      Channel verlassen
+    </button>
   </div>
 </section>
