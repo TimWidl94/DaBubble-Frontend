@@ -30,7 +30,7 @@ export class ReactionBoxComponent {
     private messageService: MessageService,
     private mainContentComponent: MainContentComponent,
     private threadService: ThreadService,
-    private messageComponent: MessageComponent,
+    private messageComponent: MessageComponent
   ) {}
 
   ngOnInit() {
@@ -76,7 +76,24 @@ export class ReactionBoxComponent {
     );
   }
 
-  editingMessage(){
+  editingMessage() {
     this.messageComponent.editMessage();
+  }
+
+  sendEmoji(emojiType: string) {
+    let emoji = emojiType;
+    let messageEmoji = `emoji_${emoji}`;
+    let index = this.message[messageEmoji].indexOf(this.user);
+    if (index > -1) {
+      this.message[messageEmoji].splice(index, 1);
+    } else {
+      this.message[messageEmoji].push(this.user);
+    }
+    console.log(this.message);
+    this.messageService.updateMessageEmojis(this.message.channel, this.message.id, this.message).subscribe(response => {
+      console.log('Emoji updated:', response);
+    }, error => {
+      console.error('error updating emoji', error)
+    })
   }
 }

@@ -5,10 +5,10 @@
   }"
   (mouseleave)="isHoveredEditMessageBox(false)"
 >
-  <button (mouseenter)="isHoveredEditMessageBox(false)">
+  <button (mouseenter)="isHoveredEditMessageBox(false)" (click)="sendEmoji('check')">
     <img src="assets/icons/emoji_check_green.svg" alt="emoji check green" />
   </button>
-  <button (mouseenter)="isHoveredEditMessageBox(false)">
+  <button (mouseenter)="isHoveredEditMessageBox(false)" (click)="sendEmoji('handsup')">
     <img src="assets/icons/emoji_raise_hands.svg" alt="emoji raise hands" />
   </button>
   <button
@@ -23,6 +23,10 @@
       "
       alt="add reaction"
     />
+    <div *ngIf="hoveredReactionEmoji" class="emoji-box">
+      <button (click)="sendEmoji('rocket')"><img src="assets/icons/emoji_rocket.svg" alt=""></button>
+      <button (click)="sendEmoji('nerd')"><img src="assets/icons/emoji_nerd.svg" alt=""></button>
+    </div>
   </button>
   <button
     (mouseenter)="isHoveredEditMessageBox(false); isHoveredMessageEmoji(true)"

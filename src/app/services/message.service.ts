@@ -52,4 +52,13 @@ export class MessageService {
       this.pollingSubscription = null;
     }
   }
+
+  updateMessage(channelId: number, messageId: number, content: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/channel/${channelId}/messages/${messageId}/`, { content });
+  }
+
+  updateMessageEmojis(channelId: number, messageId: number, emojiData: any): Observable<any> {
+    const url = `${this.apiUrl}/channel/${channelId}/messages/${messageId}/`;
+    return this.http.patch(url, emojiData);
+  }
 }

@@ -1,6 +1,6 @@
 @import "./../../../../styles.scss";
 
-.chat-messages-box{
+.chat-messages-box {
   @include dFlex($jc: start);
   width: 100%;
   min-height: 141px;
@@ -8,18 +8,18 @@
   padding: 10px 0;
   position: relative;
   // background-color: $BGShadow;
-  &:hover{
+  &:hover {
     background-color: $BGShadow;
     cursor: pointer;
   }
 }
 
-.left-content-box{
+.left-content-box {
   @include dFlex();
   width: 180px;
   height: 100%;
   position: relative;
-  >img{
+  > img {
     position: absolute;
     top: 10px;
     right: 20px;
@@ -30,35 +30,34 @@
   }
 }
 
-.right-content-box{
-  @include dFlex($ai:start, $jc: start, $g:8px);
+.right-content-box {
+  @include dFlex($ai: start, $jc: start, $g: 8px);
   flex-direction: column;
   width: 100%;
   height: 100%;
 }
 
-
-.message-header-box{
-  @include dFlex($g:20px);
+.message-header-box {
+  @include dFlex($g: 20px);
 }
 
-.message-header-name{
-font-family: $nunito;
-font-weight: 700;
-font-size: 18px;
-line-height: 24.55px;
+.message-header-name {
+  font-family: $nunito;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24.55px;
 }
 
-.message-header-time{
-font-family: $nunito;
-font-weight: 400;
-font-size: 14px;
-line-height: 19.1px;
-color: $Gray;
+.message-header-time {
+  font-family: $nunito;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19.1px;
+  color: $Gray;
 }
 
-.message-content-box{
-  @include dFlex($g: 8px, $jc:start);
+.message-content-box {
+  @include dFlex($g: 8px, $jc: start);
   // width: 100%;
   min-height: calc(55px - 30px);
   padding: 15px;
@@ -70,53 +69,98 @@ color: $Gray;
   line-height: 24.55px;
 }
 
-.mirroring{
+.mirroring {
   transform: scaleX(-1);
 }
 
-.mirroring-bubble{
+.mirroring-bubble {
   border-radius: 30px 0 30px 30px;
   background-color: $PalePurple;
   color: white;
   margin-right: 30px;
 }
 
-.hoveredBubble{
+.hoveredBubble {
   background-color: $White;
 }
 
-.thread-answer-box{
+.thread-answer-box {
   @include dFlex($g: 20px);
   font-family: $nunito;
   font-weight: 400;
-  >div{
+  > div {
     @include dFlex($g: 6px);
     font-size: 18px;
     line-height: 24.55px;
     color: $PurpleFont;
     transition: font-weight 0.3s ease;
-    &:hover{
+    &:hover {
       cursor: pointer;
       font-weight: bold;
     }
   }
-  >span{
+  > span {
     font-size: 14px;
     line-height: 19.1px;
     color: $Gray;
   }
 }
 
-.message-input-box{
-@include dFlex($g: 16px);
-flex-direction: column;
-width: 100%;
->div{
-  @include dFlex($g: 32px, $jc: end);
+.message-input-box {
+  @include dFlex($g: 16px);
+  flex-direction: column;
   width: 100%;
-}
+  > div {
+    @include dFlex($g: 32px, $jc: end);
+    width: 100%;
+  }
 }
 
-.width90{
+.width90 {
   width: 90%;
+}
+
+.message-reaction-box {
+  @include dFlex($g: 10px);
+}
+
+.emoji-box {
+  @include dFlex($g: 10px);
+  border-radius: 20px;
+  padding: 5px 10px;
+  border: 1px solid $lightPurple;
+  background-color: $White;
+  position: relative;
+  &:hover{
+    cursor: pointer;
+    border-color: $PalePurple;
+  }
+}
+
+.emoji-hovered-box{
+  @include dFlex($g:5px);
+  padding: 15px 10px;
+  border-radius: 30px 30px 30px 0;
+  background-color: $Purple;
+  color: $White;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  flex-direction: column;
+  font-family: $nunito;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21.82px;
+  min-width: calc(169px - 2 * 15px);
+  >img{
+    width: 30px;
+    height: 30px;
+  }
+  >div{
+    @include dFlex();
+    flex-direction: column;
+    >span:not(:last-child){
+      font-weight: 700;
+    }
+  }
 }

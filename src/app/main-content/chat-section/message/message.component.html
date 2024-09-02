@@ -1,4 +1,5 @@
-<div (click)="getInformation()"
+<div
+  (click)="getInformation()"
   class="chat-messages-box"
   [ngClass]="{ mirroring: message.user?.id === user?.id }"
   (mouseenter)="hovered(true); showReactionBox(true)"
@@ -25,38 +26,40 @@
       >
     </div>
     <div
-  class="message-content-box"
-  [ngClass]="{
-    'mirroring & mirroring-bubble': message.user?.id === user?.id,
-    'width90': isEditingMessage
-  }"
-  [class.hoveredBubble]="isHovered"
->
-  <ng-container *ngIf="isEditingMessage; else viewModeMessageContent">
-    <div class="message-input-box">
-      <textarea
-        class="textarea-transparent"
-        [(ngModel)]="messageContent"
-        name="messageContent"
-        (input)="autoResize($event)"
-
-      ></textarea>
-      <div class="button-group">
-
-        <button (click)="cancelEditing()" class="btn-white">Abbrechen</button>
-        <button (click)="saveMessage()" class="btn-purple">Speichern</button>
-      </div>
+      class="message-content-box"
+      [ngClass]="{
+        'mirroring & mirroring-bubble': message.user?.id === user?.id,
+        width90: isEditingMessage
+      }"
+      [class.hoveredBubble]="isHovered"
+    >
+      <ng-container *ngIf="isEditingMessage; else viewModeMessageContent">
+        <div class="message-input-box">
+          <textarea
+            class="textarea-transparent"
+            [(ngModel)]="messageContent"
+            name="messageContent"
+            (input)="autoResize($event)"
+          ></textarea>
+          <div class="button-group">
+            <button (click)="cancelEditing()" class="btn-white">
+              Abbrechen
+            </button>
+            <button (click)="saveMessage()" class="btn-purple">
+              Speichern
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #viewModeMessageContent>
+        <span>{{ message.content }}</span>
+      </ng-template>
     </div>
-  </ng-container>
-  <ng-template #viewModeMessageContent>
-    <span>{{ message.content }}</span>
-  </ng-template>
-</div>
     <div
       *ngIf="message.threadOpen && threadMessages.length > 1"
       class="thread-answer-box"
       [ngClass]="{
-        'mirroring': message.user?.id === user?.id
+        mirroring: message.user?.id === user?.id
       }"
     >
       <div (click)="openThread()">
@@ -65,7 +68,112 @@
       </div>
       <span>Letzte Antwort {{ lastMessageTime }}</span>
     </div>
-    <div class="message-reaction-box"></div>
+    <div class="message-reaction-box">
+      <div
+        class="emoji-box"
+        *ngIf="message.emoji_check.length >= 1"
+        [ngClass]="{
+          mirroring: message.user?.id === user?.id
+        }"
+        (mouseenter)="hoverEmoji(true, 'Check')"
+        (mouseleave)="hoverEmoji(false, 'Check')"
+        (click)="sendEmoji('check')"
+      >
+        <img src="assets/icons/emoji_check_green.svg" alt="emoji checked" />
+        <span>{{ message.emoji_check.length }}</span>
+        <div *ngIf="emojiCheckHovered" class="emoji-hovered-box">
+          <img src="assets/icons/emoji_check_green.svg" alt="emoji checked" />
+          <div>
+            <span *ngFor="let user of message.emoji_check; let i = index">
+              <span *ngIf="user.id !== userId"
+                >{{ user.first_name }} {{ user.last_name }}</span
+              >
+              <span *ngIf="i >= 1">und </span>
+              <span *ngIf="user.id === userId">Du</span>
+            </span>
+            <span>hat reagiert</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="emoji-box"
+        *ngIf="message.emoji_handsup.length >= 1"
+        [ngClass]="{
+          mirroring: message.user?.id === user?.id
+        }"
+        (mouseenter)="hoverEmoji(true, 'HandsUp')"
+        (mouseleave)="hoverEmoji(false, 'HandsUp')"
+        (click)="sendEmoji('handsup')"
+      >
+        <img src="assets/icons/emoji_raise_hands.svg" alt="emoji checked" />
+        <span>{{ message.emoji_handsup.length }}</span>
+        <div *ngIf="emojiHandsUpHovered" class="emoji-hovered-box">
+          <img src="assets/icons/emoji_raise_hands.svg" alt="emoji checked" />
+          <div>
+            <span *ngFor="let user of message.emoji_handsup; let i = index">
+              <span *ngIf="user.id !== userId"
+                >{{ user.first_name }} {{ user.last_name }}</span
+              >
+              <span *ngIf="i >= 1">und </span>
+              <span *ngIf="user.id === userId">Du</span>
+            </span>
+            <span>hat reagiert</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="emoji-box"
+        *ngIf="message.emoji_rocket.length >= 1"
+        [ngClass]="{
+          mirroring: message.user?.id === user?.id
+        }"
+        (mouseenter)="hoverEmoji(true, 'Rocket')"
+        (mouseleave)="hoverEmoji(false, 'Rocket')"
+        (click)="sendEmoji('rocket')"
+      >
+        <img src="assets/icons/emoji_rocket.svg" alt="emoji checked" />
+        <span>{{ message.emoji_rocket.length }}</span>
+        <div *ngIf="emojiRocketHovered" class="emoji-hovered-box">
+          <img src="assets/icons/emoji_rocket.svg" alt="emoji checked" />
+          <div>
+            <span *ngFor="let user of message.emoji_rocket; let i = index">
+              <span *ngIf="user.id !== userId"
+                >{{ user.first_name }} {{ user.last_name }}</span
+              >
+              <span *ngIf="i >= 1">und </span>
+              <span *ngIf="user.id === userId">Du</span>
+            </span>
+            <span>hat reagiert</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="emoji-box"
+        *ngIf="message.emoji_nerd.length >= 1"
+        [ngClass]="{
+          mirroring: message.user?.id === user?.id
+        }"
+        (mouseenter)="hoverEmoji(true, 'Nerd')"
+        (mouseleave)="hoverEmoji(false, 'Nerd')"
+        (click)="sendEmoji('nerd')"
+      >
+        <img src="assets/icons/emoji_nerd.svg" alt="emoji checked" />
+        <span>{{ message.emoji_nerd.length }}</span>
+        <div *ngIf="emojiNerdHovered" class="emoji-hovered-box">
+          <img src="assets/icons/emoji_nerd.svg" alt="emoji checked" />
+          <div>
+            <span *ngFor="let user of message.emoji_nerd; let i = index">
+              <span *ngIf="user.id !== userId"
+                >{{ user.first_name }} {{ user.last_name }}</span
+              >
+              <span *ngIf="i >= 1">und </span>
+              <span *ngIf="user.id === userId">Du</span>
+            </span>
+            <span>hat reagiert</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <app-reaction-box *ngIf="reactionBox" [message]="message"></app-reaction-box>
 </div>
