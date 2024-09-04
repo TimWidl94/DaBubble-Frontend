@@ -63,7 +63,7 @@ export class DevspaceSectionComponent implements OnInit {
     this.channelService.allChannel$.subscribe((channels) => {
       this.channels = channels;
       if(this.channels){
-        console.log(this.channels)
+        // console.log(this.channels)
       }
       this.cdRef.detectChanges();
     });

@@ -28,7 +28,7 @@
           let i = index;
           trackBy: trackByMessageId">
           <span *ngIf="i === 1" class="answer-counter-box">{{threadMessages.length - 1 }} Antworten</span>
-        <app-message [message]="message"> </app-message>
+        <app-thread-message [message]="message"> </app-thread-message>
       </div>
     </div>
 

@@ -55,7 +55,6 @@ export class ChatSectionComponent {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   user!: User;
   channel: Channel | null = null;
-  // users: User[] = [];
   usersFromChannel: User[] = [];
   chatPartner: User | null = null;
   userId: number | null = null;

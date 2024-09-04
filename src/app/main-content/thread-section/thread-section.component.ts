@@ -10,7 +10,6 @@ import { UsersService } from '../../services/users.service';
 import { MessageService } from '../../services/message.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MessageComponent } from '../chat-section/message/message.component';
 import { ChannelInfoComponent } from '../chat-section/channel-info/channel-info.component';
 import { NewChannelMemberComponent } from '../chat-section/new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from '../chat-section/channel-member/channel-member.component';
@@ -21,6 +20,7 @@ import { Channel } from '../../models/channel.model';
 import { Message } from '../../models/message.model';
 import { ThreadService } from '../../services/thread.service';
 import { MainContentComponent } from '../main-content.component';
+import { ThreadMessageComponent } from "./thread-message/thread-message.component";
 
 
 @Component({
@@ -29,12 +29,12 @@ import { MainContentComponent } from '../main-content.component';
   imports: [
     CommonModule,
     FormsModule,
-    MessageComponent,
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
     ProfilInfoComponent,
-  ],
+    ThreadMessageComponent
+],
   templateUrl: './thread-section.component.html',
   styleUrl: './thread-section.component.scss',
 })
@@ -55,7 +55,6 @@ export class ThreadSectionComponent {
   threadMessages: Message[] = [];
   channel: Channel | null = null;
   threadChannelId!: number;
-
 
   newMessage: string = '';
 

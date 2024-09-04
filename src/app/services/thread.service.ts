@@ -61,4 +61,13 @@ export class ThreadService {
       }
     );
   }
+
+  updateThreadMessage(channelId: number, messageId: number, content: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/channelThread/${channelId}/messages/${messageId}/`, { content });
+  }
+
+  updateThreadMessageEmojis(channelId: number, messageId: number, emojiData: any): Observable<any> {
+    const url = `${this.apiUrl}/channelThread/${channelId}/messages/${messageId}/`;
+    return this.http.patch(url, emojiData);
+  }
 }

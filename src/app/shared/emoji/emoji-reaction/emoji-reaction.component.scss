@@ -1,0 +1,72 @@
+@import "./../../../../styles.scss";
+
+.message-reaction-box {
+  @include dFlex($g: 10px);
+}
+
+.emoji-box {
+  @include dFlex($g: 10px);
+  border-radius: 20px;
+  padding: 5px 10px;
+  border: 1px solid $lightPurple;
+  background-color: $White;
+  position: relative;
+  &:hover{
+    cursor: pointer;
+    border-color: $PalePurple;
+  }
+}
+
+.emoji-hovered-box{
+  @include dFlex($g:5px);
+  padding: 15px 10px;
+  border-radius: 30px 30px 30px 0;
+  background-color: $Purple;
+  color: $White;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  flex-direction: column;
+  font-family: $nunito;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21.82px;
+  min-width: calc(169px - 2 * 15px);
+  >img{
+    width: 30px;
+    height: 30px;
+  }
+  >div{
+    @include dFlex();
+    flex-direction: column;
+    >span:not(:last-child){
+      font-weight: 700;
+    }
+  }
+}
+
+.new-emoji-box{
+  @include dFlex();
+  width: 26px;
+  height: 24px;
+  border-radius: 20px;
+  padding: 5px;
+  background-color: $White;
+  >button{
+    width: 26px;
+    height: 24px;
+    padding: 5px;
+    border: none;
+    background-color: $White;
+    border-radius: 20px;
+    background-image: url("./../../../../assets/icons/add_reaction_black.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    &:hover{
+    background-image: url("./../../../../assets/icons/add_reaction_blue.svg");
+    background-color: $BGShadow;
+    cursor: pointer;
+  }
+  }
+}

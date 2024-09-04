@@ -1,30 +1,24 @@
-import { MessageService } from './../../../services/message.service';
-import { Component, Input } from '@angular/core';
-import { Message } from '../../../models/message.model';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../models/user.model';
+import { Component, Input } from '@angular/core';
+import { ReactionBoxComponent } from '../../chat-section/message/reaction-box/reaction-box.component';
+import { FormsModule } from '@angular/forms';
+import { EmojiReactionComponent } from '../../../shared/emoji/emoji-reaction/emoji-reaction.component';
 import { UsersService } from '../../../services/users.service';
-import { ReactionBoxComponent } from './reaction-box/reaction-box.component';
 import { ThreadService } from '../../../services/thread.service';
 import { MainContentComponent } from '../../main-content.component';
+import { MessageService } from '../../../services/message.service';
+import { User } from '../../../models/user.model';
+import { Message } from '../../../models/message.model';
 import { Observable } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { ChatSectionComponent } from '../chat-section.component';
-import { EmojiReactionComponent } from '../../../shared/emoji/emoji-reaction/emoji-reaction.component';
 
 @Component({
-  selector: 'app-message',
+  selector: 'app-thread-message',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactionBoxComponent,
-    FormsModule,
-    EmojiReactionComponent,
-  ],
-  templateUrl: './message.component.html',
-  styleUrl: './message.component.scss',
+  imports: [CommonModule, ReactionBoxComponent, FormsModule, EmojiReactionComponent],
+  templateUrl: './thread-message.component.html',
+  styleUrl: './thread-message.component.scss'
 })
-export class MessageComponent {
+export class ThreadMessageComponent {
   constructor(
     private usersService: UsersService,
     private threadService: ThreadService,
@@ -135,15 +129,15 @@ export class MessageComponent {
     this.isEditingMessage = true;
   }
 
-  saveMessage() {
+  saveThreadMessage() {
     let content: string = this.messageContent;
-    this.messageService
-      .updateMessage(this.message.channel, this.message.id, content)
+    this.threadService
+      .updateThreadMessage(this.message.channel, this.message.id, content)
       .subscribe(
         (response) => {
           console.log('message wurde geupdated:', response);
           this.isEditingMessage = false;
-          this.messageService.getMessages(this.message.channel);
+          this.threadService.getThreadMessages(this.message.channel);
         },
         (error) => {
           console.error('error updating message:', error);
@@ -155,6 +149,4 @@ export class MessageComponent {
     this.messageContent = this.messageContent;
     this.isEditingMessage = false;
   }
-
-
 }
