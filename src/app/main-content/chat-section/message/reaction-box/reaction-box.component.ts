@@ -2,12 +2,12 @@ import { ThreadSectionComponent } from './../../../thread-section/thread-section
 import { MainContentComponent } from './../../../main-content.component';
 import { UsersService } from './../../../../services/users.service';
 import { Component, Input } from '@angular/core';
-import { Message } from '../../../../models/message.model';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../../models/user.model';
 import { MessageService } from '../../../../services/message.service';
 import { ThreadService } from '../../../../services/thread.service';
 import { MessageComponent } from '../message.component';
+import { Message } from '../../../../models/message.model';
 
 @Component({
   selector: 'app-reaction-box',

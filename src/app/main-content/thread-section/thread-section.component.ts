@@ -17,10 +17,10 @@ import { ProfilInfoComponent } from '../chat-section/profil-info/profil-info.com
 import { combineLatest, filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Channel } from '../../models/channel.model';
-import { Message } from '../../models/message.model';
 import { ThreadService } from '../../services/thread.service';
 import { MainContentComponent } from '../main-content.component';
 import { ThreadMessageComponent } from "./thread-message/thread-message.component";
+import { Message } from '../../models/message.model';
 
 
 @Component({

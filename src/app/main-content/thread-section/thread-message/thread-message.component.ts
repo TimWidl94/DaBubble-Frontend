@@ -8,13 +8,15 @@ import { ThreadService } from '../../../services/thread.service';
 import { MainContentComponent } from '../../main-content.component';
 import { MessageService } from '../../../services/message.service';
 import { User } from '../../../models/user.model';
-import { Message } from '../../../models/message.model';
+
 import { Observable } from 'rxjs';
+import { Message } from '../../../models/message.model';
+import { ThreadReactionBoxComponent } from "../threadMessage/thread-reaction-box/thread-reaction-box.component";
 
 @Component({
   selector: 'app-thread-message',
   standalone: true,
-  imports: [CommonModule, ReactionBoxComponent, FormsModule, EmojiReactionComponent],
+  imports: [CommonModule, ReactionBoxComponent, FormsModule, EmojiReactionComponent, ThreadReactionBoxComponent],
   templateUrl: './thread-message.component.html',
   styleUrl: './thread-message.component.scss'
 })
@@ -37,7 +39,7 @@ export class ThreadMessageComponent {
   threadMessages: Message[] = [];
   lastMessageTime?: string;
 
-  @Input() message!: Message;
+  @Input() threadMessage!: Message;
 
   reactionBox: boolean = false;
 
@@ -46,8 +48,8 @@ export class ThreadMessageComponent {
       this.user = user;
       this.userId = this.user?.id;
     });
-    if (this.message.thread_channel) {
-      this.loadThreadMessages(this.message.thread_channel).subscribe(
+    if (this.threadMessage.thread_channel) {
+      this.loadThreadMessages(this.threadMessage.thread_channel).subscribe(
         (messages) => {
           this.threadMessages = messages;
           if (this.threadMessages.length != 0) {
@@ -56,17 +58,15 @@ export class ThreadMessageComponent {
         }
       );
     }
-
-    // console.log('geladener User:', this.user)
-    // console.log(this.message);
   }
 
+
   getTimeFromTimestamp(): string {
-    if (!this.message.timestamp) {
+    if (!this.threadMessage.timestamp) {
       return '';
     }
 
-    const date = new Date(this.message.timestamp);
+    const date = new Date(this.threadMessage.timestamp);
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
@@ -74,7 +74,7 @@ export class ThreadMessageComponent {
   }
 
   hovered(isHovered: boolean) {
-    if (this.user?.id !== this.message.user?.id) {
+    if (this.user?.id !== this.threadMessage.user?.id) {
       this.isHovered = isHovered;
     }
   }
@@ -83,22 +83,6 @@ export class ThreadMessageComponent {
     this.reactionBox = !this.reactionBox;
   }
 
-  openThread() {
-    this.threadService
-      .openThread(this.message.channel, this.message.id)
-      .subscribe(
-        (response) => {
-          if (response.id) {
-            this.threadService.threadSubject.next(response);
-            this.mainContentComponent.threadOpen = true;
-          }
-          // console.log('Thread created/loaded reactionBox:', response);
-        },
-        (error) => {
-          console.error('Error creating thread:', error);
-        }
-      );
-  }
 
   loadThreadMessages(threadChannelId: number): Observable<Message[]> {
     return this.threadService.getThreadMessages(threadChannelId);
@@ -114,7 +98,7 @@ export class ThreadMessageComponent {
   }
 
   getInformation() {
-    console.log(this.message);
+    console.log(this.threadMessage);
     console.log(this.threadMessages);
   }
 
@@ -125,19 +109,20 @@ export class ThreadMessageComponent {
   }
 
   editMessage() {
-    this.messageContent = this.message.content;
+    this.messageContent = this.threadMessage.content;
     this.isEditingMessage = true;
   }
 
   saveThreadMessage() {
+    console.log('thread-message message:',this.threadMessage)
     let content: string = this.messageContent;
     this.threadService
-      .updateThreadMessage(this.message.channel, this.message.id, content)
+      .updateThreadMessage(this.threadMessage.thread_channel, this.threadMessage.id, content)
       .subscribe(
         (response) => {
           console.log('message wurde geupdated:', response);
           this.isEditingMessage = false;
-          this.threadService.getThreadMessages(this.message.channel);
+          this.threadService.loadThread(this.threadMessage.thread_channel);
         },
         (error) => {
           console.error('error updating message:', error);

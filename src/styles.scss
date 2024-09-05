@@ -328,3 +328,7 @@ body {
     font-weight: 200;
   }
 }
+
+.mirroring {
+  transform: scaleX(-1);
+}

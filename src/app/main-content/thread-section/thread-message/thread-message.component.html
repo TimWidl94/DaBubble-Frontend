@@ -1,38 +1,35 @@
 <div
   (click)="getInformation()"
   class="chat-messages-box"
-  [ngClass]="{ mirroring: message.user?.id === user?.id }"
+  [ngClass]="{ mirroring: threadMessage.user?.id === user?.id }"
   (mouseenter)="hovered(true); showReactionBox(true)"
   (mouseleave)="hovered(false); showReactionBox(false)"
 >
   <div class="left-content-box">
     <img
-      src="{{ message.user?.image || message.user?.imagepath }}"
+      src="{{ threadMessage.user?.image || threadMessage.user?.imagepath }}"
       alt=""
-      [ngClass]="{ mirroring: message.user?.id === user?.id }"
+      [ngClass]="{ mirroring: threadMessage.user?.id === user?.id }"
     />
   </div>
   <div class="right-content-box">
     <div class="message-header-box">
       <span
         class="message-header-name"
-        [ngClass]="{ mirroring: message.user?.id === user?.id }"
-        >{{ message.user?.first_name }} {{ message.user?.last_name }}</span
+        [ngClass]="{ mirroring: threadMessage.user?.id === user?.id }"
+        >{{ threadMessage.user?.first_name }} {{ threadMessage.user?.last_name }}</span
       >
       <span
         class="message-header-time"
-        [ngClass]="{ mirroring: message.user?.id === user?.id }"
+        [ngClass]="{ mirroring: threadMessage.user?.id === user?.id }"
         >{{ getTimeFromTimestamp() }}</span
       >
     </div>
     <div
       class="message-content-box"
       [ngClass]="{
-        'mirroring & mirroring-bubble': message.user?.id === user?.id,
-        width90: isEditingMessage
-      }"
-      [class.hoveredBubble]="isHovered"
-    >
+        'mirroring & mirroring-bubble': threadMessage.user?.id === user?.id
+      }">
       <ng-container *ngIf="isEditingMessage; else viewModeMessageContent">
         <div class="message-input-box">
           <textarea
@@ -52,23 +49,10 @@
         </div>
       </ng-container>
       <ng-template #viewModeMessageContent>
-        <span>{{ message.content }}</span>
+        <span>{{ threadMessage.content }}</span>
       </ng-template>
     </div>
-    <div
-      *ngIf="message.threadOpen && threadMessages.length > 1"
-      class="thread-answer-box"
-      [ngClass]="{
-        mirroring: message.user?.id === user?.id
-      }"
-    >
-      <div (click)="openThread()">
-        <span>{{ threadMessages.length - 1 }}</span
-        ><span>Antworten</span>
-      </div>
-      <span>Letzte Antwort {{ lastMessageTime }}</span>
-    </div>
-    <app-emoji-reaction [message]="message" [user]="user"></app-emoji-reaction>
+    <app-emoji-reaction [message]="threadMessage" [user]="user"></app-emoji-reaction>
   </div>
-  <app-reaction-box *ngIf="reactionBox" [message]="message"></app-reaction-box>
+  <app-thread-reaction-box *ngIf="reactionBox" [threadMessage]="threadMessage"></app-thread-reaction-box>
 </div>

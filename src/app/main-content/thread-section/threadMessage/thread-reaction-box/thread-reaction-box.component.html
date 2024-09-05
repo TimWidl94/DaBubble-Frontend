@@ -1,0 +1,37 @@
+<div
+  class="reaction-box"
+  [ngClass]="{
+    scaleX: loggedInUser
+  }"
+  (mouseleave)="isHoveredEditMessageBox(false)"
+>
+  <button
+    (mouseenter)="isHoveredEditMessageBox(false); isHoveredReactionEmoji(true)"
+    (mouseleave)="isHoveredReactionEmoji(false)"
+  >
+    <img
+      [src]="
+        hoveredReactionEmoji
+          ? 'assets/icons/add_reaction_blue.svg'
+          : 'assets/icons/add_reaction_black.svg'
+      "
+      alt="add reaction"
+    />
+    <div *ngIf="hoveredReactionEmoji" class="emoji-box">
+      <button (click)="sendEmoji('check')"><img src="assets/icons/emoji_check_green.svg" alt=""></button>
+      <button (click)="sendEmoji('hands_up')"><img src="assets/icons/emoji_raise_hands.svg" alt=""></button>
+      <button (click)="sendEmoji('rocket')"><img src="assets/icons/emoji_rocket.svg" alt=""></button>
+      <button (click)="sendEmoji('nerd')"><img src="assets/icons/emoji_nerd.svg" alt=""></button>
+    </div>
+  </button>
+  <button *ngIf="loggedInUser" (mouseenter)="isHoveredEditMessageBox(true)" >
+    <img src="assets/icons/dots_lineup.svg" alt="uplined dots" />
+  </button>
+  <div
+    class="btn-editMessage-box"
+    *ngIf="editMessageBox"
+    (mouseleave)="isHoveredEditMessageBox(false)"
+  >
+    <button (click)="editingThreadMessage()">Nachricht bearbeiten</button>
+  </div>
+</div>

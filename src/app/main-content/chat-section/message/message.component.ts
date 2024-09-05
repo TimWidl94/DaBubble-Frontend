@@ -137,8 +137,9 @@ export class MessageComponent {
 
   saveMessage() {
     let content: string = this.messageContent;
+    let emojiData = this.message;
     this.messageService
-      .updateMessage(this.message.channel, this.message.id, content)
+      .updateMessage(this.message.channel, this.message.id, content, emojiData)
       .subscribe(
         (response) => {
           console.log('message wurde geupdated:', response);
