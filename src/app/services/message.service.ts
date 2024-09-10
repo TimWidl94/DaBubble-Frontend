@@ -58,7 +58,7 @@ export class MessageService {
   }
 
   updateMessageEmojis(channelId: number, messageId: number, emojiData: any): Observable<any> {
-    const url = `${this.apiUrl}/channel/${channelId}/messages/${messageId}/`;
+    const url = `${this.apiUrl}/channel/${channelId}/messages/${messageId}/emoji/`;
     return this.http.patch(url, emojiData);
   }
 }

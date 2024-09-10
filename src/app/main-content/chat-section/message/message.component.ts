@@ -48,6 +48,7 @@ export class MessageComponent {
   reactionBox: boolean = false;
 
   ngOnInit() {
+    this.usersService.loadUserFromToken();
     this.usersService.user$.subscribe((user) => {
       this.user = user;
       this.userId = this.user?.id;
@@ -121,7 +122,7 @@ export class MessageComponent {
 
   getInformation() {
     console.log(this.message);
-    console.log(this.threadMessages);
+    // console.log(this.threadMessages);
   }
 
   autoResize(event: any) {

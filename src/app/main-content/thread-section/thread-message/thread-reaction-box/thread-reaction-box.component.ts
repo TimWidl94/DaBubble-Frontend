@@ -1,18 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { UsersService } from '../../../../services/users.service';
-import { MessageService } from '../../../../services/message.service';
-import { Message } from '../../../../models/message.model';
 import { User } from '../../../../models/user.model';
 import { MainContentComponent } from '../../../main-content.component';
 import { ThreadService } from '../../../../services/thread.service';
 import { CommonModule } from '@angular/common';
 
 import { ThreadMessageComponent } from '../../thread-message/thread-message.component';
+import { MessageThread } from '../../../../models/messageThread.model';
+import { Message } from '../../../../models/message.model';
 
 @Component({
   selector: 'app-thread-reaction-box',
   standalone: true,
-  imports: [CommonModule, ],
+  imports: [CommonModule],
   providers: [],
   templateUrl: './thread-reaction-box.component.html',
   styleUrl: './thread-reaction-box.component.scss'
@@ -28,13 +28,12 @@ export class ThreadReactionBoxComponent {
 
   constructor(
     private usersService: UsersService,
-    private messageService: MessageService,
     private threadService: ThreadService,
     private threadMessageComponent: ThreadMessageComponent
   ) {}
 
   ngOnInit() {
-    console.log(this.threadMessage);
+    // console.log(this.threadMessage);
     this.checkIfMessageUser();
   }
 

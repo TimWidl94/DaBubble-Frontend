@@ -65,8 +65,14 @@ export class NewChannelMemberComponent {
         }
       }
     }
+    this.showUser(searchInput);
+  }
+
+  showUser(searchInput:string){
     if (this.searchedUser.length === 0 || searchInput == '') {
       this.ifUserIsFind = false;
+    } else if (searchInput.length >= 1){
+      this.ifUserIsFind = true
     }
   }
 
@@ -129,9 +135,9 @@ export class NewChannelMemberComponent {
     }
   }
 
-  async addSelectedUser(user: any[]) {
+  addSelectedUser(user: any[]) {
     if (!this.selectedUser.includes(user)) {
-      await this.selectedUser.push(user);
+      this.selectedUser.push(user);
       this.calculateTopPosition();
       this.ifUserIsFind = false;
       this.searchUser = '';
@@ -144,6 +150,7 @@ export class NewChannelMemberComponent {
         }
       }
       this.mergeChannelMember();
+      this.searchedUser = [];
     }
   }
 

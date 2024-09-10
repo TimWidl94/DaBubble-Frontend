@@ -9,8 +9,8 @@ section {
   flex-direction: column;
   border-radius: 30px;
   height: calc(100% - 16px - 2 * 32px);
-  width: calc(20% - 16px);
-  width: 346px;
+  // width: calc(20% - 16px);
+  width: 302px;
 }
 
 .devspace-header {
@@ -193,7 +193,7 @@ section {
   border-radius: 30px;
   width: 100%;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .direct-message-box::-webkit-scrollbar {

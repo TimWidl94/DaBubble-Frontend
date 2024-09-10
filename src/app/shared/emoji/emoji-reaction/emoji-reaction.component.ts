@@ -1,3 +1,4 @@
+import { ThreadService } from './../../../services/thread.service';
 import { Component, Input, input } from '@angular/core';
 import { Message } from '../../../models/message.model';
 import { CommonModule } from '@angular/common';
@@ -27,7 +28,7 @@ export class EmojiReactionComponent {
 
   newEmojiHovered: boolean = false;
 
-  constructor(private messageService: MessageService){
+  constructor(private messageService: MessageService, private threadService: ThreadService){
 
   }
 
@@ -39,6 +40,13 @@ export class EmojiReactionComponent {
     let emojiName = `emoji${emoji}Hovered`;
     this[emojiName] = isHovered;
   }
+
+  checkThreadOrMessage(emojiType: string){
+    if(this.message.threadOpen){
+      this.sendEmoji(emojiType);
+    } else{ this.saveEmojiThread(emojiType)}
+  }
+
 
   sendEmoji(emojiType: string) {
     let emoji = emojiType;
@@ -54,6 +62,30 @@ export class EmojiReactionComponent {
     console.log(this.message);
     this.messageService
       .updateMessageEmojis(this.message.channel, this.message.id, this.message)
+      .subscribe(
+        (response) => {
+          console.log('Emoji updated:', response);
+        },
+        (error) => {
+          console.error('error updating emoji', error);
+        }
+      );
+  }
+
+  saveEmojiThread(emojiType: string){
+    let emoji = emojiType;
+    let messageEmoji = `emoji_${emoji}`;
+    let index = this.message[messageEmoji].findIndex(
+      (user: User) => user.id === this.user!.id
+    );
+    if (index > -1) {
+      this.message[messageEmoji].splice(index, 1);
+    } else {
+      this.message[messageEmoji].push(this.user);
+    }
+    console.log(this.message);
+    this.threadService
+      .updateThreadMessageEmojis(this.message.thread_channel, this.message.id, this.message)
       .subscribe(
         (response) => {
           console.log('Emoji updated:', response);

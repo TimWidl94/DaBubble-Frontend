@@ -11,7 +11,8 @@ import { User } from '../../../models/user.model';
 
 import { Observable } from 'rxjs';
 import { Message } from '../../../models/message.model';
-import { ThreadReactionBoxComponent } from "../threadMessage/thread-reaction-box/thread-reaction-box.component";
+import { ThreadReactionBoxComponent } from './thread-reaction-box/thread-reaction-box.component';
+
 
 @Component({
   selector: 'app-thread-message',
@@ -99,7 +100,7 @@ export class ThreadMessageComponent {
 
   getInformation() {
     console.log(this.threadMessage);
-    console.log(this.threadMessages);
+    // console.log(this.threadMessages);
   }
 
   autoResize(event: any) {

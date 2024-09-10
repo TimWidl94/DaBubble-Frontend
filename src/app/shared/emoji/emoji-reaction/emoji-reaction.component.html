@@ -13,7 +13,7 @@
     }"
     (mouseenter)="hoverEmoji(true, 'Check')"
     (mouseleave)="hoverEmoji(false, 'Check')"
-    (click)="sendEmoji('check')"
+    (click)="checkThreadOrMessage('check')"
   >
     <img src="assets/icons/emoji_check_green.svg" alt="emoji checked" />
     <span>{{ message.emoji_check.length }}</span>
@@ -39,7 +39,7 @@
     }"
     (mouseenter)="hoverEmoji(true, 'HandsUp')"
     (mouseleave)="hoverEmoji(false, 'HandsUp')"
-    (click)="sendEmoji('handsup')"
+    (click)="checkThreadOrMessage('handsup')"
   >
     <img src="assets/icons/emoji_raise_hands.svg" alt="emoji checked" />
     <span>{{ message.emoji_handsup.length }}</span>
@@ -65,7 +65,7 @@
     }"
     (mouseenter)="hoverEmoji(true, 'Rocket')"
     (mouseleave)="hoverEmoji(false, 'Rocket')"
-    (click)="sendEmoji('rocket')"
+    (click)="checkThreadOrMessage('rocket')"
   >
     <img src="assets/icons/emoji_rocket.svg" alt="emoji checked" />
     <span>{{ message.emoji_rocket.length }}</span>
@@ -91,7 +91,7 @@
     }"
     (mouseenter)="hoverEmoji(true, 'Nerd')"
     (mouseleave)="hoverEmoji(false, 'Nerd')"
-    (click)="sendEmoji('nerd')"
+    (click)="checkThreadOrMessage('nerd')"
   >
     <img src="assets/icons/emoji_nerd.svg" alt="emoji checked" />
     <span>{{ message.emoji_nerd.length }}</span>

@@ -33,10 +33,10 @@ export class DevspaceSectionComponent implements OnInit {
   isHoveredDirectMessage: boolean = false;
   isHoveredNewChannel: boolean = false;
   // users: User[] = [];
-  showUser: boolean = false;
+  showUser: boolean = true;
   openCreateChannel: boolean = false;
   channels: Channel[] = [];
-  channelsOpen: boolean = false;
+  channelsOpen: boolean = true;
   activeBox: HTMLElement | null = null;
   isPrivatChannelExist: boolean = false;
   privateChannelId: number = 0;

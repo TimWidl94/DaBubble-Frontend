@@ -39,7 +39,7 @@ export class LoginformComponent {
         this.email,
         this.password
       );
-      console.log(resp);
+      // console.log(resp);
       localStorage.setItem('token', resp['token']);
       localStorage.setItem('user', JSON.stringify(resp));
       this.router.navigateByUrl('/chat');

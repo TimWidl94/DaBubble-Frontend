@@ -4,15 +4,18 @@ section {
   @include dFlex($jc: space-between);
   // width: 100%;
   height: 120px;
-  padding: 0 45px;
+  // padding: 0 45px;
 }
 
 .logo-box {
   @include dFlex();
   min-width: 242px;
-  max-width: 20%;
+  max-width: 392px;
+  width: 100%;
   height: 70px;
   background-image: url("./../../../assets/img/logo/dabubble_logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .search-box {
@@ -54,8 +57,10 @@ section {
 }
 
 .user-box {
-  @include dFlex($g: 12px);
-  // max-width: 20%;
+  @include dFlex($g: 12px, $jc: end);
+  max-width: 416px;
+  width: 100%;
+  margin-right: 30px;
   > span {
     text-align: center;
     font-family: $nunito;
@@ -114,8 +119,6 @@ section {
     }
   }
 }
-
-
 
 .profil-box {
   @include dFlex($g: 45px, $jc: start);
@@ -221,7 +224,7 @@ section {
   }
 }
 
-.profil-edit-box{
+.profil-edit-box {
   @include dFlex($g: 45px, $jc: start);
   width: calc(500px - 2 * 40px);
   height: calc(698px - 2 * 40px);
@@ -285,15 +288,15 @@ section {
   }
 }
 
-.user-edit-name-email-box{
+.user-edit-name-email-box {
   @include dFlex($g: 7px, $ai: start, $jc: start);
   width: 100%;
   height: 70px;
   flex-direction: column;
-  >div{
-    @include dFlex($jc:start, $g: 20px);
+  > div {
+    @include dFlex($jc: start, $g: 20px);
     width: 100%;
-    >span{
+    > span {
       font-family: $nunito;
       font-size: 20px;
       font-weight: 700;
@@ -302,6 +305,6 @@ section {
   }
 }
 
-.btn-box{
+.btn-box {
   @include dFlex($g: 32px);
 }
