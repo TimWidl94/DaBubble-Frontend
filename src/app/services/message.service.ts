@@ -21,13 +21,9 @@ export class MessageService {
   private messagesSubject = new BehaviorSubject<MessageList>([]);
   messages$ = this.messagesSubject.asObservable();
 
-  sendMessage(channelId: number, messageData: any): Observable<any> {
-    const body = {
-      content: messageData.content,
-      sender: messageData.sender,
-      channel: channelId // Hier wird die Channel-ID übermittelt
-    };
-    return this.http.post(`${this.apiUrl}/channel/${channelId}/messages/`, body);
+  sendMessage(channelId: number, formData: FormData): Observable<any> {
+    // Die FormData anstelle eines JSON-Objekts senden
+    return this.http.post(`${this.apiUrl}/channel/${channelId}/messages/`, formData);
   }
 
   getMessages(channelId: number){

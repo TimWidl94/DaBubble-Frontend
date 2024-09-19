@@ -18,7 +18,7 @@ import { combineLatest } from 'rxjs';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
-import { ProfilInfoComponent } from "./profil-info/profil-info.component";
+import { ProfilInfoComponent } from './profil-info/profil-info.component';
 import { ThreadService } from '../../services/thread.service';
 import { MainContentComponent } from '../main-content.component';
 
@@ -32,8 +32,8 @@ import { MainContentComponent } from '../main-content.component';
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
-    ProfilInfoComponent
-],
+    ProfilInfoComponent,
+  ],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -43,7 +43,7 @@ export class ChatSectionComponent {
     private usersService: UsersService,
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
-    private threadService: ThreadService,
+    private threadService: ThreadService
   ) {
     this.usersService.user$.subscribe((user) => {
       if (user) {
@@ -71,6 +71,9 @@ export class ChatSectionComponent {
   profilInformationOpen: boolean = false;
 
   previousMessagesLength = 0;
+
+  fileName: string = '';
+  selectedFile: File | null = null;
 
   @Input() users: User[] = [];
 
@@ -158,20 +161,36 @@ export class ChatSectionComponent {
     this.channelNameHovered = isHovered;
   }
 
-  getMessageData() {
-    let messageData = {
-      channel: this.channel,
-      content: this.newMessage,
-      sender: this.user.first_name + ' ' + this.user.last_name,
-    };
-    return messageData;
-  }
+  getMessageData(): FormData {
+    const formData = new FormData();
+
+    // Textdaten hinzufügen
+    formData.append('content', this.newMessage);
+    formData.append('sender', this.user.id.toString());
+    formData.append('channel', this.channel ? this.channel.id.toString() : '0');
+    formData.append('timestamp', new Date().toISOString());
+    formData.append('thread_channel', '0'); // oder den passenden Wert setzen
+
+    // Datei hinzufügen, falls vorhanden
+    if (this.selectedFile) {
+        formData.append('messageData', this.selectedFile);
+    }
+
+    // Emojis als JSON-String, da FormData nur primitive Datentypen unterstützt
+    formData.append('emoji_check', JSON.stringify([]));
+    formData.append('emoji_handsup', JSON.stringify([]));
+    formData.append('emoji_nerd', JSON.stringify([]));
+    formData.append('emoji_rocket', JSON.stringify([]));
+
+    return formData;
+}
 
   sendMessage() {
-    let messageData = this.getMessageData();
+    let formData = this.getMessageData();
 
     if (this.channel) {
-      this.messageService.sendMessage(this.channel.id, messageData).subscribe(
+
+      this.messageService.sendMessage(this.channel.id, formData).subscribe(
         (response) => {
           console.log('Nachricht erfolgreich übermittelt:', response);
           this.newMessage = '';
@@ -180,7 +199,7 @@ export class ChatSectionComponent {
           this.loadAndCombineMessagesWithUsers();
         },
         (error) => {
-          console.error('Fehler beim schicken der Nachricht:', error);
+          console.error('Fehler beim Schicken der Nachricht:', error);
         }
       );
     }
@@ -244,22 +263,37 @@ export class ChatSectionComponent {
     this.profilInformationOpen = false;
   }
 
-  checkForPrivatChannelPartner(){
-    for(let user of this.usersFromChannel){
-      if(user.id != this.user.id){
+  checkForPrivatChannelPartner() {
+    for (let user of this.usersFromChannel) {
+      if (user.id != this.user.id) {
         this.chatPartner = user;
-      } if(this.usersFromChannel.length <= 1 && user.id == this.user.id){
+      }
+      if (this.usersFromChannel.length <= 1 && user.id == this.user.id) {
         this.chatPartner = user;
       }
     }
   }
 
-  openProfilInformation(channelMemberId:number){
+  openProfilInformation(channelMemberId: number) {
     this.userId = channelMemberId;
     this.profilInformationOpen = !this.profilInformationOpen;
   }
 
-  closeProfilInformation(){
+  closeProfilInformation() {
     this.profilInformationOpen = !this.profilInformationOpen;
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0]; // Speichert die ausgewählte Datei
+      this.fileName = this.selectedFile.name; // Speichert den Dateinamen
+    }
   }
 }

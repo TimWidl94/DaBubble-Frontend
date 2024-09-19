@@ -76,9 +76,13 @@
       </app-channel-member>
     </div>
 
-    <div #messagesContainer class="messages-box" [ngClass]="{'justify-content-end': messages.length === 0}">
+    <div
+      #messagesContainer
+      class="messages-box"
+      [ngClass]="{ 'justify-content-end': messages.length === 0 }"
+    >
       <div
-      class="message-inside-box"
+        class="message-inside-box"
         *ngFor="
           let message of messages;
           let i = index;
@@ -93,7 +97,10 @@
 
         <app-message [message]="message"> </app-message>
       </div>
-      <div *ngIf="messages.length <= 0 && !channel.privateChannel" class="message-channel-empty-box">
+      <div
+        *ngIf="messages.length <= 0 && !channel.privateChannel"
+        class="message-channel-empty-box"
+      >
         <div>
           <div
             *ngIf="!channel.privateChannel"
@@ -101,14 +108,20 @@
             [class.chat-tag-icon-hovered]="channelNameHovered"
           ></div>
 
-          <span *ngIf="!channel.privateChannel" class="message-channel-empty-header">{{ channel.channelName }}</span>
+          <span
+            *ngIf="!channel.privateChannel"
+            class="message-channel-empty-header"
+            >{{ channel.channelName }}</span
+          >
         </div>
         <div>
           <span class="message-channel-empty-text">
             Du hast diesen Channel heute erstellt. Das ist der Anfang des
             Channels
           </span>
-          <span class="message-channel-empty-bluetext"># {{ channel.channelName }}</span>
+          <span class="message-channel-empty-bluetext"
+            ># {{ channel.channelName }}</span
+          >
         </div>
       </div>
     </div>
@@ -142,9 +155,20 @@
           [(ngModel)]="newMessage"
           name="newMessage"
         ></textarea>
+        <div class="fileUploadField">
+          <input
+            style="display: none"
+            type="file"
+            id="fileUpload"
+            accept="image/*, files"
+            (change)="onFileSelected($event)"
+          /><span>{{ fileName }}</span>
+        </div>
+
         <div>
           <div>
-            <button class="btn-add"></button>
+            <button class="btn-add" (click)="triggerFileInput()"></button>
+
             <span></span>
             <button class="btn-smiley"></button>
             <button class="btn-email"></button>

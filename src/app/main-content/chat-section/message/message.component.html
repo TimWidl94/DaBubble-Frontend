@@ -53,6 +53,32 @@
       </ng-container>
       <ng-template #viewModeMessageContent>
         <span>{{ message.content }}</span>
+        <div *ngIf="message.messageData">
+          <!-- Falls es ein Bild ist, zeige es an -->
+          <ng-container
+            *ngIf="isImage(message.messageData); else otherFileType"
+          >
+            <img
+              [src]="getMediaUrl(message.messageData)"
+              alt="Bild"
+              class="uploaded-image"
+            />
+          </ng-container>
+
+          <!-- Andere Dateitypen -->
+          <ng-template #otherFileType>
+            <div class="document-box">
+              <img
+                src="assets/icons/document.svg"
+                alt="document"
+                class="document-icon"
+              />
+              <a [href]="message.messageData" download>
+                <i class="fas fa-file-download"></i> {{ getShortFileName(message.messageData) }}
+              </a>
+            </div>
+          </ng-template>
+        </div>
       </ng-template>
     </div>
     <div

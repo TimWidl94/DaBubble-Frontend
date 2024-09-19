@@ -120,4 +120,19 @@
   width: 90%;
 }
 
+.uploaded-image{
+  display: flex;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
 
+.document-icon{
+  width: 50px;
+  height: 50px;
+}
+
+.document-box{
+  @include dFlex();
+  flex-direction: column;
+}

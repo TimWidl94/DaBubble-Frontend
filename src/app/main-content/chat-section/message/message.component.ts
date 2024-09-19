@@ -158,5 +158,24 @@ export class MessageComponent {
     this.isEditingMessage = false;
   }
 
+  isImage(fileUrl: string): boolean {
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+    const fileExtension = fileUrl.split('.').pop()?.toLowerCase();
+    return imageExtensions.includes(fileExtension || '');
+  }
 
+  getMediaUrl(filePath: string): string {
+    return `http://localhost:8000${filePath}`;  // Port und Base URL anpassen
+  }
+
+  getShortFileName(filePath: string): string {
+    if (!filePath) return ''; // Sicherstellen, dass filePath nicht leer ist
+
+    // Extrahiere den Dateinamen vom Pfad
+    const parts = filePath.split('/');
+    const fileName = parts[parts.length - 1];
+
+    // Stelle sicher, dass der Dateiname klein geschrieben ist
+    return fileName.charAt(0).toUpperCase() + fileName.slice(1).toLowerCase();
+  }
 }
