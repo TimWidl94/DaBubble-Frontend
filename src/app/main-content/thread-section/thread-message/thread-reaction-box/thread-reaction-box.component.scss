@@ -63,8 +63,8 @@
   padding: 5px 10px;
   border: 1px solid $lightPurple;
   position: absolute;
-  bottom: 30px;
-  left: 0;
+  bottom: -4px;
+  right: 36px;
   border-radius: 30px;
   z-index: 2;
   background-color: $White;
@@ -82,3 +82,7 @@
   }
 }
 
+.posLeft{
+  left: 36px;
+  right: unset;
+}

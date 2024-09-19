@@ -17,7 +17,7 @@
       "
       alt="add reaction"
     />
-    <div *ngIf="!hoveredReactionEmoji" class="emoji-box">
+    <div *ngIf="hoveredReactionEmoji" class="emoji-box" [ngClass]="{posLeft: loggedInUser}">
       <button (click)="sendEmoji('check')"><img src="assets/icons/emoji_check_green.svg" alt=""></button>
       <button (click)="sendEmoji('handsup')"><img src="assets/icons/emoji_raise_hands.svg" alt=""></button>
       <button (click)="sendEmoji('rocket')"><img src="assets/icons/emoji_rocket.svg" alt=""></button>

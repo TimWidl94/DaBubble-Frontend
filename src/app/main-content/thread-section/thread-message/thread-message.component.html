@@ -2,7 +2,8 @@
   (click)="getInformation()"
   class="chat-messages-box"
   [ngClass]="{ mirroring: threadMessage.user?.id === user?.id }"
-
+  (mouseenter)="hovered(true); showReactionBox(true)"
+  (mouseleave)="hovered(false); showReactionBox(false)"
 >
   <div class="left-content-box">
     <img
@@ -54,5 +55,5 @@
     </div>
     <app-emoji-reaction [message]="threadMessage" [user]="user"></app-emoji-reaction>
   </div>
-  <app-thread-reaction-box *ngIf="!reactionBox" [threadMessage]="threadMessage"></app-thread-reaction-box>
+  <app-thread-reaction-box *ngIf="reactionBox" [threadMessage]="threadMessage"></app-thread-reaction-box>
 </div>
