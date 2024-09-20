@@ -67,6 +67,9 @@ export class ThreadSectionComponent {
 
   previousMessagesLength = 0;
 
+  fileName: string = '';
+  selectedFile: File | null = null;
+
   private destroy$: Subject<void> = new Subject<void>();
 
   @Input() users: User[] = [];
@@ -174,27 +177,40 @@ export class ThreadSectionComponent {
     this.channelNameHovered = isHovered;
   }
 
-  sendMessage(): void {
-    if (this.newMessage.trim()) {
-      this.threadService.sendThreadMessage(this.threadChannelId, this.newMessage)
-        .subscribe(() => {
-          this.newMessage = '';
-        });
-    }
-  }
+  getMessageData(): FormData {
+    const formData = new FormData();
 
-  sendMessageInThread(threadChannelId: number) {
-    let messageData = this.newMessage;
-    this.threadService.sendThreadMessage(threadChannelId, messageData).subscribe(
-      (response) => {
-        console.log('Message sent in thread:', response);
-        this.thread.push(response);
-        this.cdRef.detectChanges();
-      },
-      (error) => {
-        console.error('Error sending message in thread:', error);
-      }
-    );
+    // Textdaten hinzufügen
+    formData.append('content', this.newMessage);
+    formData.append('sender', this.user.id.toString());
+    formData.append('channel', this.channel ? this.channel.id.toString() : '0');
+    formData.append('timestamp', new Date().toISOString());
+    formData.append('thread_channel', this.threadChannelId ? this.threadChannelId.toString() : '0'); // oder den passenden Wert setzen
+
+    // Datei hinzufügen, falls vorhanden
+    if (this.selectedFile) {
+        formData.append('messageData', this.selectedFile);
+    }
+
+    // Emojis als JSON-String, da FormData nur primitive Datentypen unterstützt
+    formData.append('emoji_check', JSON.stringify([]));
+    formData.append('emoji_handsup', JSON.stringify([]));
+    formData.append('emoji_nerd', JSON.stringify([]));
+    formData.append('emoji_rocket', JSON.stringify([]));
+
+    return formData;
+}
+
+  sendMessage(): void {
+    let formData = this.getMessageData();
+
+    if (formData) {
+
+      this.threadService.sendThreadMessage(this.threadChannelId, formData).subscribe(() => {
+        this.newMessage = '';
+      });
+    }
+
   }
 
   trackByMessageId(index: number, message: Message): number {
@@ -207,5 +223,19 @@ export class ThreadSectionComponent {
 
   closeThreadSection(): void {
     this.mainContentComponent.threadOpen = false;
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('fileUploadThread') as HTMLInputElement;
+    fileInput.click();
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.fileName = this.selectedFile.name;
+    }
   }
 }

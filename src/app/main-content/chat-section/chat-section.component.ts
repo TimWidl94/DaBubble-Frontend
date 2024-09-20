@@ -292,8 +292,8 @@ export class ChatSectionComponent {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0]; // Speichert die ausgewählte Datei
-      this.fileName = this.selectedFile.name; // Speichert den Dateinamen
+      this.selectedFile = input.files[0];
+      this.fileName = this.selectedFile.name;
     }
   }
 }

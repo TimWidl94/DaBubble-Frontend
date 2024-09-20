@@ -9,6 +9,7 @@ export interface MessageThread {
   user?: User;
   threadOpen?: boolean;
   thread_channel_id: number;
+  messageData: string | null;
   emoji_check: User[];
   emoji_handsup: User[];
   emoji_nerd: User[];

@@ -22,7 +22,6 @@ export class MessageService {
   messages$ = this.messagesSubject.asObservable();
 
   sendMessage(channelId: number, formData: FormData): Observable<any> {
-    // Die FormData anstelle eines JSON-Objekts senden
     return this.http.post(`${this.apiUrl}/channel/${channelId}/messages/`, formData);
   }
 

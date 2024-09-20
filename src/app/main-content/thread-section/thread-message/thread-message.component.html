@@ -51,6 +51,32 @@
       </ng-container>
       <ng-template #viewModeMessageContent>
         <span>{{ threadMessage.content }}</span>
+        <div *ngIf="threadMessage.messageData">
+          <!-- Falls es ein Bild ist, zeige es an -->
+          <ng-container
+            *ngIf="isImage(threadMessage.messageData); else otherFileType"
+          >
+            <img
+              [src]="getMediaUrl(threadMessage.messageData)"
+              alt="Bild"
+              class="uploaded-image"
+            />
+          </ng-container>
+
+          <!-- Andere Dateitypen -->
+          <ng-template #otherFileType>
+            <div class="document-box">
+              <img
+                src="assets/icons/document.svg"
+                alt="document"
+                class="document-icon"
+              />
+              <a [href]="threadMessage.messageData" download>
+                <i class="fas fa-file-download"></i> {{ getShortFileName(threadMessage.messageData) }}
+              </a>
+            </div>
+          </ng-template>
+        </div>
       </ng-template>
     </div>
     <app-emoji-reaction [message]="threadMessage" [user]="user"></app-emoji-reaction>

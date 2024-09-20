@@ -41,9 +41,8 @@ export class ThreadService {
       );
   }
 
-  sendThreadMessage(threadChannelId: number, content: string): Observable<any> {
-    const body = { content: content, thread_channel_id: threadChannelId };
-    return this.http.post(`${this.apiUrl}/channelThread/${threadChannelId}/messages/`, body)
+  sendThreadMessage(threadChannelId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/channelThread/${threadChannelId}/messages/`, formData)
       .pipe(
         tap((message: any) => {
           this.selectedThreadMessagesSubject.next([...this.selectedThreadMessagesSubject.getValue(), message]);

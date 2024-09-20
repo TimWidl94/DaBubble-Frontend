@@ -116,4 +116,21 @@
   }
 }
 
+.uploaded-image{
+  display: flex;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.document-icon{
+  width: 40px;
+  height: 40px;
+}
+
+.document-box{
+  @include dFlex();
+  flex-direction: column;
+}
+
 

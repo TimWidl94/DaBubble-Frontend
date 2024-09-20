@@ -41,9 +41,18 @@
           [(ngModel)]="newMessage"
           name="newMessage"
         ></textarea>
+        <div class="fileUploadField">
+          <input
+            style="display: none"
+            type="file"
+            id="fileUploadThread"
+            accept="image/*, files"
+            (change)="onFileSelected($event)"
+          /><span>{{ fileName }}</span>
+        </div>
         <div>
           <div>
-            <button class="btn-add"></button>
+            <button class="btn-add" (click)="triggerFileInput()"></button>
             <span></span>
             <button class="btn-smiley"></button>
             <button class="btn-email"></button>
