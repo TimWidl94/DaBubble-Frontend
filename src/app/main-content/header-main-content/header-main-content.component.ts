@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UploadService } from '../../services/upload.service';
 import { CommonModule } from '@angular/common';
@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.model';
+import { SearchbarComponent } from "./searchbar/searchbar.component";
 
 @Component({
   selector: 'app-header-main-content',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SearchbarComponent],
   templateUrl: './header-main-content.component.html',
   styleUrls: ['./header-main-content.component.scss'],
 })
@@ -22,7 +23,7 @@ export class HeaderMainContentComponent implements OnInit {
     private userService: UsersService
   ) {}
 
-  user: User | null = null;
+  // user: User | null = null;
   profil_img: string = 'assets/img/avatar/avatar_empty.svg';
   menuOpen: boolean = false;
   profilOpen: boolean = false;
@@ -33,17 +34,20 @@ export class HeaderMainContentComponent implements OnInit {
   name: string = '';
   email: string = '';
 
+  @Input() users: User[] = [];
+  @Input() user!:User;
+
   ngOnInit() {
     this.userService.loadUserImage();
-    this.userService.user$.subscribe((user) => {
-      this.user = user;
-      if (this.user) {
+    // this.userService.user$.subscribe((user) => {
+      // this.user = user;
+      // if (this.user) {
         this.loadUserImages();
-        this.fullName = this.getFullName(); // Voller Name initialisieren
-      }
-    });
-    this.authService.getActuellUser();
-    this.user = this.authService.getUser();
+        // this.fullName = this.getFullName(); // Voller Name initialisieren
+      // }
+    // });
+    // this.authService.getActuellUser();
+    // this.user = this.authService.getUser();
   }
 
   loadUserImages() {

@@ -18,44 +18,6 @@ section {
   background-position: center;
 }
 
-.search-box {
-  @include dFlex();
-  width: 100%;
-  position: relative;
-  // max-width: 989px;
-  height: 70px;
-  max-width: 60%;
-  > input {
-    width: 100%;
-    height: 70px;
-    border-radius: 42px;
-    padding: 17.5px 45px;
-    border: 1px solid $BGShadow;
-    font-family: $nunito;
-    font-size: 18px;
-    &:hover {
-      cursor: pointer;
-      border-color: $Gray;
-    }
-    &:focus {
-      border-color: $PurpleFont;
-      outline: none;
-    }
-    &:target {
-      border-color: $PurpleFont;
-      outline: none;
-    }
-  }
-}
-
-.search-icon {
-  @include dFlex();
-  position: absolute;
-  right: 40px;
-  width: 35px;
-  height: 35px;
-}
-
 .user-box {
   @include dFlex($g: 12px, $jc: end);
   max-width: 416px;
@@ -307,4 +269,8 @@ section {
 
 .btn-box {
   @include dFlex($g: 32px);
+}
+
+app-searchbar{
+  width: 100%;
 }
