@@ -42,14 +42,7 @@ export class DevspaceSectionComponent implements OnInit {
   privateChannelId: number = 0;
   privatChatPartner: User | null = null;
 
-  @Input() user: User = {
-    id: 0,
-    first_name: '',
-    last_name: '',
-    email: '',
-    imagepath: '',
-    image: '',
-  };
+  @Input() user!: User;
 
   @Input() users: User[] = [];
 

@@ -57,6 +57,12 @@
   @include dFlex($ai:start);
   flex-direction: column;
   padding: 8px;
+  >p{
+    font-family: $nunito;
+    font-size: 24px;
+    line-height: 24.55px;
+    margin: 8px 0px 8px 24px;
+  }
   >div{
     @include dFlex($g: 8px);
     margin-left: 24px;

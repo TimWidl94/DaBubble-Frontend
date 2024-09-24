@@ -18,9 +18,10 @@ import { combineLatest } from 'rxjs';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
-import { ProfilInfoComponent } from './profil-info/profil-info.component';
 import { ThreadService } from '../../services/thread.service';
 import { MainContentComponent } from '../main-content.component';
+import { ProfilInfoService } from '../../services/profil-info.service';
+import { ProfilInfoComponent } from "./profil-info/profil-info.component";
 
 @Component({
   selector: 'app-chat-section',
@@ -32,8 +33,8 @@ import { MainContentComponent } from '../main-content.component';
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
-    ProfilInfoComponent,
-  ],
+    ProfilInfoComponent
+],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -43,7 +44,8 @@ export class ChatSectionComponent {
     private usersService: UsersService,
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
-    private threadService: ThreadService
+    private threadService: ThreadService,
+    private profilInfoService: ProfilInfoService,
   ) {
     this.usersService.user$.subscribe((user) => {
       if (user) {
@@ -56,7 +58,7 @@ export class ChatSectionComponent {
   user!: User;
   channel: Channel | null = null;
   usersFromChannel: User[] = [];
-  chatPartner: User | null = null;
+  chatPartner!: User;
   userId: number | null = null;
 
   newMessage: string = '';
@@ -260,7 +262,6 @@ export class ChatSectionComponent {
     this.addNewChannelMemberOpen = false;
     this.channelInfoOpen = false;
     this.channelMemberOpen = false;
-    this.profilInformationOpen = false;
   }
 
   checkForPrivatChannelPartner() {
@@ -274,9 +275,8 @@ export class ChatSectionComponent {
     }
   }
 
-  openProfilInformation(channelMemberId: number) {
-    this.userId = channelMemberId;
-    this.profilInformationOpen = !this.profilInformationOpen;
+  openProfilInformation(user:User) {
+    this.profilInfoService.openProfil(user);
   }
 
   closeProfilInformation() {

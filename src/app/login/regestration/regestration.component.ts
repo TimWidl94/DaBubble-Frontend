@@ -56,7 +56,7 @@ export class RegestrationComponent {
   changeToCreateProfilScreen() {
     if (!this.buttonDisabled) {
       const [first_name, last_name] = this.splitName(this.name);
-      let username = first_name;
+      let username = first_name + last_name;
       this.authService.setRegistrationData(
         username,
         this.email,

@@ -21,16 +21,7 @@ export class ChannelMemberComponent {
 
   @Input() channel!: Channel;
 
-  @Input() allUser: User[] = [
-    {
-      id: 0,
-      first_name: '',
-      last_name: '',
-      email: '',
-      imagepath: '',
-      image: '',
-    },
-  ];
+  @Input() allUser: User[] = [];
 
   ngOnInit() {}
 
@@ -47,7 +38,7 @@ export class ChannelMemberComponent {
     this.newMemberBtnHovered = isHovered;
   }
 
-  openProfilInfo(chatPartnerId:number){
-    this.chatSection.openProfilInformation(chatPartnerId);
+  openProfilInfo(user:User){
+    this.chatSection.openProfilInformation(user);
   }
 }

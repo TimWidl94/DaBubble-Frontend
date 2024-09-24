@@ -13,12 +13,14 @@
     *ngIf="searchedUser.length >= 1 || searchedChannel.length >= 1"
   >
     <div class="searched-box"  *ngIf="searchedUser.length >= 1">
-      <div *ngFor="let user of searchedUser; let i = index" (click)="checkIfChannelExist(user)">
+      <p>Gesuchte Nutzer:</p>
+      <div *ngFor="let user of searchedUser; let i = index" (click)="openProfilInformation(user)">
         <img src="{{ user.imagepath || user.image }}" alt="" />
         <p>{{ user.first_name }} {{ user.last_name }}</p>
       </div>
     </div>
     <div class="searched-box" *ngIf="searchedChannel.length >= 1">
+      <p>Gesuchte Channel:</p>
       <div *ngFor="let channel of searchedChannel; let i = index" (click)="openChannel(channel.id)">
         <img class="img-tag" src="assets/icons/tag_black.svg" alt="tag_black" />
         <p>{{ channel.channelName }}</p>
@@ -26,3 +28,4 @@
     </div>
   </div>
 </div>
+

@@ -5,6 +5,7 @@ import { User } from '../../../models/user.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessageService } from '../../../services/message.service';
+import { ProfilInfoService } from '../../../services/profil-info.service';
 
 @Component({
   selector: 'app-searchbar',
@@ -27,7 +28,8 @@ export class SearchbarComponent {
   constructor(
     private channelService: ChannelService,
     private cdRef: ChangeDetectorRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private profilInfoService: ProfilInfoService
   ) {}
 
   ngOnInit() {
@@ -53,34 +55,55 @@ export class SearchbarComponent {
     this.searchForChannel(searchInput);
   }
 
-  searchForUser(searchInput: string){
+  searchForUser(searchInput: string) {
     this.searchedUser = [];
+
+    let searchTerms = searchInput.toLowerCase().trim().split(' ');
+
     for (let i = 0; i < this.users.length; i++) {
-      const user = this.users[i];
+        let user = this.users[i];
+        let firstName = user.first_name.toLowerCase();
+        let lastName = user.last_name.toLowerCase();
+
+        if (searchTerms.length === 1) {
+            if ((firstName.includes(searchTerms[0]) || lastName.includes(searchTerms[0])) && searchInput !== '') {
+                this.searchedUser.push(user);
+            }
+        }
+
+        else if (searchTerms.length >= 2) {
+            let firstNameMatch = firstName.includes(searchTerms[0]);
+            let lastNameMatch = lastName.includes(searchTerms[1]);
+            if (firstNameMatch && lastNameMatch) {
+                this.searchedUser.push(user);
+            }
+        }
+    }
+}
+
+  searchForChannel(searchInput: string) {
+    this.searchedChannel = [];
+    for (let i = 0; i < this.channels.length; i++) {
+      let channel = this.channels[i];
       if (
-        (user.first_name.toLowerCase().includes(searchInput) &&
-          searchInput != '') ||
-        (user.last_name.toLowerCase().includes(searchInput) &&
-          searchInput != '')
+        channel.channelName.toLowerCase().includes(searchInput) &&
+        searchInput != ''
       ) {
-        this.searchedUser.push(user);
-        console.log('gefundener User:', this.searchedUser);
+        this.searchedChannel.push(channel);
       }
     }
   }
 
-  searchForChannel(searchInput: string){
-    this.searchedChannel = [];
-    for (let i = 0; i < this.channels.length; i++) {
-      const channel = this.channels[i];
-      if (
-        (channel.channelName.toLowerCase().includes(searchInput) &&
-          searchInput != '')
-      ) {
-        this.searchedChannel.push(channel);
-        console.log('gefundener Channel:', this.searchedChannel);
+  checkIfChannelAndUserSame(channelName: string) {
+    for (let i = 0; i < this.searchedUser.length; i++) {
+      let user = this.searchedUser[i];
+      let userNameLC = user.username.toLowerCase();
+      let channelNameLC = channelName.replace(/\s+/g, '').toLowerCase();
+      if (userNameLC == channelNameLC) {
+        return false;
       }
     }
+    return true;
   }
 
   checkIfChannelExist(user: User) {
@@ -92,8 +115,7 @@ export class SearchbarComponent {
         ) {
           this.openChannel(channel.id);
           this.privateChannelId = channel.id;
-          this.searchedChannel = [];
-          this.searchedUser = [];
+          this.clearSearch();
           return true;
         }
       }
@@ -128,5 +150,58 @@ export class SearchbarComponent {
   openChannel(channelId: number) {
     this.channelService.loadSelectedChannel(channelId);
     this.messageService.getMessages(channelId);
+    this.searchedChannel = [];
+    this.searchedUser = [];
+    this.searchInput = '';
+  }
+
+  createAndCheckHelpFunction(user: User) {
+    if (this.checkIfChannelExist(user)) {
+      this.channelService.loadAllChannels();
+      this.openChannel(this.privateChannelId);
+      console.log('geöffneter Nutzer:', user);
+    }
+    if (!this.checkIfChannelExist(user)) {
+      this.getPrivatChannelData(user);
+    }
+  }
+
+  getPrivatChannelData(user: User) {
+    let channelMembers = [];
+
+    channelMembers.push(this.user.id);
+    channelMembers.push(user.id);
+
+    let channelData = {
+      channelName: user.first_name + ' ' + user.last_name,
+      channelDescription: 'Privat Channel',
+      channelMembers: channelMembers,
+      createdFrom: this.user?.first_name + ' ' + this.user?.last_name,
+      privateChannel: true,
+    };
+    this.createNewChannel(channelData, user);
+  }
+
+  createNewChannel(channelData: any, user: User): void {
+    this.channelService.createChannel(channelData).subscribe(
+      (response) => {
+        this.checkIfChannelExist(user);
+        this.openChannel(response.id);
+      },
+      (error) => {
+        console.error('Fehler beim Erstellen des Channels:', error);
+      }
+    );
+  }
+
+  openProfilInformation(user: User) {
+    this.profilInfoService.openProfil(user);
+    this.clearSearch();
+  }
+
+  clearSearch() {
+    this.searchedChannel = [];
+    this.searchedUser = [];
+    this.searchInput = '';
   }
 }

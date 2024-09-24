@@ -26,15 +26,15 @@
         class="chat-name-box"
         (mouseover)="onHover(true)"
         (mouseleave)="onHover(false)"
-        (click)="openProfilInformation(this.chatPartner!.id)"
+        (click)="openProfilInformation(this.chatPartner)"
       >
         <img
-          src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}"
+          src="{{ this.chatPartner.image || this.chatPartner.imagepath }}"
           class="privat-channel-user-icon"
           alt="user-image"
         />
         <span *ngIf="channel.privateChannel"
-          >{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</span
+          >{{ chatPartner.first_name }} {{ chatPartner.last_name }}</span
         >
       </div>
       <div class="fill-box"></div>
@@ -132,15 +132,15 @@
     >
       <div class="privat-channel-message-header-box">
         <img
-          src="{{ this.chatPartner?.image || this.chatPartner?.imagepath }}"
+          src="{{ this.chatPartner.image || this.chatPartner.imagepath }}"
           alt="channelPartner image"
         />
-        <span>{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}</span>
+        <span>{{ chatPartner.first_name }} {{ chatPartner.last_name }}</span>
       </div>
       <div class="privat-channel-message-infotext-box">
         <span>Diese Unterhaltung findet nur zwischen </span>
         <button>
-          &#64;{{ chatPartner?.first_name }} {{ chatPartner?.last_name }}
+          &#64;{{ chatPartner.first_name }} {{ chatPartner.last_name }}
         </button>
         <span>und dir statt.</span>
       </div>
@@ -185,8 +185,4 @@
   *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
   (click)="closeAllComponents()"
 ></div>
-<app-profil-info
-  [users]="usersFromChannel"
-  [userId]="userId"
-  *ngIf="profilInformationOpen"
-></app-profil-info>
+

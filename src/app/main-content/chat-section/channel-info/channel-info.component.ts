@@ -30,14 +30,7 @@ export class ChannelInfoComponent {
 
   @Input() channel!: Channel;
 
-  @Input() user: User = {
-    id: 0,
-    first_name: '',
-    last_name: '',
-    email: '',
-    imagepath: '',
-    image: '',
-  };
+  @Input() user!: User;
 
   ngOnInit(){
     console.log('channel-info:', this.user)

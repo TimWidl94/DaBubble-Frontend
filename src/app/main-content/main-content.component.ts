@@ -7,6 +7,7 @@ import { ChatSectionComponent } from './chat-section/chat-section.component';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user.model';
 import { ThreadSectionComponent } from "./thread-section/thread-section.component";
+import { ProfilInfoComponent } from "./chat-section/profil-info/profil-info.component";
 
 @Component({
   selector: 'app-main-content',
@@ -16,7 +17,8 @@ import { ThreadSectionComponent } from "./thread-section/thread-section.componen
     DevspaceSectionComponent,
     CommonModule,
     ChatSectionComponent,
-    ThreadSectionComponent
+    ThreadSectionComponent,
+    ProfilInfoComponent
 ],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss',

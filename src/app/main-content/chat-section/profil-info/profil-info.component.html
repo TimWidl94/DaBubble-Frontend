@@ -1,16 +1,16 @@
-<div class="profil-box">
+<div class="profil-box" *ngIf="profilInfoOpen">
   <div class="profil-box-headline">
     <h3>Profil</h3>
     <div (click)="closeProfilInformation()"></div>
   </div>
   <img
     class="openProfilImg"
-    src="{{ user?.image || user?.imagepath }}"
+    src="{{ user.image || user.imagepath }}"
     alt=""
   />
   <div class="user-name-and-edit-box">
     <div class="user-name-box">
-      <h2>{{ user?.first_name }} {{ user?.last_name }}</h2>
+      <h2>{{ user.first_name }} {{ user.last_name }}</h2>
     </div>
     <div class="user-status-box">
       <div></div>
@@ -21,10 +21,10 @@
     <img src="assets/icons/mail_black.svg" alt="" />
     <div>
       <span>E-Mail-Adresse</span
-      ><a href="mailto:{{ user?.email }}">{{ user?.email }}</a>
+      ><a href="mailto:{{ user.email }}">{{ user.email }}</a>
     </div>
   </div>
-  <button class="btn-purple" (click)="closeProfilInformation()">
+  <button class="btn-purple" (click)="createAndCheckHelpFunction(user)">
     <img class="btn-icon" src="assets/icons/chat_bubble_white.svg" alt="" />
     Nachricht
   </button>
