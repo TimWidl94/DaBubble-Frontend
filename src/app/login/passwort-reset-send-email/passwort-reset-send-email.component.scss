@@ -1,0 +1,122 @@
+@import "./../../../styles.scss";
+
+section {
+  @include dFlex();
+  width: 100%;
+  height: 100%;
+}
+
+.login-box {
+  @include dFlex($g: 30px); // gap ist noch fiktiv gesetzt
+  background-color: $White;
+  width: 100%;
+  max-width: calc(606px - 2 * 20px);
+  border-radius: 30px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  margin: 30px;
+  padding: 40px 20px;
+  position: relative;
+}
+
+.headline-box {
+  @include dFlex($g: 30px);
+  width: 100%;
+  max-width: 486px;
+  height: 133px;
+  max-height: 133px;
+  flex-direction: column;
+  > h2 {
+    display: flex;
+    font-family: $nunito;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 55.2px;
+    align-items: center;
+    color: $Purple;
+    margin: 0;
+    &:hover {
+      cursor: default;
+    }
+  }
+  > span {
+    width: 100%;
+    max-width: 486px;
+    height: 48px;
+    max-height: 48px;
+    font-family: $nunito;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    @include dFlex();
+    text-align: center;
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.img-arrow-left-box {
+  position: absolute;
+  left: 20px;
+  top: 48px;
+  width: 40px;
+  height: 40px;
+  background-image: url("./../../../assets/icons/arrow_left.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  &:hover {
+    cursor: pointer;
+    background-color: $BGShadow;
+    border-radius: 100%;
+    background-image: url("./../../../assets/icons/arrow_left_purple.svg");
+  }
+}
+
+.form-box{
+  @include dFlex($g:30px);
+  flex-direction: column;
+}
+
+.email-input-box {
+  @include dFlex();
+  width: 100%;
+  position: relative;
+  max-width: 473px;
+  > input {
+    // max-width: 357px;
+    flex: 1;
+    height: calc(60px - 2 * 18px);
+    border-radius: 6.25rem;
+    border: 1px solid $BGShadow;
+    padding: 18px 32px 18px 82px;
+    background-color: $BGShadow;
+    font-size: 18px;
+    line-height: 21.6px;
+    &:hover {
+      cursor: pointer;
+      border-color: $Gray;
+    }
+    &:focus {
+      border-color: $PurpleFont;
+      outline: none;
+    }
+    &:target {
+      border-color: $PurpleFont;
+      outline: none;
+    }
+  }
+  > img {
+    position: absolute;
+    left: 32px;
+  }
+}
+
+.info-text {
+  font-size: 20px;
+  line-height: 24px;
+  font-family: $nunito;
+  text-wrap: wrap;
+  text-align: center;
+  width: 65%;
+}

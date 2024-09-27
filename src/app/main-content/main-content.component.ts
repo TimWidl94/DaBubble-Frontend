@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
 import { ThreadSectionComponent } from "./thread-section/thread-section.component";
 import { ProfilInfoComponent } from "./chat-section/profil-info/profil-info.component";
 
+
 @Component({
   selector: 'app-main-content',
   standalone: true,
@@ -43,9 +44,9 @@ export class MainContentComponent {
   ngOnInit(): void {
     this.authService.getActuellUser();
     this.user = this.authService.getUser();
-
     this.loadUsers();
   }
+
 
   loadUsers(){
     this.userService.allUser$.subscribe((users) => {

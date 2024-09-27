@@ -59,16 +59,36 @@ section {
 }
 
 .login-input-box {
-  @include dFlex($ai: start);
+  @include dFlex($g: 30px);
   width: 100%;
   height: 100%;
   max-width: 500px;
   max-height: 222px;
+  flex-direction: column;
   > form {
-    @include dFlex($jc: space-between);
+    @include dFlex($jc: space-between, $g: 30px);
     flex-direction: column;
-    height: 100%;
+    // height: 100%;
     width: 100%;
+  }
+  >button{
+    @include dFlex();
+    border: none;
+    background-color: $White;
+    color: $PalePurple;
+    font-family: $figtree;
+    border-radius: 30px;
+    padding: 10px 15px;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid transparent;
+    &:hover{
+      cursor: pointer;
+      color: $Purple;
+      font-weight: 500;
+      background-color: $BGShadow;
+      font-size: 19px
+    }
   }
 }
 

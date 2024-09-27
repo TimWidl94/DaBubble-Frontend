@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-loginform',
@@ -14,9 +14,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginformComponent {
   constructor(
-    private loginService: LoginService,
     private router: Router,
-    private as: AuthService
+    private as: AuthService,
+    private http: HttpClient
   ) {}
 
   EmailInvalid: boolean = false;
@@ -25,13 +25,17 @@ export class LoginformComponent {
   loginScreen: boolean = true;
   regestrationScreen: boolean = false;
 
+  email: string = '';
+  password: string = '';
+  public isLoggedIn: boolean = false;
+
   changeToRegestration() {
     this.router.navigate(['/regestration']);
   }
 
-  email: string = '';
-  password: string = '';
-  public isLoggedIn: boolean = false;
+  changeToResetPasswortComponent(){
+    this.router.navigate(['/reset-email']);
+  }
 
   async login() {
     try {

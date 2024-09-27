@@ -12,7 +12,13 @@
         <div class="input-box">
           <div>
             <img src="assets/icons/mail.svg" alt="email icon" />
-            <input type="email" placeholder="beispielname@email.com" name="email" [(ngModel)]="email" required />
+            <input
+              type="email"
+              placeholder="beispielname@email.com"
+              name="email"
+              [(ngModel)]="email"
+              required
+            />
           </div>
           <span class="error-text" *ngIf="EmailInvalid"
             >*Diese E-Mail-Adresse ist leider ungültig
@@ -21,14 +27,22 @@
         <div class="input-box">
           <div>
             <img src="assets/icons/lock.svg" alt="lock icon" />
-            <input type="password" placeholder="Passwort" name="password" [(ngModel)]="password" required />
+            <input
+              type="password"
+              placeholder="Passwort"
+              name="password"
+              [(ngModel)]="password"
+              required
+            />
           </div>
           <span class="error-text" *ngIf="PwOrEmailWrong"
             >Falsches Passwort oder E-Mail.. Bitte noch einmal versuchen.</span
           >
         </div>
-        <a href="Placeholder für richtigen Link">Passwort vergessen?</a>
       </form>
+      <button (click)="changeToResetPasswortComponent()">
+        Passwort vergessen?
+      </button>
     </div>
     <div class="or-container">
       <span>ODER</span>

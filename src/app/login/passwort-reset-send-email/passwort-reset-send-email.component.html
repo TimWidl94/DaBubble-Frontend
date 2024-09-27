@@ -1,0 +1,25 @@
+<section>
+  <div class="login-box">
+    <div class="img-arrow-left-box" (click)="backToLogin()"></div>
+    <div class="headline-box">
+      <h2>Passwort zurücksetzen</h2>
+      <span>Bitte geben sie Ihre E-Mail-Adresse ein.</span>
+    </div>
+    <form (ngSubmit)="onSubmit()" class="form-box">
+      <div class="email-input-box">
+        <img src="assets/icons/mail.svg" alt="email icon" />
+        <input
+          type="email"
+          placeholder="beispielname@email.com"
+          name="email"
+          [(ngModel)]="email"
+          required
+        />
+      </div>
+      <span class="info-text">
+        Wir senden Ihnen eine E-mail, über die Sie ihr Passwort ändern können.
+      </span>
+    </form>
+    <button class="btn-purple" type="submit" (click)="onSubmit()">E-mail senden</button>
+  </div>
+</section>

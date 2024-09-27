@@ -8,11 +8,12 @@ import { CreateProfilComponent } from './create-profil/create-profil.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PasswortResetSendEmailComponent } from './passwort-reset-send-email/passwort-reset-send-email.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RegestrationComponent, LoginformComponent , FooterComponent, CreateProfilComponent, HttpClientModule],
+  imports: [RouterOutlet, CommonModule, RegestrationComponent, LoginformComponent , FooterComponent, CreateProfilComponent, HttpClientModule, PasswortResetSendEmailComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -25,15 +26,15 @@ export class LoginComponent {
   createProfilScreen: boolean = false;
 
   ngOnInit(){
-    this.loginService.registrationScreen$.subscribe(value => {
-      this.regestrationScreen = value;
-    });
-    this.loginService.loginScreen$.subscribe(value => {
-      this.loginScreen = value;
-    })
-    this.loginService.createProfilScreen$.subscribe(value => {
-      this.createProfilScreen = value;
-    })
+    // this.loginService.registrationScreen$.subscribe(value => {
+      // this.regestrationScreen = value;
+    // });
+    // this.loginService.loginScreen$.subscribe(value => {
+      // this.loginScreen = value;
+    // })
+    // this.loginService.createProfilScreen$.subscribe(value => {
+      // this.createProfilScreen = value;
+    // })
   }
 
 }
