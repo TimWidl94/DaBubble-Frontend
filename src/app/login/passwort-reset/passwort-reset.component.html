@@ -1,1 +1,43 @@
-<p>passwort-reset works!</p>
+<section>
+  <div class="main-box">
+    <div class="img-arrow-left-box" (click)="backToLogin()"></div>
+    <div class="headline-box">
+      <h2>Passwort zurücksetzen</h2>
+    </div>
+    <form (ngSubmit)="onSubmit()" class="form-box">
+      <div class="passwort-input-box">
+        <input
+          type="password"
+          placeholder="Neues Passwort"
+          name="password"
+          [(ngModel)]="password"
+          required
+          (keyup)="checkIfPasswordMatch()"
+        />
+        <input
+          type="password"
+          placeholder="Neues Passwort bestätigen"
+          name="passwordConfirm"
+          [(ngModel)]="passwordConfirm"
+          required
+          (keyup)="checkIfPasswordMatch()"
+        />
+      </div>
+      <div class="btn-container">
+        <button
+          class="btn-purple"
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="!btnActive"
+        >
+          Passwort ändern
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="sucessfull-sendet-box" [ngClass]="{ animate: passwordChanged }">
+    <div>
+      <span>Anmelden</span>
+    </div>
+  </div>
+</section>

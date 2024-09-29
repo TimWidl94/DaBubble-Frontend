@@ -21,20 +21,7 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService, private as: AuthService, private router: Router){}
 
-  loginScreen: boolean = true;
-  regestrationScreen: boolean = false;
-  createProfilScreen: boolean = false;
-
   ngOnInit(){
-    // this.loginService.registrationScreen$.subscribe(value => {
-      // this.regestrationScreen = value;
-    // });
-    // this.loginService.loginScreen$.subscribe(value => {
-      // this.loginScreen = value;
-    // })
-    // this.loginService.createProfilScreen$.subscribe(value => {
-      // this.createProfilScreen = value;
-    // })
   }
 
 }

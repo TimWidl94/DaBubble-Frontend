@@ -7,7 +7,7 @@ section {
 }
 
 .login-box {
-  @include dFlex($g: 30px); // gap ist noch fiktiv gesetzt
+  @include dFlex($g: 30px, $jc: start); // gap ist noch fiktiv gesetzt
   background-color: $White;
   width: 100%;
   max-width: calc(606px - 2 * 20px);
@@ -28,6 +28,7 @@ section {
   height: 133px;
   max-height: 133px;
   flex-direction: column;
+  margin-top: 40px;
   > h2 {
     display: flex;
     font-family: $nunito;
@@ -66,7 +67,7 @@ section {
   max-width: 500px;
   max-height: 340px;
   > form {
-    @include dFlex($jc: space-between);
+    @include dFlex($jc: space-between, $g: 32px);
     flex-direction: column;
     height: 100%;
     width: 100%;
@@ -79,6 +80,7 @@ section {
   height: 100%;
   max-height: 60px;
   flex-direction: column;
+  position: relative;
   > div {
     @include dFlex();
     width: 100%;
@@ -120,6 +122,9 @@ section {
   font-family: $nunito;
   font-size: 14px;
   line-height: 19.1px;
+  position: absolute;
+  left: 0;
+  bottom: -26px;
 }
 
 a {

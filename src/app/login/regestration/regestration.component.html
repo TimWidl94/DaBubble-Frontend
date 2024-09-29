@@ -1,7 +1,6 @@
 <section>
   <div class="login-box">
-    <div class="img-arrow-left-box" (click)="backToLogin()">
-    </div>
+    <div class="img-arrow-left-box" (click)="backToLogin()"></div>
     <div class="headline-box">
       <h2>Konto erstellen</h2>
       <span
@@ -14,7 +13,13 @@
         <div class="input-box">
           <div>
             <img src="assets/icons/person_filled.svg" alt="person icon" />
-            <input type="text" placeholder="Name und Nachname" [(ngModel)]="name" (input)="onInputChange('name')" name="name"/>
+            <input
+              type="text"
+              placeholder="Name und Nachname"
+              [(ngModel)]="name"
+              (input)="onInputChange('name')"
+              name="name"
+            />
           </div>
           <span class="error-text" *ngIf="nameEmpty"
             >Bitte schreiben Sie einen Namen.
@@ -23,7 +28,13 @@
         <div class="input-box">
           <div>
             <img src="assets/icons/mail.svg" alt="email icon" />
-            <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" (input)="onInputChange('email')" name="email"/>
+            <input
+              type="email"
+              placeholder="beispielname@email.com"
+              [(ngModel)]="email"
+              (input)="onInputChange('email')"
+              name="email"
+            />
           </div>
           <span class="error-text" *ngIf="emailInvalid"
             >*Diese E-Mail-Adresse ist leider ungültig</span
@@ -32,7 +43,13 @@
         <div class="input-box">
           <div>
             <img src="assets/icons/lock.svg" alt="lock icon" />
-            <input type="password" placeholder="Passwort" [(ngModel)]="password" (input)="onInputChange('password')" name="password"/>
+            <input
+              type="password"
+              placeholder="Passwort"
+              [(ngModel)]="password"
+              (input)="onInputChange('password')"
+              name="password"
+            />
           </div>
           <span class="error-text" *ngIf="pwEmpty"
             >Bitte geben Sie ein Passwort ein.</span
@@ -43,10 +60,11 @@
             [class.hovered]="isHovered"
             (mouseover)="onHover(true)"
             (mouseout)="onHover(false)"
-            (click)="changeDataProtectionImg('assets/icons/checkbox_checked.svg')"
+            (click)="
+              changeDataProtectionImg('assets/icons/checkbox_checked.svg')
+            "
             [style.backgroundImage]="'url(' + backgroundImage + ')'"
-          >
-          </div>
+          ></div>
           <span>Ich stimme der</span>
           <a
             href=""
@@ -58,10 +76,15 @@
           <span>zu.</span>
         </div>
         <div class="btn-box">
-          <button class="btn-purple" (click)="changeToCreateProfilScreen()" [disabled]="buttonDisabled">weiter</button>
+          <button
+            class="btn-purple"
+            (click)="changeToCreateProfilScreen()"
+            [disabled]="buttonDisabled"
+          >
+            weiter
+          </button>
         </div>
       </form>
     </div>
-
   </div>
 </section>

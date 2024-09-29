@@ -13,6 +13,7 @@
           placeholder="beispielname@email.com"
           name="email"
           [(ngModel)]="email"
+          (keyup)="checkEmailFilled()"
           required
         />
       </div>
@@ -20,6 +21,12 @@
         Wir senden Ihnen eine E-mail, über die Sie ihr Passwort ändern können.
       </span>
     </form>
-    <button class="btn-purple" type="submit" (click)="onSubmit()">E-mail senden</button>
+    <button class="btn-purple" type="submit" (click)="onSubmit()" [disabled]="!emailInvalid">E-mail senden</button>
+  </div>
+  <div class="sucessfull-sendet-box" [ngClass]="{'animate': emailSendet}">
+    <div>
+      <img src="assets/icons/send_white.svg" alt="">
+      <span>E-Mail gesendet</span>
+    </div>
   </div>
 </section>

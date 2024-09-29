@@ -68,7 +68,7 @@ export class AuthService {
     first_name: string,
     last_name: string
   ): Observable<any> {
-    const url = environment.baseUrl + 'register/';
+    let url = environment.baseUrl + 'register/';
     return this.http.post<any>(url, {
       username,
       password,
