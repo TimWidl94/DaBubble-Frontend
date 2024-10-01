@@ -64,7 +64,9 @@ export class RegestrationComponent {
         first_name,
         last_name
       );
-      this.router.navigate(['/create-profile']);
+      this.router.navigate(['/create-profile'], {
+        queryParams: { first_name: first_name, last_name: last_name }
+      });
     }
   }
 

@@ -12,7 +12,7 @@ section {
   width: 100%;
   max-width: calc(606px - 2 * 20px);
   height: 100%;
-  max-height: calc(669px);
+  max-height: 672px;
   border-radius: 30px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
   flex-direction: column;
@@ -29,17 +29,22 @@ section {
   max-height: 133px;
   flex-direction: column;
   margin-top: 40px;
-  > h2 {
-    display: flex;
-    font-family: $nunito;
-    font-weight: 700;
-    font-size: 46px;
-    line-height: 55.2px;
-    align-items: center;
-    color: $Purple;
-    margin: 0;
-    &:hover {
-      cursor: default;
+  > div {
+    @include dFlex();
+    position: relative;
+    width: 100%;
+    > h2 {
+      display: flex;
+      font-family: $nunito;
+      font-weight: 700;
+      font-size: 46px;
+      line-height: 55.2px;
+      align-items: center;
+      color: $Purple;
+      margin: 0;
+      &:hover {
+        cursor: default;
+      }
     }
   }
   > span {
@@ -147,11 +152,10 @@ a {
   max-width: 500px;
 }
 
-
 .img-arrow-left-box {
   position: absolute;
-  left: 50px;
-  top: 52px;
+  left: 0;
+  top: 8px;
   width: 40px;
   height: 40px;
   background-image: url("./../../../assets/icons/arrow_left.svg");
@@ -191,7 +195,7 @@ a {
   }
 }
 
-.hovered{
+.hovered {
   background-color: $BGShadow;
   color: $Purple;
   font-weight: 500;
@@ -199,3 +203,82 @@ a {
 
 /// mobile ///
 /// change font size from input fields to smaller size for flex
+
+@media (max-width: 700px) {
+  .headline-box {
+    margin: 0;
+    > div {
+      > h2 {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 38.4px;
+        text-align: center;
+      }
+    }
+
+    > span {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 20.4px;
+      text-align: center;
+    }
+  }
+  .img-arrow-left-box {
+    top: 0;
+  }
+
+  .login-input-box {
+    > button {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 20.4px;
+    }
+    >form{
+      gap:24px
+    }
+  }
+  .login-google-box {
+    > button {
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 20.4px;
+    }
+  }
+  .login-box {
+    padding: 35px 20px;
+    max-height: 552px;
+    gap: 20px;
+    // max-width: 358px;
+    width: unset;
+  }
+  .btn-box {
+    gap: 20px;
+  }
+  .input-box {
+    > div {
+      > input {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1120px) {
+  .login-box {
+    padding: 35px 20px;
+    max-width: 550px;
+  }
+  .headline-box {
+    margin: 0;
+  }
+  .error-text{
+    bottom: -23px;
+  }
+}
+
+@media (max-width: 500px) {
+  .dataprotection-box {
+    flex-direction: column;
+  }
+}
+

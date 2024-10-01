@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UploadService } from '../../services/upload.service';
 
 @Component({
@@ -17,7 +17,8 @@ export class CreateProfilComponent {
     private loginService: LoginService,
     private authService: AuthService,
     private router: Router,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private route: ActivatedRoute
   ) {}
 
   avatars: any = [
@@ -85,8 +86,6 @@ export class CreateProfilComponent {
     }
   }
 
-
-
   goToRegestration() {
     this.router.navigate(['/regestration']);
   }
@@ -112,6 +111,13 @@ export class CreateProfilComponent {
   first_name: string = '';
   last_name: string = '';
   regestrationComplete: boolean = false;
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.first_name = params['first_name'];
+      this.last_name = params['last_name'];
+    });
+  }
 
   registrate() {
     this.authService

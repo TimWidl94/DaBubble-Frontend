@@ -26,3 +26,10 @@ section {
     }
   }
 }
+
+
+@media (max-width: 1120px){
+  section{
+    display: none;
+  }
+}
