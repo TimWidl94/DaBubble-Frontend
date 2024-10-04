@@ -17,13 +17,15 @@ export class ChannelInfoComponent {
   constructor(
     private chatSection: ChatSectionComponent,
     private channelService: ChannelService
-  ) {
-  }
+  ) {}
+
+
 
   editName: boolean = false;
   editDescription: boolean = false;
   isEditingName = false;
   isEditingDescription = false;
+  newChannelMemberOpen:boolean = false;
 
   channelName: string = '';
   channelDescription: string = '';
@@ -32,13 +34,14 @@ export class ChannelInfoComponent {
 
   @Input() user!: User;
 
-  ngOnInit(){
-    console.log('channel-info:', this.user)
-    console.log('channel-info:', this.channel)
+  @Input() allUser: User[] = [];
+
+  ngOnInit() {
   }
 
-  closeEditOpen(){
+  closeEditOpen() {
     this.chatSection.openChannelEditMenu();
+    this.newChannelMemberOpen = !this.newChannelMemberOpen;
   }
 
   toggleEditName() {
@@ -50,20 +53,19 @@ export class ChannelInfoComponent {
     }
   }
 
-
-  saveEditChannelName(){
+  saveEditChannelName() {
     const updatedChannelName = {
-      ... this.channel,
+      ...this.channel,
       channelName: this.channelName,
-    }
+    };
     let channelId = this.channel.id;
-    console.log(updatedChannelName)
-    this.channelService.updateChannel(updatedChannelName, channelId).subscribe(
-      (response) => {
-        console.log(response)
+    console.log(updatedChannelName);
+    this.channelService
+      .updateChannel(updatedChannelName, channelId)
+      .subscribe((response) => {
+        console.log(response);
         this.chatSection.updateChannel(this.channel.id);
-      }
-    )
+      });
   }
 
   toggleEditDescription() {
@@ -72,22 +74,22 @@ export class ChannelInfoComponent {
       this.saveEditChannelDescription();
     } else {
       this.isEditingDescription = true;
-      console.log(this.channel.channelDescription)
+      console.log(this.channel.channelDescription);
     }
   }
 
-  saveEditChannelDescription(){
+  saveEditChannelDescription() {
     const updateChannelDescription = {
-      ... this.channel,
-      channelDescription: this.channelDescription
-    }
-    let channelId = this.channel.id
-    this.channelService.updateChannel(updateChannelDescription, channelId).subscribe(
-      (respone) => {
+      ...this.channel,
+      channelDescription: this.channelDescription,
+    };
+    let channelId = this.channel.id;
+    this.channelService
+      .updateChannel(updateChannelDescription, channelId)
+      .subscribe((respone) => {
         console.log(respone);
         this.chatSection.updateChannel(this.channel.id);
-      }
-    )
+      });
   }
 
   autoResize(event: Event): void {
@@ -96,26 +98,39 @@ export class ChannelInfoComponent {
     textarea.style.height = 72 + 'px'; // Höhe anpassen
   }
 
-  leaveChannel(){
-    let i = this.channel.channelMembers.findIndex(member => member === this.user.id)
-    if (i !== -1){
+  leaveChannel() {
+    let i = this.channel.channelMembers.findIndex(
+      (member) => member === this.user.id
+    );
+    if (i !== -1) {
       this.channel.channelMembers.splice(i, 1);
-      return this.channel.channelMembers
+      return this.channel.channelMembers;
     } else {
-      return this.channel.channelMembers
+      return this.channel.channelMembers;
     }
   }
 
-  saveLeaveChannel(){
+  saveLeaveChannel() {
     let updateChannelMember = {
-      ... this.channel,
-      channelMembers: this.leaveChannel()
-    }
+      ...this.channel,
+      channelMembers: this.leaveChannel(),
+    };
     let channelId = this.channel.id;
-    this.channelService.updateChannel(updateChannelMember, channelId).subscribe(
-    (respone) => {
-      this.chatSection.updateChannel(this.channel.id);
-      this.closeEditOpen();
-    })
+    this.channelService
+      .updateChannel(updateChannelMember, channelId)
+      .subscribe((respone) => {
+        this.chatSection.updateChannel(this.channel.id);
+        this.closeEditOpen();
+      });
+  }
+
+  openProfilInfo(user: User) {
+    this.chatSection.openProfilInformation(user);
+  }
+
+  addNewChannelMember() {
+    this.chatSection.channelMemberOpen = false;
+    this.chatSection.addNewChannelMemberOpen = true;
+    this.newChannelMemberOpen = !this.newChannelMemberOpen;
   }
 }

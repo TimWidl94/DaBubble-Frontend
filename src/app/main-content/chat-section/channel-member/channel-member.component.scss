@@ -72,7 +72,6 @@ h2 {
 
 .single-user-box{
   @include dFlex($jc:start, $g: 15px);
-  // width: 100%;
   padding: 4px 20px;
   border-radius: 30px;
   &:hover{

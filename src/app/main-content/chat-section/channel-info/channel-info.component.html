@@ -1,5 +1,5 @@
 <section>
-  <div class="edit-info-header-box">
+  <div class="edit-info-header-box" id="header">
     <div>
       <img src="assets/icons/tag_black.svg" alt="tag icon" />
       <h2>{{ channel.channelName }}</h2>
@@ -76,9 +76,21 @@
         {{ channel.createdFrom.last_name }}</span>
     </div>
   </div>
+  <div class="channel-member-mobile">
+    <h2 class="overline-members">Mitglieder</h2>
+    <div *ngFor="let user of allUser" class="single-user-box" (click)="openProfilInfo(user)">
+      <img src="{{ user.image || user.imagepath }}" alt="" />
+      <span>{{ user.first_name }} {{ user.last_name }}</span>
+    </div>
+    <div class="btn-box" (click)="addNewChannelMember()">
+      <div></div>
+      <span>Mitglieder hinzufügen</span>
+    </div>
+  </div>
   <div class="btn-box">
     <button class="btn-purple" (click)="saveLeaveChannel()">
       Channel verlassen
     </button>
   </div>
+  <div class="fullsize-shadow-mobile" *ngIf="newChannelMemberOpen"></div>
 </section>

@@ -6,6 +6,16 @@
     [(ngModel)]="searchInput"
     name="searchUser"
     autocomplete="off"
+    class="fullscreen"
+  />
+  <input
+    type="search"
+    placeholder="Gehe zu..."
+    (keyup)="search()"
+    [(ngModel)]="searchInput"
+    name="searchUser"
+    autocomplete="off"
+    class="media700px"
   />
   <img class="search-icon" src="assets/icons/search_icon.svg" alt="" />
   <div

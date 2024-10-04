@@ -67,3 +67,19 @@ app-chat-section {
   // flex: 1; /* Nimmt den restlichen Platz ein */
   width: 65%;
 }
+
+
+@media (max-width:700px){
+  .devspace-section-btn{
+    display: none;
+  }
+  .main-content{
+    height: calc(100% - 80px);
+  }
+  app-devspace-section{
+    width: 100%;
+  }
+  app-chat-section{
+    margin: 0;
+  }
+}

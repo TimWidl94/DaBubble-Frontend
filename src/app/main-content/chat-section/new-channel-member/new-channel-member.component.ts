@@ -19,7 +19,7 @@ export class NewChannelMemberComponent {
     private userService: UsersService,
     private cdRef: ChangeDetectorRef,
     private chatSection: ChatSectionComponent,
-    private channelService: ChannelService
+    private channelService: ChannelService,
   ) {}
 
   ifUserIsFind: boolean = false;
@@ -36,8 +36,6 @@ export class NewChannelMemberComponent {
   @Input() allUser: User[] = [];
 
   ngOnInit() {
-    // console.log(this.allUser);
-    // console.log(this.channel);
   }
 
   searchSpecificUser() {
@@ -173,6 +171,7 @@ export class NewChannelMemberComponent {
 
   closeAddNewMember() {
     this.chatSection.addNewChannelMemberOpen = false;
+
   }
 
   mergeChannelMember() {
@@ -202,5 +201,4 @@ export class NewChannelMemberComponent {
       }
     )
   }
-
 }

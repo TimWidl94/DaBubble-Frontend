@@ -356,3 +356,26 @@ app-message {
   // width: 200px !important;
 }
 
+@media(max-width: 700px){
+  .user-avatars{
+    display: none;
+  }
+  section{
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+  .chat-new-message-box{
+    padding: 25px 16px;
+    width: calc(100% - 32px);
+  }
+  .chat-header-box{
+    padding: 13px 16px;
+    width: calc(100% - 32px);
+    position: unset;
+  }
+  .create-message-functions{
+    width: calc(100% - 60px);
+    bottom: 26px;
+  }
+}

@@ -268,6 +268,17 @@ body {
   z-index: 2;
 }
 
+.fullsize-shadow-mobile{
+  @include dFlex();
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
 .input-transparent {
   width: calc(100% - 2 * 40px);
   height: calc(60px - 2 * 18px);

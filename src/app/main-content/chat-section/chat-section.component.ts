@@ -85,9 +85,9 @@ export class ChatSectionComponent {
 
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
-    setInterval(() => {
-      this.scrollToBottomIfNewMessage();
-    }, 1000);
+    // setInterval(() => {
+      // this.scrollToBottomIfNewMessage();
+    // }, 1000);
   }
 
   private scrollToBottomIfNewMessage(): void {

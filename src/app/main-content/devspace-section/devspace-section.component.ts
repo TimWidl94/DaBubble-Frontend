@@ -13,11 +13,13 @@ import { MessageService } from '../../services/message.service';
 import { User } from '../../models/user.model';
 import { Channel } from '../../models/channel.model';
 import { Message } from '../../models/message.model';
+import { SearchbarComponent } from "../header-main-content/searchbar/searchbar.component";
+import { MediaChangeViewService } from '../../services/media-change-view.service';
 
 @Component({
   selector: 'app-devspace-section',
   standalone: true,
-  imports: [CommonModule, CreateNewChannelComponent],
+  imports: [CommonModule, CreateNewChannelComponent, SearchbarComponent],
   templateUrl: './devspace-section.component.html',
   styleUrls: ['./devspace-section.component.scss'],
 })
@@ -26,7 +28,8 @@ export class DevspaceSectionComponent implements OnInit {
     private userService: UsersService,
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private mediaChangeViewService: MediaChangeViewService
   ) {}
 
   isHoveredChannel: boolean = false;
@@ -130,6 +133,8 @@ export class DevspaceSectionComponent implements OnInit {
   openChannel(channelId: number) {
     this.channelService.loadSelectedChannel(channelId);
     this.messageService.getMessages(channelId);
+    this.mediaChangeViewService.setChatScreenMobile(true);
+    this.mediaChangeViewService.setDevspaceScreenMobile(false);
   }
 
   createNewChannel(channelData: any, user: User): void {
