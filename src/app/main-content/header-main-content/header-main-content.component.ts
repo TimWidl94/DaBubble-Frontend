@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UploadService } from '../../services/upload.service';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/user.model';
 import { SearchbarComponent } from "./searchbar/searchbar.component";
+import { MediaChangeViewService } from '../../services/media-change-view.service';
 
 @Component({
   selector: 'app-header-main-content',
@@ -20,7 +21,9 @@ export class HeaderMainContentComponent implements OnInit {
     private authService: AuthService,
     private uploadService: UploadService,
     private router: Router,
-    private userService: UsersService
+    private userService: UsersService,
+    private mediaChangeViewService: MediaChangeViewService,
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   // user: User | null = null;
@@ -37,17 +40,19 @@ export class HeaderMainContentComponent implements OnInit {
   @Input() users: User[] = [];
   @Input() user!:User;
 
+  devspaceMobileOn:boolean = false;
+
   ngOnInit() {
     this.userService.loadUserImage();
-    // this.userService.user$.subscribe((user) => {
-      // this.user = user;
-      // if (this.user) {
-        this.loadUserImages();
-        // this.fullName = this.getFullName(); // Voller Name initialisieren
-      // }
-    // });
-    // this.authService.getActuellUser();
-    // this.user = this.authService.getUser();
+    this.loadUserImages();
+    this.loadDevspaceHeaderMobile();
+  }
+
+  loadDevspaceHeaderMobile(){
+    this.mediaChangeViewService.headerDevspaceMobileOn$.subscribe((headerDevspaceMobileOn) => {
+      this.devspaceMobileOn = headerDevspaceMobileOn;
+      this.cdRef.detectChanges();
+    })
   }
 
   loadUserImages() {
@@ -123,5 +128,16 @@ export class HeaderMainContentComponent implements OnInit {
     this.profilOpen = false;
     this.profilEditOpen = false;
     this.menuOpen = false;
+  }
+
+  backToDevspaceMobile(){
+    this.mediaChangeViewService.setChatScreenMobile(false);
+    this.mediaChangeViewService.setDevspaceScreenMobile(true);
+    this.mediaChangeViewService.setDevspaceHeaderMobile(false);
+  }
+
+  closeEditUser(){
+    this.profilEditOpen = false;
+    this.profilOpen = true;
   }
 }

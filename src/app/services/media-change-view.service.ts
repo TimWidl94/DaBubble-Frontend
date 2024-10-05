@@ -17,6 +17,12 @@ export class MediaChangeViewService {
   private threadScreenSubject = new BehaviorSubject<boolean>(false);
   threadScreen$ = this.threadScreenSubject.asObservable();
 
+  private fullsizeShadowMobileSubject = new BehaviorSubject<boolean>(false);
+  fullsizeShadow$ = this.fullsizeShadowMobileSubject.asObservable();
+
+  private headerDevspaceMobileOnSubject = new BehaviorSubject<boolean>(false);
+  headerDevspaceMobileOn$ = this.headerDevspaceMobileOnSubject.asObservable();
+
   setChatScreenMobile(value: boolean) {
     this.chatScreenSubject.next(value);
   }
@@ -27,5 +33,13 @@ export class MediaChangeViewService {
 
   setThreadScreenMobile(value: boolean){
     this.threadScreenSubject.next(value);
+  }
+
+  setFullSizeShadowMobile(value: boolean){
+    this.fullsizeShadowMobileSubject.next(value);
+  }
+
+  setDevspaceHeaderMobile(value: boolean){
+    this.headerDevspaceMobileOnSubject.next(value);
   }
 }

@@ -29,7 +29,7 @@ export class DevspaceSectionComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
     private messageService: MessageService,
-    private mediaChangeViewService: MediaChangeViewService
+    private mediaChangeViewService: MediaChangeViewService,
   ) {}
 
   isHoveredChannel: boolean = false;
@@ -135,6 +135,7 @@ export class DevspaceSectionComponent implements OnInit {
     this.messageService.getMessages(channelId);
     this.mediaChangeViewService.setChatScreenMobile(true);
     this.mediaChangeViewService.setDevspaceScreenMobile(false);
+    this.mediaChangeViewService.setDevspaceHeaderMobile(true);
   }
 
   createNewChannel(channelData: any, user: User): void {

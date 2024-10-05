@@ -4,8 +4,9 @@ import { User } from '../../../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../services/users.service';
-import { ChatSectionComponent } from '../chat-section.component';
 import { ChannelService } from '../../../services/channel.service';
+import { MediaChangeViewService } from '../../../services/media-change-view.service';
+import { ChatSectionComponent } from '../chat-section.component';
 
 @Component({
   selector: 'app-new-channel-member',
@@ -20,6 +21,7 @@ export class NewChannelMemberComponent {
     private cdRef: ChangeDetectorRef,
     private chatSection: ChatSectionComponent,
     private channelService: ChannelService,
+    private mediaChangeViewService: MediaChangeViewService,
   ) {}
 
   ifUserIsFind: boolean = false;
@@ -171,7 +173,7 @@ export class NewChannelMemberComponent {
 
   closeAddNewMember() {
     this.chatSection.addNewChannelMemberOpen = false;
-
+    this.mediaChangeViewService.setFullSizeShadowMobile(false);
   }
 
   mergeChannelMember() {

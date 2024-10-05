@@ -63,22 +63,26 @@ section {
   top: 108px;
   right: 32px;
   z-index: 2;
-  > button {
-    border: none;
-    font-size: 24px;
-    font-family: $nunito;
-    line-height: 32.74px;
-    background-color: $White;
+  > div {
+    @include dFlex();
     width: 100%;
-    height: 53px;
-    border-radius: 100px;
-    font-weight: 600;
-    transition: color 0.3s ease, transform 0.3s ease;
-    &:hover {
-      background-color: $BGShadow;
-      cursor: pointer;
-      color: $Purple;
-      transform: scale(1.01);
+    > button {
+      border: none;
+      font-size: 24px;
+      font-family: $nunito;
+      line-height: 32.74px;
+      background-color: $White;
+      width: 100%;
+      height: 53px;
+      border-radius: 100px;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.3s ease;
+      &:hover {
+        background-color: $BGShadow;
+        cursor: pointer;
+        color: $Purple;
+        transform: scale(1.01);
+      }
     }
   }
 }
@@ -272,34 +276,134 @@ section {
   @include dFlex($g: 32px);
 }
 
-app-searchbar{
+.logo-box-devspace {
+  @include dFlex($g: 10px);
+  margin-left: 30px;
+  > div {
+    @include dFlex();
+    width: 50px;
+    height: 50px;
+    background-image: url("./../../../assets/icons/devspace_icon.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 40px;
+  }
+  > span {
+    font-family: $nunito;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27.28px;
+  }
+}
+
+.logo-box-mobile {
+  @include dFlex();
+  min-width: 242px;
+  max-width: 392px;
+  width: 100%;
+  height: 70px;
+  background-image: url("./../../../assets/img/logo/dabubble_logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+app-searchbar {
   width: 100%;
 }
 
+@media (max-width: 700px) {
+  .user-box {
+    > span {
+      display: none;
+    }
+    > button {
+      display: none;
+    }
+    > img {
+      width: 50px;
+      height: 50px;
+      border-radius: 60px;
+    }
+  }
+  app-searchbar {
+    display: none;
+  }
+  .logo-box-mobile {
+    width: 161.5px;
+    height: 45px;
+    min-width: 161.5px;
+    margin-left: 30px;
+  }
+  section {
+    height: 80px;
+  }
+  .logo-box {
+    display: none;
+  }
+  .devspace-img-mobile {
+    width: 28.8px;
+    height: 19.34px;
+    border-radius: 100%;
+  }
 
-@media (max-width: 700px){
-.user-box{
-  >span{
+  .arrow-img-devspace-header-mobile {
+    width: 13px;
+    height: 27px;
+    transform: rotate(90deg);
+  }
+  .header-menu {
+    left: 0;
+    right: 0;
+    width: unset;
+    border-radius: 30px 30px 0 0;
+    bottom: 0;
+    top: unset;
+    > div {
+      gap: 15px;
+      margin-left: 50px;
+      > button {
+        text-align: start;
+      }
+      > img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  .profil-box{
+    width: unset;
+    left: 0;
+    right: 0;
+    margin: 0 16px;
+    border-radius: 30px;
+  }
+  .profil-edit-box{
+    width: unset;
+    left: 0;
+    right: 0;
+    margin: 0 16px;
+    border-radius: 30px;
+  }
+}
+
+
+
+
+
+
+@media (min-width: 700px) {
+  .logo-box-mobile {
     display: none;
   }
-  >button{
+  .logo-box-devspace {
     display: none;
   }
-  >img{
-    width: 50px;
-    height: 50px;
-    border-radius: 60px;
+  .header-menu {
+    > div {
+      > img {
+        display: none;
+      }
+    }
   }
-}
-app-searchbar{
-  display: none;
-}
-.logo-box{
-  width: 161.5px;
-  height: 45px;
-  min-width: 161.5px;
-}
-section{
-  height: 80px;
-}
 }

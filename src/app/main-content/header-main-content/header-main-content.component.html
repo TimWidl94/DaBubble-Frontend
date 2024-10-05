@@ -1,18 +1,51 @@
 <section>
   <div class="logo-box"></div>
+  <div class="logo-box-mobile" *ngIf="!devspaceMobileOn"></div>
+  <div
+    class="logo-box-devspace"
+    *ngIf="devspaceMobileOn"
+    (click)="backToDevspaceMobile()"
+  >
+    <img
+      class="arrow-img-devspace-header-mobile"
+      src="assets/icons/arrow_down_black.svg"
+      alt="arrow down"
+    />
+    <div>
+      <img
+        class="devspace-img-mobile"
+        src="assets/icons/devspace_lines_icon.svg"
+        alt=""
+      />
+    </div>
+    <span>Devspace</span>
+  </div>
+
   <app-searchbar [users]="users" [user]="user"></app-searchbar>
+
   <div class="user-box">
     <span>{{ user.first_name }} {{ user.last_name }}</span>
-    <img src="{{ profil_img }}" alt="profilpicture" />
+    <img
+      src="{{ profil_img }}"
+      alt="profilpicture"
+      (click)="openHeaderMenu()"
+    />
     <button (click)="openHeaderMenu()"></button>
     <div
       class="fullsize-shadow"
       *ngIf="menuOpen || profilOpen || profilEditOpen"
       (click)="closeHeaderMenus()"
     ></div>
+
     <div *ngIf="menuOpen" class="header-menu">
-      <button (click)="openProfil()">Profil</button
-      ><button (click)="logout()">Log out</button>
+      <div>
+        <img src="assets/icons/account_circle_black.svg" alt="account icon" />
+        <button (click)="openProfil()">Profil</button>
+      </div>
+      <div>
+        <img src="assets/icons/logout_mobile_black.svg" alt="logout icon" />
+        <button (click)="logout()">Log out</button>
+      </div>
     </div>
 
     <div class="profil-box" *ngIf="profilOpen">
@@ -74,7 +107,7 @@
         />
       </div>
       <div class="btn-box">
-        <button class="btn-white">Abbrechen</button
+        <button class="btn-white" (click)="closeEditUser()">Abbrechen</button
         ><button class="btn-purple" (click)="editUserInformation()">
           Speichern
         </button>

@@ -1,10 +1,11 @@
 import { ChatSectionComponent } from './../chat-section.component';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Channel } from '../../../models/channel.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChannelService } from '../../../services/channel.service';
 import { User } from '../../../models/user.model';
+import { MediaChangeViewService } from '../../../services/media-change-view.service';
 
 @Component({
   selector: 'app-channel-info',
@@ -16,7 +17,9 @@ import { User } from '../../../models/user.model';
 export class ChannelInfoComponent {
   constructor(
     private chatSection: ChatSectionComponent,
-    private channelService: ChannelService
+    private channelService: ChannelService,
+    private mediaChangeViewService: MediaChangeViewService,
+    private cdRef: ChangeDetectorRef,
   ) {}
 
 
@@ -25,7 +28,7 @@ export class ChannelInfoComponent {
   editDescription: boolean = false;
   isEditingName = false;
   isEditingDescription = false;
-  newChannelMemberOpen:boolean = false;
+  fullsizeShadowOn:boolean = false;
 
   channelName: string = '';
   channelDescription: string = '';
@@ -37,11 +40,19 @@ export class ChannelInfoComponent {
   @Input() allUser: User[] = [];
 
   ngOnInit() {
+    this.loadFullsizeShadowMobile();
+  }
+
+  loadFullsizeShadowMobile(){
+    this.mediaChangeViewService.fullsizeShadow$.subscribe((shadow) => {
+      this.fullsizeShadowOn = shadow;
+      this.cdRef.detectChanges();
+    })
   }
 
   closeEditOpen() {
     this.chatSection.openChannelEditMenu();
-    this.newChannelMemberOpen = !this.newChannelMemberOpen;
+    this.mediaChangeViewService.setFullSizeShadowMobile(false);
   }
 
   toggleEditName() {
@@ -131,6 +142,6 @@ export class ChannelInfoComponent {
   addNewChannelMember() {
     this.chatSection.channelMemberOpen = false;
     this.chatSection.addNewChannelMemberOpen = true;
-    this.newChannelMemberOpen = !this.newChannelMemberOpen;
+    this.mediaChangeViewService.setFullSizeShadowMobile(true);
   }
 }
