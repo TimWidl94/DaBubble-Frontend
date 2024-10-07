@@ -98,5 +98,17 @@
   }
   .media700px{
     display: flex;
+    height: 42px !important;
+  }
+  .search-box{
+    height: 42px;
+  }
+  .search-icon{
+    width: 32px;
+    height: 32px;
+  }
+  .search-results-box{
+    top: 40px;
+    border-radius: 42px;
   }
 }

@@ -40,7 +40,10 @@
     </form>
   </div>
 
-  <div class="edit-user-box" *ngIf="openEditUserBox">
+  <div
+    class="edit-user-box"
+    *ngIf="openEditUserBox"
+  >
     <form action="">
       <div class="header-box">
         <h3>Leute hinzufügen</h3>
@@ -60,7 +63,7 @@
           ></span>
           <div>
             <span class="edit-people-text">Alle Mitglieder von </span>
-            <span class="edit-people-text blue-text">OfficeTeam</span>
+            <span class="edit-people-text blue-text">OfficeTeam </span>
             <span class="edit-people-text">hinzufügen</span>
           </div>
         </label>
@@ -99,18 +102,9 @@
           (keyup)="searchSpecificUser()"
           autocomplete="off"
         />
-        <div
-          class="adding-user-box"
-          *ngIf="ifUserIsFind"
-          [ngStyle]="{
-            'top.px': topPosition,
-          }"
-        >
+        <div class="adding-user-box" *ngIf="ifUserIsFind">
           <div
             *ngFor="let user of searchedUser; let i = index"
-            [ngStyle]="{
-              'margin-top.px': i === 0 && searchedUser.length >= 5 ? calculateTop(i) : 0
-            }"
             (click)="addSelectedUser(user)"
           >
             <img [src]="user.imagepath || user.image" alt="User Image" />

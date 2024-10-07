@@ -52,12 +52,12 @@ export class CreateNewChannelComponent {
       this.allUser = users;
     });
 
-    this.calculateTopPosition();
+    // this.calculateTopPosition();
   }
 
   ngOnChanges() {
     // Neu berechnen, wenn sich selectedUser ändert
-    this.calculateTopPosition();
+    // this.calculateTopPosition();
   }
 
   closeCreateChannelBox() {
@@ -72,7 +72,7 @@ export class CreateNewChannelComponent {
 
   searchSpecificUser() {
     let searchInput = this.searchUser.trim().toLowerCase();
-    this.calculateTopPosition();
+    // this.calculateTopPosition();
     for (let i = 0; i < this.allUser.length; i++) {
       const user = this.allUser[i];
       const isUserSelected = this.selectedUser.some((u) => u.id === user.id);
@@ -134,7 +134,7 @@ export class CreateNewChannelComponent {
   async addSelectedUser(user: any[]) {
     if (!this.selectedUser.includes(user)) {
       await this.selectedUser.push(user);
-      this.calculateTopPosition();
+      // this.calculateTopPosition();
       this.ifUserIsFind = false;
       this.searchUser = '';
       this.checkEnableBtn();
@@ -148,32 +148,32 @@ export class CreateNewChannelComponent {
     }
   }
 
-  calculateTop(length: number) {
-    if (length === 0) {
-      return 290;
-    } else if (length > 0 && length <= 3) {
-      return 300;
-    } else if (length > 3 && length <= 9) {
-      return 366;
-    } else {
+  // calculateTop(length: number) {
+    // if (length === 0) {
+      // return 290;
+    // } else if (length > 0 && length <= 3) {
+      // return 300;
+    // } else if (length > 3 && length <= 9) {
+      // return 366;
+    // } else {
       // Für jedes zusätzliche Intervall von 6 Benutzern +60px hinzufügen
-      return 66 + Math.floor((length - 1) / 3) * 66;
-    }
-  }
-
-  calculateTopPosition() {
-    const selectedUserBox = document.querySelector('.selected-user-box');
-    if (selectedUserBox) {
-      const height = selectedUserBox.clientHeight;
-      this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert
-    }
-  }
+      // return 66 + Math.floor((length - 1) / 3) * 66;
+    // }
+  // }
+//
+  // calculateTopPosition() {
+    // const selectedUserBox = document.querySelector('.selected-user-box');
+    // if (selectedUserBox) {
+      // const height = selectedUserBox.clientHeight;
+      // this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert
+    // }
+  // }
 
   removeSelectedUser(user: any[]) {
     let i = this.selectedUser.indexOf(user);
     if (i !== -1) {
       this.selectedUser.splice(i, 1);
-      this.calculateTopPosition();
+      // this.calculateTopPosition();
       this.checkEnableBtn();
     }
   }

@@ -95,20 +95,20 @@ section {
   }
 }
 
-.create-message-functions{
+.create-message-functions {
   @include dFlex($jc: space-between);
-      position: absolute;
-      bottom: 50px;
-      height: 50px;
-      width: calc(100% - 2 * 65px);
-      background-color: $White;
-      > div {
-        @include dFlex($g: 2px);
-        > span {
-          height: 26px;
-          border: 0.5px solid $lightPurple;
-        }
-      }
+  position: absolute;
+  bottom: 50px;
+  height: 50px;
+  width: calc(100% - 2 * 65px);
+  background-color: $White;
+  > div {
+    @include dFlex($g: 2px);
+    > span {
+      height: 26px;
+      border: 0.5px solid $lightPurple;
+    }
+  }
 }
 
 .btn-add {
@@ -302,14 +302,17 @@ app-message {
   font-weight: 400;
   font-size: 20px;
   line-height: 27.28px;
-  > button {
-    background-color: $White;
-    border: none;
-    color: $PurpleFont;
-    font-family: $nunito;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 27.28px;
+  > span {
+    > button {
+      background-color: $White;
+      border: none;
+      color: $PurpleFont;
+      font-family: $nunito;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 27.28px;
+      padding: 0;
+    }
   }
 }
 
@@ -347,7 +350,7 @@ app-message {
   justify-content: end;
 }
 
-.fileUploadField{
+.fileUploadField {
   position: absolute;
   z-index: 2;
   // height: 50px;
@@ -356,25 +359,25 @@ app-message {
   // width: 200px !important;
 }
 
-@media(max-width: 700px){
-  .user-avatars{
+@media (max-width: 700px) {
+  .user-avatars {
     display: none;
   }
-  section{
+  section {
     height: 100%;
     margin: 0;
     border-radius: 0;
   }
-  .chat-new-message-box{
+  .chat-new-message-box {
     padding: 25px 16px;
     width: calc(100% - 32px);
   }
-  .chat-header-box{
+  .chat-header-box {
     padding: 13px 16px;
     width: calc(100% - 32px);
     position: unset;
   }
-  .create-message-functions{
+  .create-message-functions {
     width: calc(100% - 60px);
     bottom: 26px;
   }

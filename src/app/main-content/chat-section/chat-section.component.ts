@@ -79,9 +79,6 @@ export class ChatSectionComponent {
   @Input() users: User[] = [];
 
   ngOnInit(): void {
-    this.channelService.loadSelectedChannel(1);
-    this.messageService.getMessages(1);
-
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
     // setInterval(() => {

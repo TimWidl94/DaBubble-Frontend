@@ -219,6 +219,7 @@ input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
 .input-user-box {
   @include dFlex();
   width: 100%;
+  position: relative;
 }
 
 .padding1820 {
@@ -226,7 +227,7 @@ input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
 }
 
 .adding-user-box {
-  @include dFlex($g: 15px, $ai: start);
+  @include dFlex($g: 15px, $ai: start, $jc:start);
   position: absolute;
   z-index: 3;
   width: 267px;
@@ -235,8 +236,8 @@ input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
   padding: 20px 25px;
   background-color: $White;
   border: 1px solid $lightPurple;
-  top: 234px;
-  left: 60px;
+  top: 52px;
+  left: 38px;
   flex-direction: column;
   overflow-y: auto;
 
@@ -288,5 +289,43 @@ input[type="checkbox"]:checked + .custom-checkbox .checkbox-symbol::after {
         cursor: pointer;
       }
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .new-channel-box {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: unset;
+    height: unset;
+    transform: unset;
+    border-radius: 0;
+    padding: 40px 20px;
+    > form {
+      justify-content: start;
+    }
+  }
+  .edit-user-box{
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: unset;
+    border-radius: 30px 30px 0 0;
+    transform: unset;
+    width: unset;
+    padding: 40px 20px;
+  }
+  .adding-user-box{
+    height: 100px;
+    bottom: 2px;
+    position: fixed;
+    top: unset;
+    gap: 8px;
+    padding: 12px 12px;
+  }
+  .input-user-box{
+    width: 110%;
   }
 }

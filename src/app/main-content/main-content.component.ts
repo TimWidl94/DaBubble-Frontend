@@ -9,6 +9,8 @@ import { User } from '../models/user.model';
 import { ThreadSectionComponent } from "./thread-section/thread-section.component";
 import { ProfilInfoComponent } from "./chat-section/profil-info/profil-info.component";
 import { MediaChangeViewService } from '../services/media-change-view.service';
+import { MessageService } from '../services/message.service';
+import { ChannelService } from '../services/channel.service';
 
 
 @Component({
@@ -30,7 +32,9 @@ export class MainContentComponent {
     private userService: UsersService,
     private authService: AuthService,
     private cdRef: ChangeDetectorRef,
-    private mediaChangeViewService: MediaChangeViewService
+    private mediaChangeViewService: MediaChangeViewService,
+    private channelService: ChannelService,
+    private messageService: MessageService
   ) {}
 
   isHoveredDevspaceClose: boolean = false;
@@ -55,6 +59,8 @@ export class MainContentComponent {
     this.loadUsers();
     this.isMobileView = this.checkScreenWidth();
     this. loadMobileChannelBooleans();
+    this.channelService.loadSelectedChannel(1);
+    this.messageService.getMessages(1);
   }
 
 
