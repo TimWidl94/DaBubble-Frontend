@@ -60,19 +60,6 @@ export class ChannelService {
     );
   }
 
-  loadSelectedPrivatChannel(channelId: number){
-    this.http.get<any>(`${this.apiUrl}/private-channel/${channelId}/`).subscribe(
-      (channel) => {this.selectedThreadChannelSubject.next(channel)})
-  }
-
-
-
-  fetchSingleChannel(channelId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/channel/${channelId}/`).pipe(
-      tap((data) => (this.allChannel = data))
-    );
-  }
-
   updateChannel(channel: Channel, channelId:number): Observable<any>{
     return this.http.put(`${this.apiUrl}/channel/${channelId}/`, channel);
   }

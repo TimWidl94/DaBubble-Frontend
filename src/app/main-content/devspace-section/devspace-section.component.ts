@@ -97,11 +97,6 @@ export class DevspaceSectionComponent implements OnInit {
     this.channelsOpen = !this.channelsOpen;
   }
 
-  openPrivatChannel(channelId: number) {
-    this.channelService.loadSelectedPrivatChannel(channelId);
-    this.messageService.getMessages(channelId);
-  }
-
   onBoxClick(event: MouseEvent): void {
     const target = event.currentTarget as HTMLElement;
 
@@ -193,7 +188,6 @@ export class DevspaceSectionComponent implements OnInit {
 
   createAndCheckHelpFunction(user: User) {
     if (this.checkIfChannelExist(user)) {
-      this.channelService.loadAllChannels();
       this.openChannel(this.privateChannelId);
       console.log('geöffneter Nutzer:', user);
     }

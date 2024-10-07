@@ -116,7 +116,7 @@ export class ChatSectionComponent {
   loadChannel() {
     this.channelService.selectedChannel$.subscribe((channel) => {
       this.channel = channel;
-      this.cdRef.detectChanges();
+      // this.cdRef.detectChanges();
       if (this.users) {
         this.loadUserFromChannel();
       }

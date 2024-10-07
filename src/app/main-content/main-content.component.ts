@@ -75,20 +75,14 @@ export class MainContentComponent {
     this.mediaChangeViewService.devspaceScreen$.subscribe((mobileView) =>{
       this.devspaceMediaOpen = mobileView;
       this.cdRef.detectChanges();
-      console.log('devspaceMedia:', this.devspaceMediaOpen)
-      console.log('mediaView:', this.isMobileView)
     })
     this.mediaChangeViewService.chatScreen$.subscribe((mobileView) =>{
       this.chatMediaOpen = mobileView;
       this.cdRef.detectChanges();
-      console.log('chatMedia:', this.chatMediaOpen)
-      console.log('mediaView:', this.isMobileView)
     })
     this.mediaChangeViewService.threadScreen$.subscribe((mobileView) =>{
       this.threadMediaOpen = mobileView;
       this.cdRef.detectChanges();
-      console.log('threadMedia:', this.threadMediaOpen)
-      console.log('mediaView:', this.isMobileView)
     })
   }
 
