@@ -111,6 +111,7 @@ export class MainContentComponent {
   }
 
   checkScreenWidth(): boolean {
+
     return window.matchMedia('(max-width: 700px)').matches;
   }
 }

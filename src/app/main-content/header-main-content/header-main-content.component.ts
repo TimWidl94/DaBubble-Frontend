@@ -134,6 +134,7 @@ export class HeaderMainContentComponent implements OnInit {
     this.mediaChangeViewService.setChatScreenMobile(false);
     this.mediaChangeViewService.setDevspaceScreenMobile(true);
     this.mediaChangeViewService.setDevspaceHeaderMobile(false);
+    this.mediaChangeViewService.setThreadScreenMobile(false);
   }
 
   closeEditUser(){

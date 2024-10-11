@@ -1,3 +1,4 @@
+import { MediaChangeViewService } from './../../services/media-change-view.service';
 import {
   ChangeDetectorRef,
   Component,
@@ -45,7 +46,8 @@ export class ThreadSectionComponent {
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
     private threadService: ThreadService,
-    private mainContentComponent: MainContentComponent
+    private mainContentComponent: MainContentComponent,
+    private mediaChangeService: MediaChangeViewService
   ) {}
 
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
@@ -78,10 +80,6 @@ export class ThreadSectionComponent {
 
   ngOnInit(): void {
     this.loadThread();
-    // console.log('thread-section: ', this.thread);
-    // setInterval(() => {
-    // this.scrollToBottomIfNewMessage();
-    // }, 1000);
   }
 
   ngOnDestroy(): void {
@@ -89,12 +87,6 @@ export class ThreadSectionComponent {
     this.destroy$.complete();
   }
 
-  // private scrollToBottomIfNewMessage(): void {
-    // if (this.messages.length !== this.previousMessagesLength) {
-      // this.scrollToBottom();
-      // this.previousMessagesLength = this.messages.length;
-    // }
-  // }
 
   private scrollToBottom(): void {
     try {
@@ -146,7 +138,6 @@ export class ThreadSectionComponent {
     this.channelService.loadChannelForThread(channelId)
     this.channelService.selectedThreadChannel$.subscribe((channel) => {
       this.channel = channel;
-      // console.log('thread-section channel: ', this.channel);
     })
   }
 
@@ -158,7 +149,6 @@ export class ThreadSectionComponent {
       this.users = users;
       this.threadMessages = this.addCorrectUserToMessage(messages, users);
       this.cdRef.detectChanges();
-      // console.log('loadAndCombine:', this.threadMessages);
     });
   }
 
@@ -169,7 +159,7 @@ export class ThreadSectionComponent {
   addCorrectUserToMessage(messages: Message[], users: User[]): Message[] {
     return messages.map((message) => {
       const user = users.find((u) => u.id === message.sender);
-      return { ...message, user }; // Fügt den Benutzer als `user`-Feld hinzu
+      return { ...message, user };
     });
   }
 
@@ -185,14 +175,12 @@ export class ThreadSectionComponent {
     formData.append('sender', this.user.id.toString());
     formData.append('channel', this.channel ? this.channel.id.toString() : '0');
     formData.append('timestamp', new Date().toISOString());
-    formData.append('thread_channel', this.threadChannelId ? this.threadChannelId.toString() : '0'); // oder den passenden Wert setzen
+    formData.append('thread_channel', this.threadChannelId ? this.threadChannelId.toString() : '0');
 
-    // Datei hinzufügen, falls vorhanden
     if (this.selectedFile) {
         formData.append('messageData', this.selectedFile);
     }
 
-    // Emojis als JSON-String, da FormData nur primitive Datentypen unterstützt
     formData.append('emoji_check', JSON.stringify([]));
     formData.append('emoji_handsup', JSON.stringify([]));
     formData.append('emoji_nerd', JSON.stringify([]));
@@ -223,6 +211,10 @@ export class ThreadSectionComponent {
 
   closeThreadSection(): void {
     this.mainContentComponent.threadOpen = false;
+    this.mediaChangeService.setThreadScreenMobile(false);
+    this.mediaChangeService.setChatScreenMobile(false);
+    this.mediaChangeService.setDevspaceScreenMobile(true);
+    this.mediaChangeService.setDevspaceHeaderMobile(false);
   }
 
   triggerFileInput() {

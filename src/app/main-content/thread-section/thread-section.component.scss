@@ -344,3 +344,33 @@ app-message {
 app-thread-message{
   width: 100%;
 }
+
+@media (max-width:700px){
+  section{
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+  .chat-box{
+    border-radius: 0;
+  }
+  .chat-new-message-box {
+    padding: 25px 16px;
+    width: calc(100% - 32px);
+    >form{
+      >div{
+        width: calc(100% - 70px);
+        bottom: 28px;
+      }
+    }
+  }
+  .chat-header-box {
+    padding: 13px 16px;
+    width: calc(100% - 32px);
+    position: unset;
+  }
+  .create-message-functions {
+    width: calc(100% - 60px);
+    bottom: 26px;
+  }
+}

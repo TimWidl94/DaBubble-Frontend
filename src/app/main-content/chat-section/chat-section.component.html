@@ -119,10 +119,10 @@
           <span class="message-channel-empty-text">
             Du hast diesen Channel heute erstellt. Das ist der Anfang des
             Channels
+            <span class="message-channel-empty-bluetext"
+              ># {{ channel.channelName }}</span
+            >
           </span>
-          <span class="message-channel-empty-bluetext"
-            ># {{ channel.channelName }}</span
-          >
         </div>
       </div>
     </div>
@@ -139,9 +139,13 @@
         <span>{{ chatPartner.first_name }} {{ chatPartner.last_name }}</span>
       </div>
       <div class="privat-channel-message-infotext-box">
-        <span>Diese Unterhaltung findet nur zwischen <button>
-          &#64;{{ chatPartner.first_name }} {{ chatPartner.last_name }}
-        </button> und dir statt.</span>
+        <span
+          >Diese Unterhaltung findet nur zwischen
+          <button>
+            &#64;{{ chatPartner.first_name }} {{ chatPartner.last_name }}
+          </button>
+          und dir statt.</span
+        >
       </div>
     </div>
 
@@ -184,4 +188,3 @@
   *ngIf="channelInfoOpen || addNewChannelMemberOpen || channelMemberOpen"
   (click)="closeAllComponents()"
 ></div>
-

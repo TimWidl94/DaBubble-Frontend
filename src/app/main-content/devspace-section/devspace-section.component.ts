@@ -58,9 +58,6 @@ export class DevspaceSectionComponent implements OnInit {
     this.channelService.loadAllChannels();
     this.channelService.allChannel$.subscribe((channels) => {
       this.channels = channels;
-      if(this.channels){
-        // console.log(this.channels)
-      }
       this.cdRef.detectChanges();
     });
   }
@@ -131,6 +128,7 @@ export class DevspaceSectionComponent implements OnInit {
     this.mediaChangeViewService.setChatScreenMobile(true);
     this.mediaChangeViewService.setDevspaceScreenMobile(false);
     this.mediaChangeViewService.setDevspaceHeaderMobile(true);
+    this.mediaChangeViewService.setThreadScreenMobile(false);
   }
 
   createNewChannel(channelData: any, user: User): void {
@@ -189,7 +187,6 @@ export class DevspaceSectionComponent implements OnInit {
   createAndCheckHelpFunction(user: User) {
     if (this.checkIfChannelExist(user)) {
       this.openChannel(this.privateChannelId);
-      console.log('geöffneter Nutzer:', user);
     }
     if (!this.checkIfChannelExist(user)) {
       this.getPrivatChannelData(user);

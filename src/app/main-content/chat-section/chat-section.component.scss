@@ -381,4 +381,9 @@ app-message {
     width: calc(100% - 60px);
     bottom: 26px;
   }
+  .message-channel-empty-box{
+    margin-left: 0;
+    width: unset;
+    padding: 0 24px;
+  }
 }

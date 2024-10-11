@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ChatSectionComponent } from '../chat-section.component';
 import { EmojiReactionComponent } from '../../../shared/emoji/emoji-reaction/emoji-reaction.component';
+import { MediaChangeViewService } from '../../../services/media-change-view.service';
 
 @Component({
   selector: 'app-message',
@@ -29,7 +30,8 @@ export class MessageComponent {
     private usersService: UsersService,
     private threadService: ThreadService,
     private mainContentComponent: MainContentComponent,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private mediaChangeService: MediaChangeViewService
   ) {}
 
   isHovered: boolean = false;
@@ -63,9 +65,6 @@ export class MessageComponent {
         }
       );
     }
-
-    // console.log('geladener User:', this.user)
-    // console.log(this.message);
   }
 
   getTimeFromTimestamp(): string {
@@ -98,8 +97,8 @@ export class MessageComponent {
           if (response.id) {
             this.threadService.threadSubject.next(response);
             this.mainContentComponent.threadOpen = true;
+            this.mediaChangeService.setThreadScreenMobile(true);
           }
-          // console.log('Thread created/loaded reactionBox:', response);
         },
         (error) => {
           console.error('Error creating thread:', error);
@@ -120,10 +119,6 @@ export class MessageComponent {
     this.lastMessageTime = `${hours}:${minutes}`;
   }
 
-  getInformation() {
-    console.log(this.message);
-    // console.log(this.threadMessages);
-  }
 
   autoResize(event: any) {
     const textArea = event.target;
@@ -165,17 +160,15 @@ export class MessageComponent {
   }
 
   getMediaUrl(filePath: string): string {
-    return `http://localhost:8000${filePath}`;  // Port und Base URL anpassen
+    return `http://localhost:8000${filePath}`;
   }
 
   getShortFileName(filePath: string): string {
-    if (!filePath) return ''; // Sicherstellen, dass filePath nicht leer ist
+    if (!filePath) return '';
 
-    // Extrahiere den Dateinamen vom Pfad
     const parts = filePath.split('/');
     const fileName = parts[parts.length - 1];
 
-    // Stelle sicher, dass der Dateiname klein geschrieben ist
     return fileName.charAt(0).toUpperCase() + fileName.slice(1).toLowerCase();
   }
 }
