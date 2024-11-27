@@ -105,4 +105,8 @@ export class AuthService {
   updateUser(user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${user.id}/`, user);
   }
+
+  googleLogin(token: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/google-login`, { token });
+  }
 }

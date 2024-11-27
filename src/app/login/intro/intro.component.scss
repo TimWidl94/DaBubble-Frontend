@@ -1,0 +1,47 @@
+@import "./../../../styles.scss";
+
+section{
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+  @include dFlex();
+}
+
+.intro-center-box{
+@include dFlex();
+animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunden
+>div{
+  >img{
+    height: 184px;
+    width: 184px;
+  }
+}
+}
+
+.text-animation {
+  overflow: hidden; // Verhindert, dass der Text außerhalb des Containers sichtbar ist
+  span {
+    opacity: 0;
+    transform: translateX(-100%); // Startposition außerhalb des Bildschirms links
+    animation: slideInText 1s ease-in-out 1s forwards; // Animation startet nach 1 Sekunde
+  }
+}
+
+/* Text von links nach rechts erscheinen lassen */
+@keyframes slideInText {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Intro-Box von Mitte nach links oben bewegen */
+@keyframes moveToCorner {
+  to {
+    transform: translate(-30vw, -30vh); // Bewegt die Box nach links oben
+  }
+}

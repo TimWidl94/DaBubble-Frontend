@@ -6,19 +6,21 @@ import { CreateProfilComponent } from './login/create-profil/create-profil.compo
 import { PasswortResetSendEmailComponent } from './login/passwort-reset-send-email/passwort-reset-send-email.component';
 import { PasswortResetComponent } from './login/passwort-reset/passwort-reset.component';
 import { NgModule } from '@angular/core';
+import { IntroComponent } from './login/intro/intro.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'intro', pathMatch: 'full' },
+  { path: 'intro', component: IntroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'chat', component: MainContentComponent },
   { path: 'regestration', component: RegestrationComponent },
   { path: 'create-profile', component: CreateProfilComponent },
-  { path: 'reset-email', component: PasswortResetSendEmailComponent},
-  { path: 'reset-password', component: PasswortResetComponent},
+  { path: 'reset-email', component: PasswortResetSendEmailComponent },
+  { path: 'reset-password', component: PasswortResetComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
