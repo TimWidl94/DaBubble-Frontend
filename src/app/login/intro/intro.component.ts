@@ -18,7 +18,7 @@ export class IntroComponent {
     // if (this.introPlayed) {
       // setTimeout(() => {
         // this.router.navigate(['/login']); // Pfad zur Login-Seite
-      // }, 5000); // 5000 Millisekunden = 5 Sekunden
+      // }, 5500); // 5000 Millisekunden = 5 Sekunden
     // }
   }
 }

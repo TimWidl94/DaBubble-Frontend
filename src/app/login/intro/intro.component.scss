@@ -1,29 +1,51 @@
 @import "./../../../styles.scss";
 
-section{
+section {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+  background: linear-gradient(1.46deg, #313ae6 1.22%, #797ef3 98.76%);
   @include dFlex();
 }
 
-.intro-center-box{
-@include dFlex();
-animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunden
->div{
-  >img{
-    height: 184px;
-    width: 184px;
-  }
-}
+.move-to-container{
+  @include dFlex($g: 24px);
+  animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunden
 }
 
-.text-animation {
-  overflow: hidden; // Verhindert, dass der Text außerhalb des Containers sichtbar ist
-  span {
-    opacity: 0;
-    transform: translateX(-100%); // Startposition außerhalb des Bildschirms links
-    animation: slideInText 1s ease-in-out 1s forwards; // Animation startet nach 1 Sekunde
+.intro-center-box {
+  display: flex; // Flexbox sorgt für die horizontale Ausrichtung
+  align-items: center; // Zentriert das Bild und den Text vertikal
+  position: relative;
+  transform: translateX(+40%);
+  animation: moveToLeft 1s ease 0s forwards;
+  opacity: 1;
+
+
+  .logo-container {
+    flex-shrink: 0; // Das Bild behält seine Größe
+    position: relative;
+    z-index: 2;
+    > img {
+      height: 184px;
+      width: 184px;
+      animation: height 1s ease 4s forwards;
+    }
+  }
+
+  .text-animation {
+    flex-grow: 1; // Der Text nimmt den restlichen Platz ein
+    overflow: hidden; // Text außerhalb des Containers bleibt verborgen
+    position: relative; // Für die Kontrolle der Position des Texts
+    span {
+      display: inline-block; // Verhindert Zeilenumbrüche
+      opacity: 0;
+      transform: translateX(-100%); // Startposition außerhalb des Bildschirms links
+      animation: slideInText 1s ease-in-out 1s forwards,
+                changeFontSize 1s ease-in-out 4s forwards;
+      font-family: $nunito;
+      font-size: 94px;
+      color: white;
+    }
   }
 }
 
@@ -42,6 +64,26 @@ animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunde
 /* Intro-Box von Mitte nach links oben bewegen */
 @keyframes moveToCorner {
   to {
-    transform: translate(-30vw, -30vh); // Bewegt die Box nach links oben
+    transform: translate(-35vw, -40vh); // Bewegt die Box nach links oben
+  }
+}
+
+@keyframes moveToLeft {
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes changeFontSize {
+  to {
+    font-size: 44px;
+  }
+}
+
+@keyframes height {
+  to {
+    height: 84px;
+    width: 84px;
+    font-size: 32px;
   }
 }
