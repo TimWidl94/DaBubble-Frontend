@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-impressum',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './impressum.component.scss'
 })
 export class ImpressumComponent {
+  constructor(private router: Router){}
 
+  backToLogin(){
+    this.router.navigate(['/login']);
+  }
 }

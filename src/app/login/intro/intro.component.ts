@@ -15,10 +15,10 @@ export class IntroComponent {
 
   ngOnInit(): void {
     this.introPlayed = true;
-    // if (this.introPlayed) {
-      // setTimeout(() => {
-        // this.router.navigate(['/login']); // Pfad zur Login-Seite
-      // }, 5500); // 5000 Millisekunden = 5 Sekunden
-    // }
+    if (this.introPlayed) {
+      setTimeout(() => {
+        this.router.navigate(['/login']); // Pfad zur Login-Seite
+      }, 5500); // 5000 Millisekunden = 5 Sekunden
+    }
   }
 }

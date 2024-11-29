@@ -9,7 +9,7 @@ section {
 
 .move-to-container{
   @include dFlex($g: 24px);
-  animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunden
+
 }
 
 .intro-center-box {
@@ -85,5 +85,34 @@ section {
     height: 84px;
     width: 84px;
     font-size: 32px;
+  }
+}
+
+@keyframes moveToCenter {
+  to {
+    transform: translate(0vw, -40vh)
+  }
+}
+
+@media (min-width: 1120px){
+  .move-to-container{
+    animation: moveToCorner 1s ease 4s forwards; // Animation startet nach 4 Sekunden
+  }
+}
+
+@media (max-width: 1120px) {
+  .logo-container{
+    >img{
+      height: 69.53px !important;
+      width: 70.65px !important;
+    }
+  }
+  .text-animation{
+    >span{
+      font-size: 32px !important;
+    }
+  }
+  .move-to-container{
+    animation: moveToCenter 1s ease 4s forwards; // Animation startet nach 4 Sekunden
   }
 }

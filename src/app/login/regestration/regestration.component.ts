@@ -63,7 +63,7 @@ export class RegestrationComponent {
         this.password,
         first_name,
         last_name
-      );
+      );this.router.navigate(['/login']);
       this.router.navigate(['/create-profile'], {
         queryParams: { first_name: first_name, last_name: last_name }
       });
@@ -78,7 +78,7 @@ export class RegestrationComponent {
   }
 
   backToLogin() {
-    this.router.navigate(['/login']);
+
   }
 
   enableButton() {

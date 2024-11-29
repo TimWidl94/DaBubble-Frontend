@@ -7,6 +7,8 @@ import { PasswortResetSendEmailComponent } from './login/passwort-reset-send-ema
 import { PasswortResetComponent } from './login/passwort-reset/passwort-reset.component';
 import { NgModule } from '@angular/core';
 import { IntroComponent } from './login/intro/intro.component';
+import { ImpressumComponent } from './side-infos/impressum/impressum.component';
+import { DataProtectionComponent } from './side-infos/data-protection/data-protection.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
@@ -17,6 +19,8 @@ export const routes: Routes = [
   { path: 'create-profile', component: CreateProfilComponent },
   { path: 'reset-email', component: PasswortResetSendEmailComponent },
   { path: 'reset-password', component: PasswortResetComponent },
+  { path: 'impressum', component: ImpressumComponent},
+  { path: 'data-protection', component: DataProtectionComponent}
 ];
 
 @NgModule({
