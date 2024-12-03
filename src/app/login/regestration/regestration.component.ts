@@ -78,7 +78,7 @@ export class RegestrationComponent {
   }
 
   backToLogin() {
-
+    this.router.navigate(['/login'])
   }
 
   enableButton() {

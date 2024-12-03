@@ -118,4 +118,21 @@ export class LoginformComponent {
       }
     );
   }
+
+  async guestLogin(){
+    try {
+      let resp: any = await this.as.loginWithUsernameAndPassword(
+        'guest@gmail.com',
+        'password123456'
+      );
+      localStorage.setItem('token', resp['token']);
+      localStorage.setItem('user', JSON.stringify(resp));
+      this.router.navigateByUrl('/chat');
+    } catch (e) {
+      alert('Login fehlgeschlagen');
+      console.error(e);
+    }
+  }
+
 }
+
