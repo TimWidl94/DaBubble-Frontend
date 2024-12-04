@@ -19,16 +19,14 @@ export class ChannelInfoComponent {
     private chatSection: ChatSectionComponent,
     private channelService: ChannelService,
     private mediaChangeViewService: MediaChangeViewService,
-    private cdRef: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef
   ) {}
-
-
 
   editName: boolean = false;
   editDescription: boolean = false;
   isEditingName = false;
   isEditingDescription = false;
-  fullsizeShadowOn:boolean = false;
+  fullsizeShadowOn: boolean = false;
 
   channelName: string = '';
   channelDescription: string = '';
@@ -43,18 +41,29 @@ export class ChannelInfoComponent {
     this.loadFullsizeShadowMobile();
   }
 
-  loadFullsizeShadowMobile(){
+  /**
+   * Subscribes to changes in the full-size shadow state for mobile views.
+   * Updates the local `fullsizeShadowOn` property and triggers change detection.
+   */
+  loadFullsizeShadowMobile() {
     this.mediaChangeViewService.fullsizeShadow$.subscribe((shadow) => {
       this.fullsizeShadowOn = shadow;
       this.cdRef.detectChanges();
-    })
+    });
   }
 
+  /**
+   * Closes the edit menu for the chat section and disables the full-size shadow for mobile views.
+   */
   closeEditOpen() {
     this.chatSection.openChannelEditMenu();
     this.mediaChangeViewService.setFullSizeShadowMobile(false);
   }
 
+  /**
+   * Toggles the editing state of the channel name.
+   * Saves the updated channel name if editing is toggled off.
+   */
   toggleEditName() {
     if (this.isEditingName) {
       this.isEditingName = false;
@@ -64,6 +73,9 @@ export class ChannelInfoComponent {
     }
   }
 
+  /**
+   * Saves the updated channel name to the server and refreshes the channel view.
+   */
   saveEditChannelName() {
     const updatedChannelName = {
       ...this.channel,
@@ -79,6 +91,10 @@ export class ChannelInfoComponent {
       });
   }
 
+  /**
+   * Toggles the editing state of the channel description.
+   * Saves the updated channel description if editing is toggled off.
+   */
   toggleEditDescription() {
     if (this.isEditingDescription) {
       this.isEditingDescription = false;
@@ -89,6 +105,9 @@ export class ChannelInfoComponent {
     }
   }
 
+  /**
+   * Saves the updated channel description to the server and refreshes the channel view.
+   */
   saveEditChannelDescription() {
     const updateChannelDescription = {
       ...this.channel,
@@ -97,18 +116,26 @@ export class ChannelInfoComponent {
     let channelId = this.channel.id;
     this.channelService
       .updateChannel(updateChannelDescription, channelId)
-      .subscribe((respone) => {
-        console.log(respone);
+      .subscribe((response) => {
+        console.log(response);
         this.chatSection.updateChannel(this.channel.id);
       });
   }
 
+  /**
+   * Automatically resizes a textarea element to fit its content.
+   * @param event The input event triggered by the textarea.
+   */
   autoResize(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
-    textarea.style.height = 'auto'; // Höhe zurücksetzen
-    textarea.style.height = 72 + 'px'; // Höhe anpassen
+    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = 72 + 'px'; // Adjust height
   }
 
+  /**
+   * Removes the current user from the channel members list.
+   * @returns The updated list of channel members.
+   */
   leaveChannel() {
     let i = this.channel.channelMembers.findIndex(
       (member) => member === this.user.id
@@ -121,6 +148,10 @@ export class ChannelInfoComponent {
     }
   }
 
+  /**
+   * Saves the updated channel members list after a user leaves the channel.
+   * Refreshes the channel view and closes the edit menu.
+   */
   saveLeaveChannel() {
     let updateChannelMember = {
       ...this.channel,
@@ -129,16 +160,24 @@ export class ChannelInfoComponent {
     let channelId = this.channel.id;
     this.channelService
       .updateChannel(updateChannelMember, channelId)
-      .subscribe((respone) => {
+      .subscribe((response) => {
         this.chatSection.updateChannel(this.channel.id);
         this.closeEditOpen();
       });
   }
 
+  /**
+   * Opens the profile information view for the specified user.
+   * @param user The user whose profile information should be displayed.
+   */
   openProfilInfo(user: User) {
     this.chatSection.openProfilInformation(user);
   }
 
+  /**
+   * Opens the interface to add a new channel member.
+   * Adjusts the full-size shadow state for mobile views accordingly.
+   */
   addNewChannelMember() {
     this.chatSection.channelMemberOpen = false;
     this.chatSection.addNewChannelMemberOpen = true;

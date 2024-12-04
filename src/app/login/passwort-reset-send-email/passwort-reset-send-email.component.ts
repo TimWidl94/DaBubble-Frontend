@@ -27,6 +27,11 @@ export class PasswortResetSendEmailComponent {
     });
   }
 
+  /**
+   * Sends a password reset email to the provided email address.
+   * Marks the email as sent upon success and navigates to the login page after a delay.
+   * Handles and logs errors if the email fails to send.
+   */
   onSubmit() {
     let email = this.email;
     this.emailInvalid = false;
@@ -45,12 +50,19 @@ export class PasswortResetSendEmailComponent {
     );
   }
 
+  /**
+   * Validates the email field to check if it is filled with a valid email format.
+   * Updates the `emailInvalid` flag based on the result.
+   */
   checkEmailFilled() {
     if (this.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       this.emailInvalid = true;
     }
   }
 
+  /**
+   * Navigates the user back to the login page.
+   */
   backToLogin() {
     this.router.navigate(['/login']);
   }

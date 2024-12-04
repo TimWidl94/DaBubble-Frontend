@@ -35,6 +35,10 @@ export class CreateProfilComponent {
   selectedFile: File | null = null;
   imagePath: string | null = null;
 
+  /**
+   * Toggles the profile picture. If the selected image is already set, resets to the default avatar.
+   * @param imagePath The path of the new profile picture.
+   */
   changeProfilPicture(imagePath: string) {
     if (this.profilPicture === imagePath) {
       this.profilPicture = 'assets/img/avatar/avatar_empty.svg';
@@ -45,6 +49,9 @@ export class CreateProfilComponent {
     }
   }
 
+  /**
+   * Registers a user using authentication service and navigates to login upon success.
+   */
   goToLogin() {
     const { username, email, password, first_name, last_name } =
       this.authService.getRegistrationData();
@@ -62,6 +69,9 @@ export class CreateProfilComponent {
       );
   }
 
+  /**
+   * Uploads the selected image or image path to the server using the upload service.
+   */
   uploadImage() {
     const fd = new FormData();
     if (this.selectedFile) {
@@ -75,6 +85,10 @@ export class CreateProfilComponent {
     });
   }
 
+  /**
+   * Handles the file selection event, updates the selected file, and clears any existing image path.
+   * @param event The file selection event.
+   */
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -86,10 +100,17 @@ export class CreateProfilComponent {
     }
   }
 
+  /**
+   * Navigates to the registration page.
+   */
   goToRegestration() {
     this.router.navigate(['/regestration']);
   }
 
+  /**
+   * Updates the profile picture preview when a file is selected.
+   * @param event The file input change event.
+   */
   onFileChange(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -99,6 +120,9 @@ export class CreateProfilComponent {
     reader.readAsDataURL(file);
   }
 
+  /**
+   * Triggers the file input element to open the file selection dialog.
+   */
   triggerFileInput() {
     const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
     fileInput.click();
@@ -112,13 +136,19 @@ export class CreateProfilComponent {
   last_name: string = '';
   regestrationComplete: boolean = false;
 
+  /**
+   * Initializes the component and fetches query parameters for first and last name.
+   */
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.first_name = params['first_name'];
       this.last_name = params['last_name'];
     });
   }
 
+  /**
+   * Registers the user using authentication service and navigates to login upon success.
+   */
   registrate() {
     this.authService
       .register(

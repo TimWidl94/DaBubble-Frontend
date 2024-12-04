@@ -17,7 +17,7 @@ import { MessageComponent } from './message/message.component';
 import { combineLatest } from 'rxjs';
 import { ThreadService } from '../../services/thread.service';
 import { ProfilInfoService } from '../../services/profil-info.service';
-import { ProfilInfoComponent } from "./profil-info/profil-info.component";
+import { ProfilInfoComponent } from './profil-info/profil-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
@@ -32,8 +32,8 @@ import { ChannelInfoComponent } from './channel-info/channel-info.component';
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
-    ProfilInfoComponent
-],
+    ProfilInfoComponent,
+  ],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
 })
@@ -44,7 +44,7 @@ export class ChatSectionComponent {
     private cdRef: ChangeDetectorRef,
     private messageService: MessageService,
     private threadService: ThreadService,
-    private profilInfoService: ProfilInfoService,
+    private profilInfoService: ProfilInfoService
   ) {
     this.usersService.user$.subscribe((user) => {
       if (user) {
@@ -78,14 +78,21 @@ export class ChatSectionComponent {
 
   @Input() users: User[] = [];
 
+  /**
+   * Wird beim Initialisieren der Komponente aufgerufen.
+   * Lädt Nachrichten und Benutzer und startet das regelmäßige Überprüfen von neuen Nachrichten.
+   */
   ngOnInit(): void {
     this.loadAndCombineMessagesWithUsers();
     this.loadChannel();
-    // setInterval(() => {
-      // this.scrollToBottomIfNewMessage();
-    // }, 1000);
+    setInterval(() => {
+      this.scrollToBottomIfNewMessage();
+    }, 1000);
   }
 
+  /**
+   * Überprüft, ob sich die Anzahl der Nachrichten geändert hat und scrollt nach unten, wenn neue Nachrichten hinzukamen.
+   */
   private scrollToBottomIfNewMessage(): void {
     if (this.messages.length !== this.previousMessagesLength) {
       this.scrollToBottom();
@@ -93,6 +100,9 @@ export class ChatSectionComponent {
     }
   }
 
+  /**
+   * Scrolled das Nachrichten-Container-Element nach unten, um die neuesten Nachrichten anzuzeigen.
+   */
   private scrollToBottom(): void {
     try {
       this.messagesContainer.nativeElement.scrollTop =
@@ -102,6 +112,9 @@ export class ChatSectionComponent {
     }
   }
 
+  /**
+   * Kombiniert die Nachrichten mit den entsprechenden Benutzerinformationen, indem es die Benutzer mit den Nachrichten verbindet.
+   */
   loadAndCombineMessagesWithUsers() {
     combineLatest([
       this.usersService.allUser$,
@@ -113,20 +126,30 @@ export class ChatSectionComponent {
     });
   }
 
+  /**
+   * Lädt den aktuellen Kanal und aktualisiert die Anzeige, wenn der Kanal geladen wurde.
+   */
   loadChannel() {
     this.channelService.selectedChannel$.subscribe((channel) => {
       this.channel = channel;
-      // this.cdRef.detectChanges();
+      this.cdRef.detectChanges();
       if (this.users) {
         this.loadUserFromChannel();
       }
     });
   }
 
+  /**
+   * Startet das Polling für Nachrichten des angegebenen Kanals.
+   * @param channelId Die ID des Kanals, für den das Polling gestartet werden soll.
+   */
   startPolling(channelId: number) {
     this.messageService.startPollingMessages(channelId);
   }
 
+  /**
+   * Lädt die Nachrichten für den aktuellen Kanal und gibt diese in der Konsole aus.
+   */
   loadMessages() {
     this.messageService.messages$.subscribe((messages) => {
       this.messages = messages;
@@ -136,6 +159,12 @@ export class ChatSectionComponent {
     });
   }
 
+  /**
+   * Fügt die entsprechenden Benutzerinformationen zu jeder Nachricht hinzu.
+   * @param messages Die Liste von Nachrichten, die bearbeitet werden soll.
+   * @param users Die Liste der Benutzer, die den Nachrichten zugeordnet werden.
+   * @returns Eine neue Liste von Nachrichten mit den zugehörigen Benutzerinformationen.
+   */
   addCorrectUserToMessage(messages: Message[], users: User[]): Message[] {
     return messages.map((message) => {
       const user = users.find((u) => u.id === message.sender);
@@ -143,6 +172,9 @@ export class ChatSectionComponent {
     });
   }
 
+  /**
+   * Lädt alle Benutzer, die Mitglieder des aktuellen Kanals sind.
+   */
   loadUserFromChannel() {
     if (this.channel && this.channel.channelMembers) {
       this.usersFromChannel = [];
@@ -155,10 +187,18 @@ export class ChatSectionComponent {
     this.checkForPrivatChannelPartner();
   }
 
+  /**
+   * Wird ausgeführt, wenn der Benutzer den Mauszeiger über den Kanalnamen bewegt oder verlässt.
+   * @param isHovered Gibt an, ob der Mauszeiger über dem Kanalnamen schwebt.
+   */
   onHover(isHovered: boolean) {
     this.channelNameHovered = isHovered;
   }
 
+  /**
+   * Bereitet die Formulardaten für das Senden einer Nachricht vor, einschließlich Text und Dateien.
+   * @returns Ein `FormData`-Objekt, das die Nachrichtendaten enthält.
+   */
   getMessageData(): FormData {
     const formData = new FormData();
 
@@ -167,11 +207,11 @@ export class ChatSectionComponent {
     formData.append('sender', this.user.id.toString());
     formData.append('channel', this.channel ? this.channel.id.toString() : '0');
     formData.append('timestamp', new Date().toISOString());
-    formData.append('thread_channel', '0'); // oder den passenden Wert setzen
+    formData.append('thread_channel', '0');
 
     // Datei hinzufügen, falls vorhanden
     if (this.selectedFile) {
-        formData.append('messageData', this.selectedFile);
+      formData.append('messageData', this.selectedFile);
     }
 
     // Emojis als JSON-String, da FormData nur primitive Datentypen unterstützt
@@ -181,13 +221,15 @@ export class ChatSectionComponent {
     formData.append('emoji_rocket', JSON.stringify([]));
 
     return formData;
-}
+  }
 
+  /**
+   * Sendet eine Nachricht an den aktuellen Kanal und lädt anschließend die Nachrichten und Benutzer neu.
+   */
   sendMessage() {
     let formData = this.getMessageData();
 
     if (this.channel) {
-
       this.messageService.sendMessage(this.channel.id, formData).subscribe(
         (response) => {
           console.log('Nachricht erfolgreich übermittelt:', response);
@@ -203,10 +245,22 @@ export class ChatSectionComponent {
     }
   }
 
+  /**
+   * Tracking-Funktion für Nachrichten-IDs zur Optimierung der Rendering-Performance.
+   * @param index Der Index der Nachricht.
+   * @param message Die Nachricht, die getrackt werden soll.
+   * @returns Die ID der Nachricht.
+   */
   trackByMessageId(index: number, message: Message): number {
     return message.id;
   }
 
+  /**
+   * Überprüft, ob eine Nachricht die erste des Tages ist.
+   * @param message Die Nachricht, die überprüft werden soll.
+   * @param index Der Index der Nachricht in der Nachrichtenliste.
+   * @returns `true`, wenn es die erste Nachricht des Tages ist, andernfalls `false`.
+   */
   isFirstMessageOfDay(message: Message, index: number): boolean {
     if (index === 0) {
       return true;
@@ -220,6 +274,11 @@ export class ChatSectionComponent {
     return currentMessageDate !== previousMessageDate;
   }
 
+  /**
+   * Gibt das formatierte Datum einer Nachricht basierend auf dem Timestamp zurück.
+   * @param timestamp Der Timestamp der Nachricht.
+   * @returns Das formatierte Datum.
+   */
   getFormattedDate(timestamp: string): string {
     let today = new Date();
     let date = new Date(timestamp);
@@ -237,29 +296,48 @@ export class ChatSectionComponent {
     return date.toLocaleDateString('de-DE', options);
   }
 
+  /**
+   * Öffnet das Bearbeitungsmenü für den Kanal.
+   */
   openChannelEditMenu() {
     this.channelInfoOpen = !this.channelInfoOpen;
     console.log(this.channel);
   }
 
+  /**
+   * Lädt den Kanal mit der angegebenen Kanal-ID neu.
+   * @param channelId Die ID des Kanals, der neu geladen werden soll.
+   */
   updateChannel(channelId: number) {
     this.channelService.loadSelectedChannel(channelId);
   }
 
+  /**
+   * Öffnet das Menü zum Hinzufügen eines neuen Kanalmitglieds.
+   */
   openAddNewChannelMemberOpen() {
     this.addNewChannelMemberOpen = !this.addNewChannelMemberOpen;
   }
 
+  /**
+   * Öffnet das Menü für die Kanalmitglieder.
+   */
   openChannelMember() {
     this.channelMemberOpen = !this.channelMemberOpen;
   }
 
+  /**
+   * Schließt alle geöffneten Komponenten (AddNewChannelMember, ChannelInfo, ChannelMember).
+   */
   closeAllComponents() {
     this.addNewChannelMemberOpen = false;
     this.channelInfoOpen = false;
     this.channelMemberOpen = false;
   }
 
+  /**
+   * Überprüft, ob der Benutzer ein privater Kanalpartner ist, und setzt die entsprechende `chatPartner`-Variable.
+   */
   checkForPrivatChannelPartner() {
     for (let user of this.usersFromChannel) {
       if (user.id != this.user.id) {
@@ -271,19 +349,33 @@ export class ChatSectionComponent {
     }
   }
 
-  openProfilInformation(user:User) {
+  /**
+   * Öffnet das Profil des angegebenen Benutzers.
+   * @param user Der Benutzer, dessen Profil geöffnet werden soll.
+   */
+  openProfilInformation(user: User) {
     this.profilInfoService.openProfil(user);
   }
 
+  /**
+   * Schaltet das Öffnen und Schließen des Profil-Informationsbereichs um.
+   */
   closeProfilInformation() {
     this.profilInformationOpen = !this.profilInformationOpen;
   }
 
+  /**
+   * Öffnet den Datei-Upload-Dialog für das Hinzufügen von Dateien zu einer Nachricht.
+   */
   triggerFileInput() {
     const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
     fileInput.click();
   }
 
+  /**
+   * Wird aufgerufen, wenn der Benutzer eine Datei auswählt.
+   * @param event Das Auswahlereignis für die Datei.
+   */
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 

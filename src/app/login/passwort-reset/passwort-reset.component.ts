@@ -29,6 +29,10 @@ export class PasswortResetComponent {
     this.readParams();
   }
 
+  /**
+   * Submits the new password along with the UID and token to reset the password.
+   * Navigates to the login page after a delay upon success.
+   */
   onSubmit() {
     this.passwordResetService
       .sendPasswordResetConfirm(this.password, this.uid, this.token)
@@ -46,6 +50,10 @@ export class PasswortResetComponent {
       );
   }
 
+  /**
+   * Reads query parameters from the route, extracting the password reset token and UID.
+   * Logs the retrieved values for debugging purposes.
+   */
   readParams() {
     this.route.queryParamMap.subscribe((params) => {
       this.token = params.get('token');
@@ -56,6 +64,10 @@ export class PasswortResetComponent {
     });
   }
 
+  /**
+   * Checks if the password and password confirmation match.
+   * Updates the button's active state accordingly.
+   */
   checkIfPasswordMatch() {
     if (
       this.password.toLowerCase().trim() ==
@@ -68,6 +80,9 @@ export class PasswortResetComponent {
     }
   }
 
+  /**
+   * Navigates the user back to the login page.
+   */
   backToLogin() {
     this.router.navigate(['/login']);
   }

@@ -21,7 +21,7 @@ export class NewChannelMemberComponent {
     private cdRef: ChangeDetectorRef,
     private chatSection: ChatSectionComponent,
     private channelService: ChannelService,
-    private mediaChangeViewService: MediaChangeViewService,
+    private mediaChangeViewService: MediaChangeViewService
   ) {}
 
   ifUserIsFind: boolean = false;
@@ -37,9 +37,12 @@ export class NewChannelMemberComponent {
 
   @Input() allUser: User[] = [];
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  /**
+   * Sucht nach Benutzern anhand des Suchbegriffs und zeigt die gefundenen Benutzer an.
+   * Der Suchbegriff wird auf Kleinbuchstaben umgewandelt, und die Benutzer werden nach Vor- oder Nachnamen gefiltert.
+   */
   searchSpecificUser() {
     let searchInput = this.searchUser.trim().toLowerCase();
     console.log(searchInput);
@@ -68,14 +71,23 @@ export class NewChannelMemberComponent {
     this.showUser(searchInput);
   }
 
-  showUser(searchInput:string){
+  /**
+   * Zeigt an, ob Benutzer basierend auf dem Suchbegriff gefunden wurden oder nicht.
+   * @param searchInput Der Suchbegriff, der eingegeben wurde.
+   */
+  showUser(searchInput: string) {
     if (this.searchedUser.length === 0 || searchInput == '') {
       this.ifUserIsFind = false;
-    } else if (searchInput.length >= 1){
-      this.ifUserIsFind = true
+    } else if (searchInput.length >= 1) {
+      this.ifUserIsFind = true;
     }
   }
 
+  /**
+   * Überprüft, ob ein Benutzer bereits ausgewählt wurde.
+   * @param userId Die ID des Benutzers, der überprüft werden soll.
+   * @returns Gibt `false` zurück, wenn der Benutzer bereits in den Kanalmitgliedern ist, ansonsten `true`.
+   */
   checkIfUserIsAlreadySelected(userId: number) {
     for (let i = 0; i < this.channel.channelMembers.length; i++) {
       let channelMember = this.channel.channelMembers[i];
@@ -86,6 +98,11 @@ export class NewChannelMemberComponent {
     return true;
   }
 
+  /**
+   * Berechnet die obere Position für die Anzeige der Benutzer, basierend auf der Anzahl der gefundenen Benutzer.
+   * @param length Die Anzahl der gefundenen Benutzer.
+   * @returns Die berechnete obere Position in Pixeln.
+   */
   calculateTop(length: number) {
     if (length === 0) {
       return 290;
@@ -99,6 +116,9 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Berechnet die obere Position für die Anzeige der Benutzer basierend auf der Höhe der `selected-user-box`.
+   */
   calculateTopPosition() {
     const selectedUserBox = document.querySelector('.selected-user-box');
     if (selectedUserBox) {
@@ -107,6 +127,9 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Setzt das Benutzerbild für jeden Benutzer basierend auf den geladenen Benutzerdaten.
+   */
   setUserImageToUser() {
     for (let i = 0; i < this.allUser.length; i++) {
       const user = this.allUser[i];
@@ -123,6 +146,10 @@ export class NewChannelMemberComponent {
     this.cdRef.detectChanges();
   }
 
+  /**
+   * Lädt die Bilder der Benutzer und weist sie den Benutzern zu.
+   * Wenn keine Benutzerbilder vorhanden sind, werden sie aus dem Service abgerufen.
+   */
   loadUserImages() {
     if (this.userService.getUsersImages().length === 0) {
       this.userService.fetchUserImage().subscribe((data) => {
@@ -135,6 +162,11 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Fügt einen ausgewählten Benutzer zur Liste der ausgewählten Benutzer hinzu.
+   * Aktualisiert die Benutzeroberfläche und entfernt den Benutzer aus der Suchergebnisliste.
+   * @param user Das Array der ausgewählten Benutzer.
+   */
   addSelectedUser(user: any[]) {
     if (!this.selectedUser.includes(user)) {
       this.selectedUser.push(user);
@@ -154,6 +186,9 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Überprüft, ob der Button aktiviert oder deaktiviert werden soll, basierend auf der Anzahl der ausgewählten Benutzer.
+   */
   checkEnableBtn() {
     if (this.selectedUser.length >= 1) {
       this.btnDisabled = true;
@@ -162,6 +197,11 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Entfernt einen Benutzer aus der Liste der ausgewählten Benutzer.
+   * Aktualisiert die Benutzeroberfläche.
+   * @param user Das Array der ausgewählten Benutzer.
+   */
   removeSelectedUser(user: any[]) {
     let i = this.selectedUser.indexOf(user);
     if (i !== -1) {
@@ -171,11 +211,17 @@ export class NewChannelMemberComponent {
     }
   }
 
+  /**
+   * Schließt das Fenster zum Hinzufügen neuer Kanalmitglieder und setzt die Anzeige zurück.
+   */
   closeAddNewMember() {
     this.chatSection.addNewChannelMemberOpen = false;
     this.mediaChangeViewService.setFullSizeShadowMobile(false);
   }
 
+  /**
+   * Kombiniert die Mitglieder des Kanals mit den ausgewählten Benutzern, um die endgültige Liste der Kanalmitglieder zu erstellen.
+   */
   mergeChannelMember() {
     for (let i = 0; i < this.channel.channelMembers.length; i++) {
       let channelMember = this.channel.channelMembers[i];
@@ -187,20 +233,24 @@ export class NewChannelMemberComponent {
     }
   }
 
-  async addChannelMember(){
+  /**
+   * Fügt die ausgewählten Benutzer als Kanalmitglieder hinzu, indem die Kanalmitgliederdaten im Backend aktualisiert werden.
+   * Nach der Aktualisierung wird die Benutzeroberfläche aktualisiert.
+   */
+  async addChannelMember() {
     let updatedChannelMembers = {
-      ... this.channel,
-      channelMembers: this.newAllUserFromChannel
-    }
+      ...this.channel,
+      channelMembers: this.newAllUserFromChannel,
+    };
     let channelId = this.channel.id;
-    console.log('geupdatede Channelmember:',updatedChannelMembers);
-    this.channelService.updateChannel(updatedChannelMembers, channelId).subscribe(
-      (response) => {
+    console.log('Geupdatede Channelmitglieder:', updatedChannelMembers);
+    this.channelService
+      .updateChannel(updatedChannelMembers, channelId)
+      .subscribe((response) => {
         console.log(response);
         this.chatSection.updateChannel(this.channel.id);
         this.closeAddNewMember();
         this.searchedUser = [];
-      }
-    )
+      });
   }
 }

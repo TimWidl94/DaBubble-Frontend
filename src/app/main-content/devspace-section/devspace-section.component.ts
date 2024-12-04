@@ -13,7 +13,7 @@ import { MessageService } from '../../services/message.service';
 import { User } from '../../models/user.model';
 import { Channel } from '../../models/channel.model';
 import { Message } from '../../models/message.model';
-import { SearchbarComponent } from "../header-main-content/searchbar/searchbar.component";
+import { SearchbarComponent } from '../header-main-content/searchbar/searchbar.component';
 import { MediaChangeViewService } from '../../services/media-change-view.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class DevspaceSectionComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private channelService: ChannelService,
     private messageService: MessageService,
-    private mediaChangeViewService: MediaChangeViewService,
+    private mediaChangeViewService: MediaChangeViewService
   ) {}
 
   isHoveredChannel: boolean = false;
@@ -49,11 +49,19 @@ export class DevspaceSectionComponent implements OnInit {
 
   @Input() users: User[] = [];
 
+  /**
+   * Wird beim Initialisieren der Komponente aufgerufen.
+   * Lädt alle Kanäle und überprüft, ob ein neues Kanal-Erstellungsformular geöffnet werden soll.
+   */
   ngOnInit(): void {
     this.fetchAllChannel();
     this.loadNewChannelOpen();
   }
 
+  /**
+   * Lädt alle Kanäle und speichert sie in der `channels`-Variable.
+   * Ruft `detectChanges()` auf, um Änderungen zu erkennen.
+   */
   fetchAllChannel() {
     this.channelService.loadAllChannels();
     this.channelService.allChannel$.subscribe((channels) => {
@@ -62,10 +70,16 @@ export class DevspaceSectionComponent implements OnInit {
     });
   }
 
+  /**
+   * Öffnet das Formular zum Erstellen eines neuen Kanals.
+   */
   newChannelOpen() {
     this.channelService.setcreateChannelScreen(true);
   }
 
+  /**
+   * Abonniert die Anzeige für die Kanal-Erstellungsansicht und aktualisiert `openCreateChannel`, wenn der Wert geändert wird.
+   */
   loadNewChannelOpen() {
     this.channelService.createChannel$.subscribe((value: boolean | null) => {
       if (value !== null) {
@@ -74,26 +88,48 @@ export class DevspaceSectionComponent implements OnInit {
     });
   }
 
+  /**
+   * Setzt den Status `isHoveredChannel`, wenn der Mauszeiger über einem Kanal schwebt.
+   * @param isHovered Gibt an, ob der Mauszeiger über einem Kanal schwebt.
+   */
   onHoverChannel(isHovered: boolean) {
     this.isHoveredChannel = isHovered;
   }
 
+  /**
+   * Setzt den Status `isHoveredDirectMessage`, wenn der Mauszeiger über einer Direktnachricht schwebt.
+   * @param isHovered Gibt an, ob der Mauszeiger über einer Direktnachricht schwebt.
+   */
   onHoverDm(isHovered: boolean) {
     this.isHoveredDirectMessage = isHovered;
   }
 
+  /**
+   * Setzt den Status `isHoveredNewChannel`, wenn der Mauszeiger über dem "Neuen Kanal"-Button schwebt.
+   * @param isHovered Gibt an, ob der Mauszeiger über dem "Neuen Kanal"-Button schwebt.
+   */
   onHoverNewChannel(isHovered: boolean) {
     this.isHoveredNewChannel = isHovered;
   }
 
+  /**
+   * Zeigt oder verbirgt den Benutzer in der Benutzeransicht für Direktnachrichten.
+   */
   showDmUser() {
     this.showUser = !this.showUser;
   }
 
+  /**
+   * Schaltet den Status von `channelsOpen`, um die Kanalliste zu öffnen oder zu schließen.
+   */
   toggleChannels() {
     this.channelsOpen = !this.channelsOpen;
   }
 
+  /**
+   * Wird ausgeführt, wenn ein Kanal-Element angeklickt wird. Markiert das angeklickte Element als aktiv.
+   * @param event Das Klick-Ereignis.
+   */
   onBoxClick(event: MouseEvent): void {
     const target = event.currentTarget as HTMLElement;
 
@@ -106,6 +142,10 @@ export class DevspaceSectionComponent implements OnInit {
     this.activeBox = target;
   }
 
+  /**
+   * Erstellt einen privaten Kanal mit dem angegebenen Benutzer.
+   * @param user Der Benutzer, mit dem der private Kanal erstellt werden soll.
+   */
   getPrivatChannelData(user: User) {
     let channelMembers = [];
 
@@ -122,6 +162,11 @@ export class DevspaceSectionComponent implements OnInit {
     this.createNewChannel(channelData, user);
   }
 
+  /**
+   * Öffnet den angegebenen Kanal und lädt die Nachrichten für diesen Kanal.
+   * Passt die mobile Ansicht an, wenn der Kanal geöffnet wird.
+   * @param channelId Die ID des Kanals, der geöffnet werden soll.
+   */
   openChannel(channelId: number) {
     this.channelService.loadSelectedChannel(channelId);
     this.messageService.getMessages(channelId);
@@ -131,6 +176,11 @@ export class DevspaceSectionComponent implements OnInit {
     this.mediaChangeViewService.setThreadScreenMobile(false);
   }
 
+  /**
+   * Erstellt einen neuen Kanal mit den angegebenen Kanal-Daten und dem angegebenen Benutzer.
+   * @param channelData Die Kanal-Daten, die für den neuen Kanal verwendet werden.
+   * @param user Der Benutzer, mit dem der Kanal erstellt werden soll.
+   */
   createNewChannel(channelData: any, user: User): void {
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
@@ -143,6 +193,12 @@ export class DevspaceSectionComponent implements OnInit {
     );
   }
 
+  /**
+   * Überprüft, ob ein Kanal mit dem angegebenen Benutzer bereits existiert.
+   * Wenn ja, wird der Kanal geöffnet, andernfalls wird ein neuer Kanal erstellt.
+   * @param user Der Benutzer, der überprüft wird.
+   * @returns `true`, wenn der Kanal existiert, andernfalls `false`.
+   */
   checkIfChannelExist(user: User) {
     this.fetchAllChannel();
     for (let channel of this.channels) {
@@ -160,6 +216,12 @@ export class DevspaceSectionComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Überprüft, ob der angegebene Kanal den angegebenen Benutzer enthält.
+   * @param channel Der Kanal, der überprüft werden soll.
+   * @param user Der Benutzer, der überprüft werden soll.
+   * @returns `true`, wenn der Benutzer Mitglied des Kanals ist, andernfalls `false`.
+   */
   checkChannelIncludesUser(channel: Channel, user: User) {
     if (
       channel.channelMembers.includes(user.id) &&
@@ -172,6 +234,12 @@ export class DevspaceSectionComponent implements OnInit {
     }
   }
 
+  /**
+   * Überprüft, ob der angegebene Kanal nur einen Benutzer (den aktuellen Benutzer) enthält.
+   * @param channel Der Kanal, der überprüft werden soll.
+   * @param user Der Benutzer, der überprüft werden soll.
+   * @returns `true`, wenn der Kanal nur den aktuellen Benutzer und den angegebenen Benutzer enthält, andernfalls `false`.
+   */
   checkIfChannelIncludeSingleUser(channel: Channel, user: User) {
     if (
       channel.channelMembers.length <= 1 &&
@@ -184,6 +252,10 @@ export class DevspaceSectionComponent implements OnInit {
     }
   }
 
+  /**
+   * Führt die Prüfung durch, ob ein Kanal existiert, und erstellt ihn, falls notwendig.
+   * @param user Der Benutzer, mit dem der Kanal überprüft oder erstellt werden soll.
+   */
   createAndCheckHelpFunction(user: User) {
     if (this.checkIfChannelExist(user)) {
       this.openChannel(this.privateChannelId);

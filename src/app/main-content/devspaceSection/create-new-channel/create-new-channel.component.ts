@@ -47,32 +47,40 @@ export class CreateNewChannelComponent {
     });
   }
 
+  /**
+   * Wird beim Initialisieren der Komponente aufgerufen.
+   * Lädt alle Benutzer und speichert diese in der `allUser`-Variable.
+   */
   ngOnInit() {
     this.userService.allUser$.subscribe((users) => {
       this.allUser = users;
     });
-
-    // this.calculateTopPosition();
   }
 
-  ngOnChanges() {
-    // Neu berechnen, wenn sich selectedUser ändert
-    // this.calculateTopPosition();
-  }
-
+  /**
+   * Schließt das Formular zur Kanal-Erstellung.
+   */
   closeCreateChannelBox() {
     this.channelService.setcreateChannelScreen(false);
   }
 
+  /**
+   * Öffnet und schließt das Benutzerbearbeitungsformular, indem `openChannelBox` und `openEditUserBox` umgeschaltet werden.
+   * Überprüft, ob der Button aktiviert oder deaktiviert werden soll.
+   */
   goToEditUser() {
     this.openChannelBox = !this.openChannelBox;
     this.openEditUserBox = !this.openEditUserBox;
     this.checkEnableBtn();
   }
 
+  /**
+   * Durchsucht die Benutzer nach dem angegebenen Suchbegriff und fügt Benutzer zur `searchedUser`-Liste hinzu,
+   * wenn sie mit dem Suchbegriff übereinstimmen und noch nicht ausgewählt wurden.
+   * Entfernt Benutzer, die nicht mehr dem Suchbegriff entsprechen.
+   */
   searchSpecificUser() {
     let searchInput = this.searchUser.trim().toLowerCase();
-    // this.calculateTopPosition();
     for (let i = 0; i < this.allUser.length; i++) {
       const user = this.allUser[i];
       const isUserSelected = this.selectedUser.some((u) => u.id === user.id);
@@ -88,7 +96,6 @@ export class CreateNewChannelComponent {
           this.loadUserImages();
         }
       } else {
-        // Wenn der Benutzer nicht mehr passt oder ausgewählt ist, entfernen
         this.searchedUser = this.searchedUser.filter((u) => u.id !== user.id);
       }
     }
@@ -97,12 +104,18 @@ export class CreateNewChannelComponent {
     }
   }
 
+  /**
+   * Aktiviert oder deaktiviert die Eingabeoption für spezifische Benutzer und überprüft, ob der Button aktiviert werden soll.
+   */
   activateSearchSpecificUser() {
     this.inputAllMember = !this.inputAllMember;
     this.inputSpecificUsers = !this.inputSpecificUsers;
     this.checkEnableBtn();
   }
 
+  /**
+   * Setzt die Benutzerbilder für alle Benutzer, indem es die Bilder mit den entsprechenden Benutzern verknüpft.
+   */
   setUserImageToUser() {
     for (let i = 0; i < this.allUser.length; i++) {
       const user = this.allUser[i];
@@ -119,6 +132,9 @@ export class CreateNewChannelComponent {
     this.cdRef.detectChanges();
   }
 
+  /**
+   * Lädt die Benutzerbilder entweder aus dem Cache oder durch einen API-Aufruf, wenn keine Bilder im Cache vorhanden sind.
+   */
   loadUserImages() {
     if (this.userService.getUsersImages().length === 0) {
       this.userService.fetchUserImage().subscribe((data) => {
@@ -131,10 +147,14 @@ export class CreateNewChannelComponent {
     }
   }
 
+  /**
+   * Fügt einen ausgewählten Benutzer zur Liste der `selectedUser` hinzu und entfernt ihn aus der `searchedUser`-Liste, falls er dort vorhanden ist.
+   * Setzt die Suche zurück und überprüft, ob der Button aktiviert werden soll.
+   * @param user Der Benutzer, der hinzugefügt werden soll.
+   */
   async addSelectedUser(user: any[]) {
     if (!this.selectedUser.includes(user)) {
       await this.selectedUser.push(user);
-      // this.calculateTopPosition();
       this.ifUserIsFind = false;
       this.searchUser = '';
       this.checkEnableBtn();
@@ -148,36 +168,22 @@ export class CreateNewChannelComponent {
     }
   }
 
-  // calculateTop(length: number) {
-    // if (length === 0) {
-      // return 290;
-    // } else if (length > 0 && length <= 3) {
-      // return 300;
-    // } else if (length > 3 && length <= 9) {
-      // return 366;
-    // } else {
-      // Für jedes zusätzliche Intervall von 6 Benutzern +60px hinzufügen
-      // return 66 + Math.floor((length - 1) / 3) * 66;
-    // }
-  // }
-//
-  // calculateTopPosition() {
-    // const selectedUserBox = document.querySelector('.selected-user-box');
-    // if (selectedUserBox) {
-      // const height = selectedUserBox.clientHeight;
-      // this.topPosition = 234 + height + 20; // 234px ist der ursprüngliche Top-Wert
-    // }
-  // }
-
+  /**
+   * Entfernt einen Benutzer aus der Liste der `selectedUser` und überprüft, ob der Button aktiviert werden soll.
+   * @param user Der Benutzer, der entfernt werden soll.
+   */
   removeSelectedUser(user: any[]) {
     let i = this.selectedUser.indexOf(user);
     if (i !== -1) {
       this.selectedUser.splice(i, 1);
-      // this.calculateTopPosition();
       this.checkEnableBtn();
     }
   }
 
+  /**
+   * Überprüft, ob der Button aktiviert oder deaktiviert werden soll, basierend auf der Anzahl der ausgewählten Benutzer
+   * oder der Option "Alle Mitglieder".
+   */
   checkEnableBtn() {
     if (this.selectedUser.length >= 1) {
       this.btnDisabled = true;
@@ -188,9 +194,13 @@ export class CreateNewChannelComponent {
     }
   }
 
-  //// create new Channel functions  ////
+  /* --------- Funktionen zum Erstellen eines neuen Kanals --------- */
 
-  createNewChannel(channelData:any): void {
+  /**
+   * Erstellt einen neuen Kanal mit den angegebenen Kanal-Daten und aktualisiert die Kanalliste.
+   * @param channelData Die Daten des neuen Kanals, einschließlich Name, Beschreibung und Mitglieder.
+   */
+  createNewChannel(channelData: any): void {
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
         console.log('Channel erfolgreich erstellt:', response);
@@ -203,17 +213,17 @@ export class CreateNewChannelComponent {
     );
   }
 
+  /**
+   * Bereitet die Kanal-Daten vor, je nachdem, ob alle Benutzer oder nur die ausgewählten Benutzer Mitglieder des Kanals sein sollen.
+   * Ruft `createNewChannel()` auf, um den Kanal zu erstellen.
+   */
   getChannelData() {
     let channelMembers = [];
-
     if (this.inputAllMember) {
-      // Wenn inputAllMember true ist, verwende alle Benutzer
       channelMembers = this.allUser.map((user) => user.id);
     } else if (this.selectedUser.length > 0) {
-      // Wenn inputAllMember false ist und mindestens ein Benutzer ausgewählt wurde
       channelMembers = this.selectedUser.map((user) => user.id);
     }
-
     let channelData = {
       channelName: this.channelName,
       channelDescription: this.channelDescription,
@@ -221,7 +231,6 @@ export class CreateNewChannelComponent {
       createdFrom: this.user?.first_name + ' ' + this.user?.last_name,
       privatChannel: false,
     };
-
     this.createNewChannel(channelData);
   }
 }
