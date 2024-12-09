@@ -58,8 +58,9 @@ export class LoginformComponent {
       localStorage.setItem('user', JSON.stringify(resp));
       this.router.navigateByUrl('/chat');
     } catch (e) {
-      alert('Login fehlgeschlagen');
-      console.error(e);
+      // alert('Login fehlgeschlagen');
+      this.PwOrEmailWrong=true;
+      this.password = '';
     }
   }
 
