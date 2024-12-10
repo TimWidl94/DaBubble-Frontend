@@ -138,6 +138,9 @@ section {
     background-image: url("./../../../assets/icons/send_purple.svg");
     cursor: pointer;
   }
+  &:disabled{
+    background-image: url("./../../../assets/icons/send_disabled.svg");
+  }
 }
 
 .users-avatars-box {
@@ -359,6 +362,53 @@ app-message {
   // width: 200px !important;
 }
 
+.emoji-menu-box {
+  @include dFlex();
+  position: relative;
+}
+
+.emoji-menu {
+  @include dFlex($g: 2px);
+  position: absolute;
+  bottom: 122px;
+  left: -65px;
+  background-color: $White;
+  border-radius: 30px;
+  padding: 12px;
+  box-shadow: 0px 2px 10px 0px #00000014;
+  width: 400px;
+  flex-wrap: wrap;
+  > button {
+    @include dFlex();
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    border: none;
+    background-color: transparent;
+    &:hover {
+      cursor: pointer;
+      scale: 1.2;
+    }
+  }
+}
+
+.close-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: $White;
+  border-radius: 20px;
+  background-image: url("./../../../assets/icons/close_black.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-color 0.15s ease, background-image 0.15s ease;
+  &:hover {
+    background-image: url("./../../../assets/icons/close_blue.svg");
+    background-color: $BGShadow;
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 700px) {
   .user-avatars {
     display: none;
@@ -381,9 +431,12 @@ app-message {
     width: calc(100% - 60px);
     bottom: 26px;
   }
-  .message-channel-empty-box{
+  .message-channel-empty-box {
     margin-left: 0;
     width: unset;
     padding: 0 24px;
+  }
+  .emoji-menu {
+    width: 332px;
   }
 }

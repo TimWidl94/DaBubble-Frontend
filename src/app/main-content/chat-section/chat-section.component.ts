@@ -17,7 +17,6 @@ import { MessageComponent } from './message/message.component';
 import { combineLatest } from 'rxjs';
 import { ThreadService } from '../../services/thread.service';
 import { ProfilInfoService } from '../../services/profil-info.service';
-import { ProfilInfoComponent } from './profil-info/profil-info.component';
 import { NewChannelMemberComponent } from './new-channel-member/new-channel-member.component';
 import { ChannelMemberComponent } from './channel-member/channel-member.component';
 import { ChannelInfoComponent } from './channel-info/channel-info.component';
@@ -32,7 +31,6 @@ import { ChannelInfoComponent } from './channel-info/channel-info.component';
     ChannelInfoComponent,
     NewChannelMemberComponent,
     ChannelMemberComponent,
-    ProfilInfoComponent,
   ],
   templateUrl: './chat-section.component.html',
   styleUrl: './chat-section.component.scss',
@@ -62,7 +60,17 @@ export class ChatSectionComponent {
 
   newMessage: string = '';
 
+  messageEmpty: boolean = true;
+
   messages: any[] = [];
+
+  emoji_list = ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '😗',
+  '😙', '😚', '☺️', '🙂', '🤗', '🤩', '🤔', '🤨', '😐', '😑', '😶', '🙄', '😏', '😣', '😥',
+  '😮', '🤐', '😯', '😪', '😫', '🥱', '😴', '😌', '😛', '😜', '😝', '🤤', '😒', '😓', '😔',
+  '😕', '🙃', '🤑', '😲', '☹️', '🙁', '😖', '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨',
+  '😩', '🤯', '😬', '😰', '😱', '🥵', '🥶', '😳', '🤪', '😵', '😡', '😠', '🤬', '😷', '🤒',
+  '🤕', '🤢', '🤮', '🤧', '😇', '🤠', '🥳'];
+  emojiMenuOpen: boolean = false;
 
   channelNameHovered: boolean = false;
   channelInfoOpen: boolean = false;
@@ -193,6 +201,18 @@ export class ChatSectionComponent {
    */
   onHover(isHovered: boolean) {
     this.channelNameHovered = isHovered;
+  }
+
+
+  /**
+   * Wird ausgeführt, wenn der Benutzer eine Nachricht im Textfeld eingibt.
+   * @param message ist die Nachricht das der Benutzer eingibt.
+   * Wenn ein Zeichen auser einem Leerzeichen eingegeben wird, wird der Button enabled.
+   */
+  checkEmptyMessage(message: string){
+    if(message.trim().length <= 0){
+      this.messageEmpty = true;
+    } else {this.messageEmpty = false}
   }
 
   /**
@@ -383,5 +403,21 @@ export class ChatSectionComponent {
       this.selectedFile = input.files[0];
       this.fileName = this.selectedFile.name;
     }
+  }
+
+  /**
+   * Öffne das Emoji Menü
+   */
+  toggleEmojiMenu(){
+    this.emojiMenuOpen = !this.emojiMenuOpen;
+  }
+
+
+  /**
+   * Füge der Nachricht ein Emoji hinzu.
+   * @param emoji Das Auwahlergebnis des Emoji aus einer Liste
+   */
+  addEmoji(emoji: string){
+    this.newMessage += emoji;
   }
 }

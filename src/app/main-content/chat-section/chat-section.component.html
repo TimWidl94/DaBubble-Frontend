@@ -157,6 +157,7 @@
           placeholder="Nachricht an #{{ channel.channelName }}"
           [(ngModel)]="newMessage"
           name="newMessage"
+          (ngModelChange)="checkEmptyMessage(newMessage)"
         ></textarea>
         <div class="fileUploadField">
           <input
@@ -173,10 +174,18 @@
             <button class="btn-add" (click)="triggerFileInput()"></button>
 
             <span></span>
-            <button class="btn-smiley"></button>
-            <button class="btn-email"></button>
+            <div class="emoji-menu-box">
+              <button class="btn-smiley" (click)="toggleEmojiMenu()"></button>
+              <div class="emoji-menu" *ngIf="emojiMenuOpen">
+                <button *ngFor="let emoji of emoji_list" (click)="addEmoji(emoji)">
+                  {{ emoji }}
+                </button>
+                <div class="close-btn" (click)="toggleEmojiMenu()"></div>
+              </div>
+            </div>
+            <!-- <button class="btn-email"></button> -->
           </div>
-          <button class="btn-sendmessage" (click)="sendMessage()"></button>
+          <button class="btn-sendmessage" (click)="sendMessage()" [disabled]="messageEmpty"></button>
         </div>
       </form>
     </div>
