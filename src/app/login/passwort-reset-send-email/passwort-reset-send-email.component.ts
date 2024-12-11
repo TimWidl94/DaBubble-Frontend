@@ -37,7 +37,6 @@ export class PasswortResetSendEmailComponent {
     this.emailInvalid = false;
     this.passwordResetService.sendPasswordResetEmail(email).subscribe(
       (response) => {
-        console.log('Reset email sent', response);
         this.emailSendet = true;
 
         setTimeout(() => {

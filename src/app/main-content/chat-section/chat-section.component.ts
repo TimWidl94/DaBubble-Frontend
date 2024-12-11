@@ -161,9 +161,6 @@ export class ChatSectionComponent {
   loadMessages() {
     this.messageService.messages$.subscribe((messages) => {
       this.messages = messages;
-      if (this.messages) {
-        console.log('Nachrichten aus dem geladenen Channel:', this.messages);
-      }
     });
   }
 
@@ -252,7 +249,6 @@ export class ChatSectionComponent {
     if (this.channel) {
       this.messageService.sendMessage(this.channel.id, formData).subscribe(
         (response) => {
-          console.log('Nachricht erfolgreich übermittelt:', response);
           this.newMessage = '';
           this.channelService.loadSelectedChannel(this.channel!.id);
           this.messageService.getMessages(this.channel!.id);
@@ -321,7 +317,6 @@ export class ChatSectionComponent {
    */
   openChannelEditMenu() {
     this.channelInfoOpen = !this.channelInfoOpen;
-    console.log(this.channel);
   }
 
   /**

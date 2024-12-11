@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ReactionBoxComponent } from '../../chat-section/message/reaction-box/reaction-box.component';
 import { FormsModule } from '@angular/forms';
 import { EmojiReactionComponent } from '../../../shared/emoji/emoji-reaction/emoji-reaction.component';
 import { UsersService } from '../../../services/users.service';
@@ -8,7 +7,6 @@ import { ThreadService } from '../../../services/thread.service';
 import { MainContentComponent } from '../../main-content.component';
 import { MessageService } from '../../../services/message.service';
 import { User } from '../../../models/user.model';
-
 import { Observable } from 'rxjs';
 import { Message } from '../../../models/message.model';
 import { ThreadReactionBoxComponent } from './thread-reaction-box/thread-reaction-box.component';
@@ -18,7 +16,6 @@ import { ThreadReactionBoxComponent } from './thread-reaction-box/thread-reactio
   standalone: true,
   imports: [
     CommonModule,
-    ReactionBoxComponent,
     FormsModule,
     EmojiReactionComponent,
     ThreadReactionBoxComponent,
@@ -129,9 +126,6 @@ export class ThreadMessageComponent {
   /**
    * Gibt die vollständigen Informationen der aktuellen Thread-Nachricht aus (zu Debugging-Zwecken).
    */
-  getInformation() {
-    console.log(this.threadMessage);
-  }
 
   /**
    * Passt die Größe eines Textbereichs automatisch an den Inhalt an.
@@ -155,7 +149,6 @@ export class ThreadMessageComponent {
    * Speichert eine bearbeitete Nachricht im Thread und lädt den Thread erneut.
    */
   saveThreadMessage() {
-    console.log('thread-message message:', this.threadMessage);
     let content: string = this.messageContent;
     this.threadService
       .updateThreadMessage(
@@ -165,7 +158,6 @@ export class ThreadMessageComponent {
       )
       .subscribe(
         (response) => {
-          console.log('message wurde geupdated:', response);
           this.isEditingMessage = false;
           this.threadService.loadThread(this.threadMessage.thread_channel);
         },

@@ -176,7 +176,6 @@ export class MessageComponent {
       .updateMessage(this.message.channel, this.message.id, content, emojiData)
       .subscribe(
         (response) => {
-          console.log('Message updated:', response);
           this.isEditingMessage = false;
           this.messageService.getMessages(this.message.channel);
         },

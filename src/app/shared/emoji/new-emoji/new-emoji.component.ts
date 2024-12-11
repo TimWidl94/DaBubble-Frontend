@@ -26,7 +26,6 @@ export class NewEmojiComponent {
     } else {
       this.message[messageEmoji].push(this.user);
     }
-    console.log(this.message);
     this.messageService.updateMessageEmojis(this.message.channel, this.message.id, this.message).subscribe(response => {
       console.log('Emoji updated:', response);
     }, error => {

@@ -82,11 +82,9 @@ export class ChannelInfoComponent {
       channelName: this.channelName,
     };
     let channelId = this.channel.id;
-    console.log(updatedChannelName);
     this.channelService
       .updateChannel(updatedChannelName, channelId)
       .subscribe((response) => {
-        console.log(response);
         this.chatSection.updateChannel(this.channel.id);
       });
   }
@@ -101,7 +99,6 @@ export class ChannelInfoComponent {
       this.saveEditChannelDescription();
     } else {
       this.isEditingDescription = true;
-      console.log(this.channel.channelDescription);
     }
   }
 
@@ -117,7 +114,6 @@ export class ChannelInfoComponent {
     this.channelService
       .updateChannel(updateChannelDescription, channelId)
       .subscribe((response) => {
-        console.log(response);
         this.chatSection.updateChannel(this.channel.id);
       });
   }

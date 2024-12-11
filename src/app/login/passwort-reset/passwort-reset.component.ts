@@ -38,7 +38,6 @@ export class PasswortResetComponent {
       .sendPasswordResetConfirm(this.password, this.uid, this.token)
       .subscribe(
         (response) => {
-          console.log('new password accepted', response);
           this.passwordChanged = true;
           setTimeout(() => {
             this.router.navigate(['/login']);
@@ -58,9 +57,6 @@ export class PasswortResetComponent {
     this.route.queryParamMap.subscribe((params) => {
       this.token = params.get('token');
       this.uid = params.get('uid');
-
-      console.log('Token:', this.token);
-      console.log('UID:', this.uid);
     });
   }
 
@@ -74,7 +70,6 @@ export class PasswortResetComponent {
       this.passwordConfirm.toLowerCase().trim()
     ) {
       this.btnActive = true;
-      console.log(this.btnActive);
     } else {
       this.btnActive = false;
     }

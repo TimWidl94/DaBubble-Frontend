@@ -59,7 +59,6 @@ export class CreateProfilComponent {
       .register(username, password, email, first_name, last_name)
       .subscribe(
         (response) => {
-          console.log('Registration successful', response);
           this.authService.setToken(response.token);
           this.uploadImage();
         },
@@ -80,7 +79,6 @@ export class CreateProfilComponent {
       fd.append('image_path', this.imagePath);
     }
     this.uploadService.uploadImage(fd).subscribe((res) => {
-      console.log(res);
       this.router.navigate(['/login']);
     });
   }
@@ -160,7 +158,6 @@ export class CreateProfilComponent {
       )
       .subscribe(
         (response) => {
-          console.log('Registration successful', response);
           this.regestrationComplete = true;
           setTimeout(() => {
             this.router.navigateByUrl('/login');

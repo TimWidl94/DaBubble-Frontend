@@ -87,7 +87,6 @@ export class ReactionBoxComponent {
           this.threadService.threadSubject.next(response);
           this.mainContentComponent.threadOpen = true;
         }
-        console.log('Thread created/loaded reactionBox:', response);
       },
       (error) => {
         console.error('Error creating thread:', error);
@@ -117,7 +116,6 @@ export class ReactionBoxComponent {
     } else {
       this.message[messageEmoji].push(this.user);
     }
-    console.log(this.message);
     this.messageService
       .updateMessageEmojis(this.message.channel, this.message.id, this.message)
       .subscribe(

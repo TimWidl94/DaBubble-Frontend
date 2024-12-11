@@ -33,7 +33,6 @@ export class ThreadReactionBoxComponent {
   ) {}
 
   ngOnInit() {
-    // console.log(this.threadMessage);
     this.checkIfMessageUser();
   }
 
@@ -63,7 +62,7 @@ export class ThreadReactionBoxComponent {
   }
 
   sendEmoji(emojiType: string) {
-    console.log(this.threadMessage);
+
     let emoji = emojiType;
     let messageEmoji = `emoji_${emoji}`;
     let index = this.threadMessage[messageEmoji].indexOf(this.user);
@@ -72,9 +71,7 @@ export class ThreadReactionBoxComponent {
     } else {
       this.threadMessage[messageEmoji].push(this.user);
     }
-    console.log(this.threadMessage);
     this.threadService.updateThreadMessageEmojis(this.threadMessage.thread_channel, this.threadMessage.id, this.threadMessage).subscribe(response => {
-      console.log('Emoji updated:', response);
     }, error => {
       console.error('error updating emoji', error)
     })

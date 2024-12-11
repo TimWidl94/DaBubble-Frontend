@@ -59,7 +59,6 @@ export class EmojiReactionComponent {
     } else {
       this.message[messageEmoji].push(this.user);
     }
-    console.log(this.message);
     this.messageService
       .updateMessageEmojis(this.message.channel, this.message.id, this.message)
       .subscribe(
@@ -83,7 +82,6 @@ export class EmojiReactionComponent {
     } else {
       this.message[messageEmoji].push(this.user);
     }
-    console.log(this.message);
     this.threadService
       .updateThreadMessageEmojis(this.message.thread_channel, this.message.id, this.message)
       .subscribe(

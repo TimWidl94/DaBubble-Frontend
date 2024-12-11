@@ -74,7 +74,6 @@ export class ProfilInfoComponent {
     if (this.checkIfChannelExist(user)) {
       this.channelService.loadAllChannels();
       this.openChannel(this.privateChannelId);
-      console.log('geöffneter Nutzer:', user);
     }
     if (!this.checkIfChannelExist(user)) {
       this.getPrivatChannelData(user);
@@ -111,9 +110,6 @@ export class ProfilInfoComponent {
     this.channelService.loadAllChannels();
     this.channelService.allChannel$.subscribe((channels) => {
       this.channels = channels;
-      if (this.channels) {
-        // console.log(this.channels)
-      }
       this.cdRef.detectChanges();
     });
   }

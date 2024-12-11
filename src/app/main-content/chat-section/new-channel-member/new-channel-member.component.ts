@@ -45,7 +45,6 @@ export class NewChannelMemberComponent {
    */
   searchSpecificUser() {
     let searchInput = this.searchUser.trim().toLowerCase();
-    console.log(searchInput);
     this.calculateTopPosition();
     for (let i = 0; i < this.allUser.length; i++) {
       let user = this.allUser[i];
@@ -243,11 +242,9 @@ export class NewChannelMemberComponent {
       channelMembers: this.newAllUserFromChannel,
     };
     let channelId = this.channel.id;
-    console.log('Geupdatede Channelmitglieder:', updatedChannelMembers);
     this.channelService
       .updateChannel(updatedChannelMembers, channelId)
       .subscribe((response) => {
-        console.log(response);
         this.chatSection.updateChannel(this.channel.id);
         this.closeAddNewMember();
         this.searchedUser = [];

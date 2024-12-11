@@ -26,6 +26,8 @@ export class CreateNewChannelComponent {
   ifUserIsFind: boolean = false;
   searchUser: string = '';
 
+  channelExist:boolean = false;
+
   searchedUser: any[] = [];
 
   userImages: any[] = [];
@@ -203,12 +205,14 @@ export class CreateNewChannelComponent {
   createNewChannel(channelData: any): void {
     this.channelService.createChannel(channelData).subscribe(
       (response) => {
-        console.log('Channel erfolgreich erstellt:', response);
         this.channelService.setcreateChannelScreen(false);
         this.channelService.loadAllChannels();
       },
       (error) => {
-        console.error('Fehler beim Erstellen des Channels:', error);
+        this.channelExist = true;
+        setTimeout(()=> {
+          this.channelExist = false;
+        },5000)
       }
     );
   }
